@@ -1,0 +1,308 @@
+{
+    "#Const": {
+        "Description": ""
+    },
+    "#Else": {
+        "Description": ""
+    },
+    "#ElseIf": {
+        "Description": ""
+    },
+    "#End": {
+        "Description": ""
+    },
+    "#If": {
+        "Description": ""
+    },
+    "#Then": {
+        "Description": ""
+    },
+    "As": {
+        "Description": ""
+    },
+    "Base": {
+        "Description": ""
+    },
+    "Binary": {
+        "Description": ""
+    },
+    "Boolean": {
+        "Description": ""
+    },
+    "ByRef": {
+        "Description": ""
+    },
+    "Byte": {
+        "Description": ""
+    },
+    "ByVal": {
+        "Description": ""
+    },
+    "Call": {
+        "Description": ""
+    },
+    "Close": {
+        "Description": ""
+    },
+    "Compare": {
+        "Description": ""
+    },
+    "Const": {
+        "Description": ""
+    },
+    "Currency": {
+        "Description": ""
+    },
+    "Date": {
+        "Description": ""
+    },
+    "Declare": {
+        "Description": ""
+    },
+    "Deftype": {
+        "Description": ""
+    },
+    "Dim": {
+        "Description": ""
+    },
+    "Do": {
+        "Description": ""
+    },
+    "Double": {
+        "Description": ""
+    },
+    "Each": {
+        "Description": ""
+    },
+    "Else": {
+        "Description": ""
+    },
+    "Empty": {
+        "Description": ""
+    },
+    "End": {
+        "Description": ""
+    },
+    "Enum": {
+        "Description": ""
+    },
+    "Erase": {
+        "Description": ""
+    },
+    "Error": {
+        "Description": ""
+    },
+    "Event": {
+        "Description": ""
+    },
+    "Exit": {
+        "Description": ""
+    },
+    "Explicit": {
+        "Description": ""
+    },
+    "False": {
+        "Description": ""
+    },
+    "For": {
+        "Description": ""
+    },
+    "Friend": {
+        "Description": ""
+    },
+    "Function": {
+        "Description": ""
+    },
+    "Get": {
+        "Description": ""
+    },
+    "GoSub": {
+        "Description": ""
+    },
+    "GoTo": {
+        "Description": ""
+    },
+    "If": {
+        "Description": ""
+    },
+    "Implements": {
+        "Description": ""
+    },
+    "Input #": {
+        "Description": ""
+    },
+    "Integer": {
+        "Description": ""
+    },
+    "Is": {
+        "Description": ""
+    },
+    "Kill": {
+        "Description": ""
+    },
+    "Len": {
+        "Description": ""
+    },
+    "Let": {
+        "Description": ""
+    },
+    "Line": {
+        "Description": ""
+    },
+    "Lock": {
+        "Description": ""
+    },
+    "Long": {
+        "Description": ""
+    },
+    "LongLong": {
+        "Description": ""
+    },
+    "LongPtr": {
+        "Description": ""
+    },
+    "Loop": {
+        "Description": ""
+    },
+    "LSet": {
+        "Description": ""
+    },
+    "Me": {
+        "Description": ""
+    },
+    "Name": {
+        "Description": ""
+    },
+    "New": {
+        "Description": ""
+    },
+    "Next": {
+        "Description": ""
+    },
+    "Nothing": {
+        "Description": ""
+    },
+    "Null": {
+        "Description": ""
+    },
+    "Object": {
+        "Description": ""
+    },
+    "On": {
+        "Description": ""
+    },
+    "Open": {
+        "Description": ""
+    },
+    "Option": {
+        "Description": ""
+    },
+    "Optional": {
+        "Description": ""
+    },
+    "ParamArray": {
+        "Description": ""
+    },
+    "Print": {
+        "Description": ""
+    },
+    "Print #": {
+        "Description": ""
+    },
+    "Private": {
+        "Description": ""
+    },
+    "Property": {
+        "Description": ""
+    },
+    "PtrSafe": {
+        "Description": ""
+    },
+    "Public": {
+        "Description": ""
+    },
+    "Put": {
+        "Description": ""
+    },
+    "RaiseEvent": {
+        "Description": ""
+    },
+    "ReDim": {
+        "Description": ""
+    },
+    "Rem": {
+        "Description": ""
+    },
+    "Resume": {
+        "Description": ""
+    },
+    "Return": {
+        "Description": ""
+    },
+    "RSet": {
+        "Description": ""
+    },
+    "Seek": {
+        "Description": ""
+    },
+    "SendKeys": {
+        "Description": ""
+    },
+    "Set": {
+        "Description": ""
+    },
+    "Single": {
+        "Description": ""
+    },
+    "Static": {
+        "Description": ""
+    },
+    "Step": {
+        "Description": ""
+    },
+    "Stop": {
+        "Description": ""
+    },
+    "String": {
+        "Description": ""
+    },
+    "Sub": {
+        "Description": ""
+    },
+    "Then": {
+        "Description": ""
+    },
+    "To": {
+        "Description": ""
+    },
+    "True": {
+        "Description": ""
+    },
+    "Type": {
+        "Description": ""
+    },
+    "Unlock": {
+        "Description": ""
+    },
+    "Variant": {
+        "Description": ""
+    },
+    "Wend": {
+        "Description": ""
+    },
+    "While": {
+        "Description": ""
+    },
+    "Width #": {
+        "Description": ""
+    },
+    "With": {
+        "Description": ""
+    },
+    "WithEvents": {
+        "Description": ""
+    },
+    "Write #": {
+        "Description": ""
+    }
+}

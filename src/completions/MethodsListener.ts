@@ -43,10 +43,6 @@ export default class MethodsListener implements VisualBasic6Listener {
     private readonly position: Position
   ) {}
 
-  enterModuleReference(ctx: ModuleReferenceContext) {
-    console.log(`${ctx.start.line}:${ctx.stop?.line}`);
-  }
-
   enterVariableSubStmt(ctx: VariableSubStmtContext) {
     if (this.isInPositionRange(ctx) || this.isDeclareStmt) {
       this.contextNames.push(
@@ -80,23 +76,23 @@ export default class MethodsListener implements VisualBasic6Listener {
   }
 
   enterPropertyGetStmt(ctx: PropertyGetStmtContext) {
-    this.addName(ctx);
+    this.addName(ctx, true);
   }
 
   enterPropertyLetStmt(ctx: PropertyLetStmtContext) {
-    this.addName(ctx);
+    this.addName(ctx, true);
   }
 
   enterPropertySetStmt(ctx: PropertySetStmtContext) {
-    this.addName(ctx);
+    this.addName(ctx, true);
   }
 
-  addName(ctx: MethodStmContext) {
+  addName(ctx: MethodStmContext, isParam = false) {
     this.isDeclareStmt = false;
     this.funcNames.push(
       new CompletionItem(
         ctx.ambiguousIdentifier().text,
-        CompletionItemKind.Method
+        isParam ? CompletionItemKind.Property : CompletionItemKind.Method
       )
     );
     if (this.isInRange(ctx)) {

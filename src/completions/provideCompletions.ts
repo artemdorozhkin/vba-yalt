@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import TreeParser from "./TreeParser";
+import * as fs from "fs";
 
 export const provider = vscode.languages.registerCompletionItemProvider(
   { scheme: "file", language: "vba" },
@@ -10,13 +11,20 @@ export const provider = vscode.languages.registerCompletionItemProvider(
   }
 );
 
-function provideCompletions(
+async function provideCompletions(
   document: vscode.TextDocument,
   position: vscode.Position
-): vscode.CompletionItem[] {
+): Promise<vscode.CompletionItem[]> {
   const text = document.getText();
-  const treeParser: TreeParser = new TreeParser(text, position);
+  let treeParser: TreeParser = new TreeParser(text, position);
   const completions = treeParser.getCompletions();
 
+  const data = fs.readFileSync(
+    "C:\\Users\\aador\\development\\typescript\\vba\\def\\vba\\strings.bas"
+  );
+
+  treeParser = new TreeParser(data.toString(), position);
+  const excelCompletions = treeParser.getCompletions();
+  completions.push(...excelCompletions);
   return completions;
 }
