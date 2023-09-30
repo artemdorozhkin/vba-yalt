@@ -13,6 +13,9 @@ import {
   ModuleHeaderContext,
   ModuleOptionContext,
   ModuleReferenceContext,
+  PropertyGetStmtContext,
+  PropertyLetStmtContext,
+  PropertySetStmtContext,
   SubStmtContext,
   TypeStmtContext,
   VariableStmtContext,
@@ -32,6 +35,7 @@ type PositionRange = {
 
 export default class MethodsListener implements VisualBasic6Listener {
   private readonly positionRange: PositionRange = { start: 0, end: 0 };
+  private isDeclareStmt: boolean = true;
 
   constructor(
     private readonly funcNames: CompletionItem[],
@@ -44,11 +48,13 @@ export default class MethodsListener implements VisualBasic6Listener {
   }
 
   enterVariableSubStmt(ctx: VariableSubStmtContext) {
-    if (this.isInPositionRange(ctx)) {
+    if (this.isInPositionRange(ctx) || this.isDeclareStmt) {
       this.contextNames.push(
         new CompletionItem(
           ctx.ambiguousIdentifier().text,
-          CompletionItemKind.Variable
+          this.isDeclareStmt
+            ? CompletionItemKind.Field
+            : CompletionItemKind.Variable
         )
       );
     }
@@ -73,7 +79,20 @@ export default class MethodsListener implements VisualBasic6Listener {
     this.addName(ctx);
   }
 
+  enterPropertyGetStmt(ctx: PropertyGetStmtContext) {
+    this.addName(ctx);
+  }
+
+  enterPropertyLetStmt(ctx: PropertyLetStmtContext) {
+    this.addName(ctx);
+  }
+
+  enterPropertySetStmt(ctx: PropertySetStmtContext) {
+    this.addName(ctx);
+  }
+
   addName(ctx: MethodStmContext) {
+    this.isDeclareStmt = false;
     this.funcNames.push(
       new CompletionItem(
         ctx.ambiguousIdentifier().text,
