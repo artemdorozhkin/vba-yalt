@@ -12,10 +12,39 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [
+    "languages": [
       {
-        "command": "vba.helloWorld",
-        "title": "Hello World"
+        "id": "vba",
+        "aliases": [
+          "VBA (Visual Basic for Applications)"
+        ],
+        "extensions": [
+          ".bas",
+          ".cls",
+          ".frm"
+        ],
+        "grammars": [
+          {
+            "language": "vba",
+            "scopeName": "source.vba",
+            "path": "./vba.tmLanguage.yaml"
+          }
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "files": [
+      {
+        "scheme": "file",
+        "pattern": "**/*.bas"
+      },
+      {
+        "scheme": "file",
+        "pattern": "**/*.cls"
+      },
+      {
+        "scheme": "file",
+        "pattern": "**/*.frm"
       }
     ]
   },
@@ -31,18 +60,21 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.82.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.82.0",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
+    "@vscode/test-electron": "^2.3.4",
     "eslint": "^8.47.0",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
-    "typescript": "^5.1.6",
     "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "@vscode/test-electron": "^2.3.4"
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "vb6-antlr4": "^1.0.50"
   }
 }
