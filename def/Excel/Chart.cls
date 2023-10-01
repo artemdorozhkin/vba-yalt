@@ -3,7 +3,7 @@ End Property
 
 Property Get AutoScaling() As Boolean
 End Property
-Property Let AutoScaling() As Boolean
+Property Let AutoScaling()
 End Property
 
 Property Get BackWall() As Walls
@@ -11,12 +11,12 @@ End Property
 
 Property Get BarShape() As XlBarShape
 End Property
-Property Let BarShape() As XlBarShape
+Property Let BarShape()
 End Property
 
 Property Get CategoryLabelLevel() As XlCategoryLabelLevel
 End Property
-Property Let CategoryLabelLevel() As XlCategoryLabelLevel
+Property Let CategoryLabelLevel()
 End Property
 
 Property Get ChartArea() As ChartArea
@@ -24,12 +24,12 @@ End Property
 
 Property Get ChartColor() As Variant
 End Property
-Property Let ChartColor() As Variant
+Property Let ChartColor()
 End Property
 
 Property Get ChartStyle() As Variant
 End Property
-Property Let ChartStyle() As Variant
+Property Let ChartStyle()
 End Property
 
 Property Get ChartTitle() As ChartTitle
@@ -37,7 +37,7 @@ End Property
 
 Property Get ChartType() As XlChartType
 End Property
-Property Let ChartType() As XlChartType
+Property Let ChartType()
 End Property
 
 Property Get CodeName() As String
@@ -51,17 +51,17 @@ End Property
 
 Property Get DepthPercent() As Long
 End Property
-Property Let DepthPercent() As Long
+Property Let DepthPercent()
 End Property
 
 Property Get DisplayBlanksAs() As XlDisplayBlanksAs
 End Property
-Property Let DisplayBlanksAs() As XlDisplayBlanksAs
+Property Let DisplayBlanksAs()
 End Property
 
 Property Get Elevation() As Long
 End Property
-Property Let Elevation() As Long
+Property Let Elevation()
 End Property
 
 Property Get Floor() As Floor
@@ -69,7 +69,7 @@ End Property
 
 Property Get GapDepth() As Long
 End Property
-Property Let GapDepth() As Long
+Property Let GapDepth()
 End Property
 
 Property Get HasAxis(Optional Index1, Optional Index2)
@@ -79,22 +79,22 @@ End Property
 
 Property Get HasDataTable() As Boolean
 End Property
-Property Let HasDataTable() As Boolean
+Property Let HasDataTable()
 End Property
 
 Property Get HasLegend() As Boolean
 End Property
-Property Let HasLegend() As Boolean
+Property Let HasLegend()
 End Property
 
 Property Get HasTitle() As Boolean
 End Property
-Property Let HasTitle() As Boolean
+Property Let HasTitle()
 End Property
 
 Property Get HeightPercent() As Long
 End Property
-Property Let HeightPercent() As Long
+Property Let HeightPercent()
 End Property
 
 Property Get Hyperlinks() As Hyperlinks
@@ -111,7 +111,7 @@ End Property
 
 Property Get Name() As String
 End Property
-Property Let Name() As String
+Property Let Name()
 End Property
 
 Property Get Next() As Object
@@ -125,7 +125,7 @@ End Property
 
 Property Get Perspective() As Long
 End Property
-Property Let Perspective() As Long
+Property Let Perspective()
 End Property
 
 Property Get PivotLayout() As PivotLayout
@@ -136,12 +136,12 @@ End Property
 
 Property Get PlotBy() As XlRowCol
 End Property
-Property Let PlotBy() As XlRowCol
+Property Let PlotBy()
 End Property
 
 Property Get PlotVisibleOnly() As Boolean
 End Property
-Property Let PlotVisibleOnly() As Boolean
+Property Let PlotVisibleOnly()
 End Property
 
 Property Get Previous() As Object
@@ -155,7 +155,7 @@ End Property
 
 Property Get ProtectData() As Boolean
 End Property
-Property Let ProtectData() As Boolean
+Property Let ProtectData()
 End Property
 
 Property Get ProtectDrawingObjects() As Boolean
@@ -163,7 +163,7 @@ End Property
 
 Property Get ProtectFormatting() As Boolean
 End Property
-Property Let ProtectFormatting() As Boolean
+Property Let ProtectFormatting()
 End Property
 
 Property Get ProtectionMode() As Boolean
@@ -171,22 +171,22 @@ End Property
 
 Property Get ProtectSelection() As Boolean
 End Property
-Property Let ProtectSelection() As Boolean
+Property Let ProtectSelection()
 End Property
 
 Property Get RightAngleAxes() As Variant
 End Property
-Property Let RightAngleAxes() As Variant
+Property Let RightAngleAxes()
 End Property
 
 Property Get Rotation() As Variant
 End Property
-Property Let Rotation() As Variant
+Property Let Rotation()
 End Property
 
 Property Get SeriesNameLevel() As XlSeriesNameLevel
 End Property
-Property Let SeriesNameLevel() As XlSeriesNameLevel
+Property Let SeriesNameLevel()
 End Property
 
 Property Get Shapes() As Shapes
@@ -194,37 +194,37 @@ End Property
 
 Property Get ShowAllFieldButtons() As Boolean
 End Property
-Property Let ShowAllFieldButtons() As Boolean
+Property Let ShowAllFieldButtons()
 End Property
 
 Property Get ShowAxisFieldButtons() As Boolean
 End Property
-Property Let ShowAxisFieldButtons() As Boolean
+Property Let ShowAxisFieldButtons()
 End Property
 
 Property Get ShowDataLabelsOverMaximum() As Boolean
 End Property
-Property Let ShowDataLabelsOverMaximum() As Boolean
+Property Let ShowDataLabelsOverMaximum()
 End Property
 
 Property Get ShowExpandCollapseEntireFieldButtons() As Boolean
 End Property
-Property Let ShowExpandCollapseEntireFieldButtons() As Boolean
+Property Let ShowExpandCollapseEntireFieldButtons()
 End Property
 
 Property Get ShowLegendFieldButtons() As Boolean
 End Property
-Property Let ShowLegendFieldButtons() As Boolean
+Property Let ShowLegendFieldButtons()
 End Property
 
 Property Get ShowReportFilterFieldButtons() As Boolean
 End Property
-Property Let ShowReportFilterFieldButtons() As Boolean
+Property Let ShowReportFilterFieldButtons()
 End Property
 
 Property Get ShowValueFieldButtons() As Boolean
 End Property
-Property Let ShowValueFieldButtons() As Boolean
+Property Let ShowValueFieldButtons()
 End Property
 
 Property Get SideWall() As Walls
@@ -235,7 +235,7 @@ End Property
 
 Property Get Visible() As XlSheetVisibility
 End Property
-Property Let Visible() As XlSheetVisibility
+Property Let Visible()
 End Property
 
 Property Get Walls() As Walls
@@ -280,8 +280,7 @@ End Sub
 Sub CopyPicture(Optional Appearance As XlPictureAppearance = xlScreen, Optional Format As XlCopyPictureFormat = xlPicture, Optional Size As XlPictureAppearance = xlPrinter)
 End Sub
 
-Sub Delete()
-End Sub
+'TODO: repaire missing method
 
 Function Evaluate(Name)
 End Function

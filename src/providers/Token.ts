@@ -24,6 +24,14 @@ export default class Token {
     );
   }
 
+  isModule(): boolean {
+    return this.symbol == SymbolKind.Module;
+  }
+
+  isClass(): boolean {
+    return this.symbol == SymbolKind.Class;
+  }
+
   isContainer(): boolean {
     return (
       this.symbol == SymbolKind.Method ||

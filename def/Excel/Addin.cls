@@ -12,7 +12,7 @@ End Property
 
 Property Get Installed() As Boolean
 End Property
-Property Let Installed() As Boolean
+Property Let Installed()
 End Property
 
 Property Get IsOpen() As Boolean

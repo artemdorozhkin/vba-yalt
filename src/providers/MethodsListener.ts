@@ -125,13 +125,21 @@ export default class MethodsListener implements VisualBasic6Listener {
   }
 
   getRange(start: Start, stop: Stop) {
-    const startPos = new Position(start.line, start.startIndex);
-    const stopPos = new Position(stop.line, stop.stopIndex) || startPos;
+    const startPos = new Position(start.line - 1, start.startIndex);
+    const stopPos = new Position(stop.line - 1, stop.stopIndex) || startPos;
     return new Range(startPos, stopPos);
   }
 
   addName(ctx: MethodStmContext, isProp = false) {
     this.isDeclareStmt = false;
+
+    if (isProp) {
+      const token = this.tokens.find((token) => {
+        return token.label == ctx.ambiguousIdentifier().text;
+      });
+
+      if (token) return;
+    }
     this.tokens.push(
       new Token(
         ctx.ambiguousIdentifier().text,

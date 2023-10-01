@@ -9,7 +9,7 @@ End Property
 
 Property Get ActivePrinter() As String
 End Property
-Property Let ActivePrinter() As String
+Property Let ActivePrinter()
 End Property
 
 Property Get ActiveProtectedViewWindow() As ProtectedViewWindow
@@ -32,17 +32,17 @@ End Property
 
 Property Get AlertBeforeOverwriting() As Boolean
 End Property
-Property Let AlertBeforeOverwriting() As Boolean
+Property Let AlertBeforeOverwriting()
 End Property
 
 Property Get AltStartupPath() As String
 End Property
-Property Let AltStartupPath() As String
+Property Let AltStartupPath()
 End Property
 
 Property Get AlwaysUseClearType() As Boolean
 End Property
-Property Let AlwaysUseClearType() As Boolean
+Property Let AlwaysUseClearType()
 End Property
 
 Property Get Application() As Application
@@ -53,7 +53,7 @@ End Property
 
 Property Get AskToUpdateLinks() As Boolean
 End Property
-Property Let AskToUpdateLinks() As Boolean
+Property Let AskToUpdateLinks()
 End Property
 
 Property Get Assistance() As IAssistance
@@ -64,17 +64,17 @@ End Property
 
 Property Get AutoFormatAsYouTypeReplaceHyperlinks() As Boolean
 End Property
-Property Let AutoFormatAsYouTypeReplaceHyperlinks() As Boolean
+Property Let AutoFormatAsYouTypeReplaceHyperlinks()
 End Property
 
 Property Get AutomationSecurity() As MsoAutomationSecurity
 End Property
-Property Let AutomationSecurity() As MsoAutomationSecurity
+Property Let AutomationSecurity()
 End Property
 
 Property Get AutoPercentEntry() As Boolean
 End Property
-Property Let AutoPercentEntry() As Boolean
+Property Let AutoPercentEntry()
 End Property
 
 Property Get AutoRecover() As AutoRecover
@@ -85,17 +85,17 @@ End Property
 
 Property Get CalculateBeforeSave() As Boolean
 End Property
-Property Let CalculateBeforeSave() As Boolean
+Property Let CalculateBeforeSave()
 End Property
 
 Property Get Calculation() As XlCalculation
 End Property
-Property Let Calculation() As XlCalculation
+Property Let Calculation()
 End Property
 
 Property Get CalculationInterruptKey() As XlCalculationInterruptKey
 End Property
-Property Let CalculationInterruptKey() As XlCalculationInterruptKey
+Property Let CalculationInterruptKey()
 End Property
 
 Property Get CalculationState() As XlCalculationState
@@ -115,12 +115,12 @@ End Property
 
 Property Get Caption() As String
 End Property
-Property Let Caption() As String
+Property Let Caption()
 End Property
 
 Property Get CellDragAndDrop() As Boolean
 End Property
-Property Let CellDragAndDrop() As Boolean
+Property Let CellDragAndDrop()
 End Property
 
 Property Get Cells() As Range
@@ -128,7 +128,7 @@ End Property
 
 Property Get ChartDataPointTrack() As Boolean
 End Property
-Property Let ChartDataPointTrack() As Boolean
+Property Let ChartDataPointTrack()
 End Property
 
 Property Get Charts() As Sheets
@@ -139,7 +139,7 @@ End Property
 
 Property Get ClusterConnector() As String
 End Property
-Property Let ClusterConnector() As String
+Property Let ClusterConnector()
 End Property
 
 Property Get Columns() As Range
@@ -153,22 +153,22 @@ End Property
 
 Property Get CommandUnderlines() As XlCommandUnderlines
 End Property
-Property Let CommandUnderlines() As XlCommandUnderlines
+Property Let CommandUnderlines()
 End Property
 
 Property Get ConstrainNumeric() As Boolean
 End Property
-Property Let ConstrainNumeric() As Boolean
+Property Let ConstrainNumeric()
 End Property
 
 Property Get ControlCharacters() As Boolean
 End Property
-Property Let ControlCharacters() As Boolean
+Property Let ControlCharacters()
 End Property
 
 Property Get CopyObjectsWithCells() As Boolean
 End Property
-Property Let CopyObjectsWithCells() As Boolean
+Property Let CopyObjectsWithCells()
 End Property
 
 Property Get Creator() As XlCreator
@@ -176,12 +176,12 @@ End Property
 
 Property Get Cursor() As XlMousePointer
 End Property
-Property Let Cursor() As XlMousePointer
+Property Let Cursor()
 End Property
 
 Property Get CursorMovement() As Long
 End Property
-Property Let CursorMovement() As Long
+Property Let CursorMovement()
 End Property
 
 Property Get CustomListCount() As Long
@@ -189,12 +189,12 @@ End Property
 
 Property Get CutCopyMode() As XlCutCopyMode
 End Property
-Property Let CutCopyMode() As XlCutCopyMode
+Property Let CutCopyMode()
 End Property
 
 Property Get DataEntryMode() As Long
 End Property
-Property Let DataEntryMode() As Long
+Property Let DataEntryMode()
 End Property
 
 Property Get DDEAppReturnCode() As Long
@@ -202,22 +202,22 @@ End Property
 
 Property Get DecimalSeparator() As String
 End Property
-Property Let DecimalSeparator() As String
+Property Let DecimalSeparator()
 End Property
 
 Property Get DefaultFilePath() As String
 End Property
-Property Let DefaultFilePath() As String
+Property Let DefaultFilePath()
 End Property
 
 Property Get DefaultSaveFormat() As XlFileFormat
 End Property
-Property Let DefaultSaveFormat() As XlFileFormat
+Property Let DefaultSaveFormat()
 End Property
 
 Property Get DefaultSheetDirection() As Long
 End Property
-Property Let DefaultSheetDirection() As Long
+Property Let DefaultSheetDirection()
 End Property
 
 Property Get DefaultWebOptions() As DefaultWebOptions
@@ -225,7 +225,7 @@ End Property
 
 Property Get DeferAsyncQueries() As Boolean
 End Property
-Property Let DeferAsyncQueries() As Boolean
+Property Let DeferAsyncQueries()
 End Property
 
 Property Get Dialogs() As Dialogs
@@ -233,132 +233,132 @@ End Property
 
 Property Get DisplayAlerts() As Boolean
 End Property
-Property Let DisplayAlerts() As Boolean
+Property Let DisplayAlerts()
 End Property
 
 Property Get DisplayClipboardWindow() As Boolean
 End Property
-Property Let DisplayClipboardWindow() As Boolean
+Property Let DisplayClipboardWindow()
 End Property
 
 Property Get DisplayCommentIndicator() As XlCommentDisplayMode
 End Property
-Property Let DisplayCommentIndicator() As XlCommentDisplayMode
+Property Let DisplayCommentIndicator()
 End Property
 
 Property Get DisplayDocumentActionTaskPane() As Boolean
 End Property
-Property Let DisplayDocumentActionTaskPane() As Boolean
+Property Let DisplayDocumentActionTaskPane()
 End Property
 
 Property Get DisplayDocumentInformationPanel() As Boolean
 End Property
-Property Let DisplayDocumentInformationPanel() As Boolean
+Property Let DisplayDocumentInformationPanel()
 End Property
 
 Property Get DisplayExcel4Menus() As Boolean
 End Property
-Property Let DisplayExcel4Menus() As Boolean
+Property Let DisplayExcel4Menus()
 End Property
 
 Property Get DisplayFormulaAutoComplete() As Boolean
 End Property
-Property Let DisplayFormulaAutoComplete() As Boolean
+Property Let DisplayFormulaAutoComplete()
 End Property
 
 Property Get DisplayFormulaBar() As Boolean
 End Property
-Property Let DisplayFormulaBar() As Boolean
+Property Let DisplayFormulaBar()
 End Property
 
 Property Get DisplayFullScreen() As Boolean
 End Property
-Property Let DisplayFullScreen() As Boolean
+Property Let DisplayFullScreen()
 End Property
 
 Property Get DisplayFunctionToolTips() As Boolean
 End Property
-Property Let DisplayFunctionToolTips() As Boolean
+Property Let DisplayFunctionToolTips()
 End Property
 
 Property Get DisplayInsertOptions() As Boolean
 End Property
-Property Let DisplayInsertOptions() As Boolean
+Property Let DisplayInsertOptions()
 End Property
 
 Property Get DisplayNoteIndicator() As Boolean
 End Property
-Property Let DisplayNoteIndicator() As Boolean
+Property Let DisplayNoteIndicator()
 End Property
 
 Property Get DisplayPasteOptions() As Boolean
 End Property
-Property Let DisplayPasteOptions() As Boolean
+Property Let DisplayPasteOptions()
 End Property
 
 Property Get DisplayRecentFiles() As Boolean
 End Property
-Property Let DisplayRecentFiles() As Boolean
+Property Let DisplayRecentFiles()
 End Property
 
 Property Get DisplayScrollBars() As Boolean
 End Property
-Property Let DisplayScrollBars() As Boolean
+Property Let DisplayScrollBars()
 End Property
 
 Property Get DisplayStatusBar() As Boolean
 End Property
-Property Let DisplayStatusBar() As Boolean
+Property Let DisplayStatusBar()
 End Property
 
 Property Get EditDirectlyInCell() As Boolean
 End Property
-Property Let EditDirectlyInCell() As Boolean
+Property Let EditDirectlyInCell()
 End Property
 
 Property Get EnableAnimations() As Boolean
 End Property
-Property Let EnableAnimations() As Boolean
+Property Let EnableAnimations()
 End Property
 
 Property Get EnableAutoComplete() As Boolean
 End Property
-Property Let EnableAutoComplete() As Boolean
+Property Let EnableAutoComplete()
 End Property
 
 Property Get EnableCancelKey() As XlEnableCancelKey
 End Property
-Property Let EnableCancelKey() As XlEnableCancelKey
+Property Let EnableCancelKey()
 End Property
 
 Property Get EnableCheckFileExtensions() As Boolean
 End Property
-Property Let EnableCheckFileExtensions() As Boolean
+Property Let EnableCheckFileExtensions()
 End Property
 
 Property Get EnableEvents() As Boolean
 End Property
-Property Let EnableEvents() As Boolean
+Property Let EnableEvents()
 End Property
 
 Property Get EnableLargeOperationAlert() As Boolean
 End Property
-Property Let EnableLargeOperationAlert() As Boolean
+Property Let EnableLargeOperationAlert()
 End Property
 
 Property Get EnableLivePreview() As Boolean
 End Property
-Property Let EnableLivePreview() As Boolean
+Property Let EnableLivePreview()
 End Property
 
 Property Get EnableMacroAnimations() As Boolean
 End Property
-Property Let EnableMacroAnimations() As Boolean
+Property Let EnableMacroAnimations()
 End Property
 
 Property Get EnableSound() As Boolean
 End Property
-Property Let EnableSound() As Boolean
+Property Let EnableSound()
 End Property
 
 Property Get ErrorCheckingOptions() As ErrorCheckingOptions
@@ -372,12 +372,12 @@ End Property
 
 Property Get ExtendList() As Boolean
 End Property
-Property Let ExtendList() As Boolean
+Property Let ExtendList()
 End Property
 
 Property Get FeatureInstall() As MsoFeatureInstall
 End Property
-Property Let FeatureInstall() As MsoFeatureInstall
+Property Let FeatureInstall()
 End Property
 
 Property Get FileConverters(Optional Index1, Optional Index2)
@@ -391,62 +391,62 @@ End Property
 
 Property Get FileValidation() As MsoFileValidationMode
 End Property
-Property Let SetFileValidation() As MsoFileValidationMode
+Property Let SetFileValidation()
 End Property
 
 Property Get FileValidationPivot() As XlFileValidationPivotMode
 End Property
-Property Let SetFileValidationPivot() As XlFileValidationPivotMode
+Property Let SetFileValidationPivot()
 End Property
 
 Property Get FindFormat() As CellFormat
 End Property
-Property Let FindFormat() As CellFormat
+Property Let FindFormat()
 End Property
 
 Property Get FixedDecimal() As Boolean
 End Property
-Property Let FixedDecimal() As Boolean
+Property Let FixedDecimal()
 End Property
 
 Property Get FixedDecimalPlaces() As Long
 End Property
-Property Let FixedDecimalPlaces() As Long
+Property Let FixedDecimalPlaces()
 End Property
 
 Property Get FlashFill() As Boolean
 End Property
-Property Let FlashFill() As Boolean
+Property Let FlashFill()
 End Property
 
 Property Get FlashFillMode() As Boolean
 End Property
-Property Let FlashFillMode() As Boolean
+Property Let FlashFillMode()
 End Property
 
 Property Get FormulaBarHeight() As Long
 End Property
-Property Let FormulaBarHeight() As Long
+Property Let FormulaBarHeight()
 End Property
 
 Property Get GenerateGetPivotData() As Boolean
 End Property
-Property Let GenerateGetPivotData() As Boolean
+Property Let GenerateGetPivotData()
 End Property
 
 Property Get GenerateTableRefs() As XlGenerateTableRefs
 End Property
-Property Let GenerateTableRefs() As XlGenerateTableRefs
+Property Let GenerateTableRefs()
 End Property
 
 Property Get Height() As Double
 End Property
-Property Let Height() As Double
+Property Let Height()
 End Property
 
 Property Get HighQualityModeForGraphics() As Boolean
 End Property
-Property Let HighQualityModeForGraphics() As Boolean
+Property Let HighQualityModeForGraphics()
 End Property
 
 Property Get Hinstance() As Long
@@ -460,12 +460,12 @@ End Property
 
 Property Get IgnoreRemoteRequests() As Boolean
 End Property
-Property Let IgnoreRemoteRequests() As Boolean
+Property Let IgnoreRemoteRequests()
 End Property
 
 Property Get Interactive() As Boolean
 End Property
-Property Let Interactive() As Boolean
+Property Let Interactive()
 End Property
 
 Property Get International(Optional Index)
@@ -476,7 +476,7 @@ End Property
 
 Property Get Iteration() As Boolean
 End Property
-Property Let Iteration() As Boolean
+Property Let Iteration()
 End Property
 
 Property Get LanguageSettings() As LanguageSettings
@@ -484,12 +484,12 @@ End Property
 
 Property Get LargeOperationCellThousandCount() As Long
 End Property
-Property Let LargeOperationCellThousandCount() As Long
+Property Let LargeOperationCellThousandCount()
 End Property
 
 Property Get Left() As Double
 End Property
-Property Let Left() As Double
+Property Let Left()
 End Property
 
 Property Get LibraryPath() As String
@@ -503,7 +503,7 @@ End Property
 
 Property Get MapPaperSize() As Boolean
 End Property
-Property Let MapPaperSize() As Boolean
+Property Let MapPaperSize()
 End Property
 
 Property Get MathCoprocessorAvailable() As Boolean
@@ -511,22 +511,22 @@ End Property
 
 Property Get MaxChange() As Double
 End Property
-Property Let MaxChange() As Double
+Property Let MaxChange()
 End Property
 
 Property Get MaxIterations() As Long
 End Property
-Property Let MaxIterations() As Long
+Property Let MaxIterations()
 End Property
 
 Property Get MeasurementUnit() As Long
 End Property
-Property Let MeasurementUnit() As Long
+Property Let MeasurementUnit()
 End Property
 
 Property Get MergeInstances() As Boolean
 End Property
-Property Let MergeInstances() As Boolean
+Property Let MergeInstances()
 End Property
 
 Property Get MouseAvailable() As Boolean
@@ -534,12 +534,12 @@ End Property
 
 Property Get MoveAfterReturn() As Boolean
 End Property
-Property Let MoveAfterReturn() As Boolean
+Property Let MoveAfterReturn()
 End Property
 
 Property Get MoveAfterReturnDirection() As XlDirection
 End Property
-Property Let MoveAfterReturnDirection() As XlDirection
+Property Let MoveAfterReturnDirection()
 End Property
 
 Property Get MultiThreadedCalculation() As MultiThreadedCalculation
@@ -562,7 +562,7 @@ End Property
 
 Property Get ODBCTimeout() As Long
 End Property
-Property Let ODBCTimeout() As Long
+Property Let ODBCTimeout()
 End Property
 
 Property Get OLEDBErrors() As OLEDBErrors
@@ -570,7 +570,7 @@ End Property
 
 Property Get OnWindow() As String
 End Property
-Property Let OnWindow() As String
+Property Let OnWindow()
 End Property
 
 Property Get OperatingSystem() As String
@@ -590,7 +590,7 @@ End Property
 
 Property Get PivotTableSelection() As Boolean
 End Property
-Property Let PivotTableSelection() As Boolean
+Property Let PivotTableSelection()
 End Property
 
 Property Get PreviousSelections(Optional Index)
@@ -598,7 +598,7 @@ End Property
 
 Property Get PrintCommunication() As Boolean
 End Property
-Property Let PrintCommunication() As Boolean
+Property Let PrintCommunication()
 End Property
 
 Property Get ProductCode() As String
@@ -606,7 +606,7 @@ End Property
 
 Property Get PromptForSummaryInfo() As Boolean
 End Property
-Property Let PromptForSummaryInfo() As Boolean
+Property Let PromptForSummaryInfo()
 End Property
 
 Property Get ProtectedViewWindows() As ProtectedViewWindows
@@ -629,7 +629,7 @@ End Property
 
 Property Get ReferenceStyle() As XlReferenceStyle
 End Property
-Property Let ReferenceStyle() As XlReferenceStyle
+Property Let ReferenceStyle()
 End Property
 
 Property Get RegisteredFunctions(Optional Index1, Optional Index2)
@@ -637,12 +637,12 @@ End Property
 
 Property Get ReplaceFormat() As CellFormat
 End Property
-Property Let ReplaceFormat() As CellFormat
+Property Let ReplaceFormat()
 End Property
 
 Property Get RollZoom() As Boolean
 End Property
-Property Let RollZoom() As Boolean
+Property Let RollZoom()
 End Property
 
 Property Get Rows() As Range
@@ -653,7 +653,7 @@ End Property
 
 Property Get ScreenUpdating() As Boolean
 End Property
-Property Let ScreenUpdating() As Boolean
+Property Let ScreenUpdating()
 End Property
 
 Property Get Selection() As Object
@@ -664,47 +664,47 @@ End Property
 
 Property Get SheetsInNewWorkbook() As Long
 End Property
-Property Let SheetsInNewWorkbook() As Long
+Property Let SheetsInNewWorkbook()
 End Property
 
 Property Get ShowChartTipNames() As Long
 End Property
-Property Let ShowChartTipNames() As Long
+Property Let ShowChartTipNames()
 End Property
 
 Property Get ShowChartTipValues() As Boolean
 End Property
-Property Let ShowChartTipValues() As Boolean
+Property Let ShowChartTipValues()
 End Property
 
 Property Get ShowDevTools() As Boolean
 End Property
-Property Let ShowDevTools() As Boolean
+Property Let ShowDevTools()
 End Property
 
 Property Get ShowMenuFloaties() As Boolean
 End Property
-Property Let ShowMenuFloaties() As Boolean
+Property Let ShowMenuFloaties()
 End Property
 
 Property Get ShowQuickAnalysis() As Boolean
 End Property
-Property Let ShowQuickAnalysis() As Boolean
+Property Let ShowQuickAnalysis()
 End Property
 
 Property Get ShowSelectionFloaties() As Boolean
 End Property
-Property Let ShowSelectionFloaties() As Boolean
+Property Let ShowSelectionFloaties()
 End Property
 
 Property Get ShowStartupDialog() As Boolean
 End Property
-Property Let ShowStartupDialog() As Boolean
+Property Let ShowStartupDialog()
 End Property
 
 Property Get ShowToolTips() As Boolean
 End Property
-Property Let ShowToolTips() As Boolean
+Property Let ShowToolTips()
 End Property
 
 Property Get SmartArtColors() As SmartArtColors
@@ -724,12 +724,12 @@ End Property
 
 Property Get StandardFont() As String
 End Property
-Property Let StandardFont() As String
+Property Let StandardFont()
 End Property
 
 Property Get StandardFontSize() As Double
 End Property
-Property Let StandardFontSize() As Double
+Property Let StandardFontSize()
 End Property
 
 Property Get StartupPath() As String
@@ -737,7 +737,7 @@ End Property
 
 Property Get StatusBar() As Variant
 End Property
-Property Let StatusBar() As Variant
+Property Let StatusBar()
 End Property
 
 Property Get TemplatesPath() As String
@@ -751,27 +751,27 @@ End Property
 
 Property Get ThousandsSeparator() As String
 End Property
-Property Let ThousandsSeparator() As String
+Property Let ThousandsSeparator()
 End Property
 
 Property Get Top() As Double
 End Property
-Property Let Top() As Double
+Property Let Top()
 End Property
 
 Property Get TransitionMenuKey() As String
 End Property
-Property Let TransitionMenuKey() As String
+Property Let TransitionMenuKey()
 End Property
 
 Property Get TransitionMenuKeyAction() As Long
 End Property
-Property Let TransitionMenuKeyAction() As Long
+Property Let TransitionMenuKeyAction()
 End Property
 
 Property Get TransitionNavigKeys() As Boolean
 End Property
-Property Let TransitionNavigKeys() As Boolean
+Property Let TransitionNavigKeys()
 End Property
 
 Property Get UsableHeight() As Double
@@ -782,7 +782,7 @@ End Property
 
 Property Get UseClusterConnector() As Boolean
 End Property
-Property Let UseClusterConnector() As Boolean
+Property Let UseClusterConnector()
 End Property
 
 Property Get UsedObjects() As UsedObjects
@@ -790,7 +790,7 @@ End Property
 
 Property Get UserControl() As Boolean
 End Property
-Property Let UserControl() As Boolean
+Property Let UserControl()
 End Property
 
 Property Get UserLibraryPath() As String
@@ -798,12 +798,12 @@ End Property
 
 Property Get UserName() As String
 End Property
-Property Let UserName() As String
+Property Let UserName()
 End Property
 
 Property Get UseSystemSeparators() As Boolean
 End Property
-Property Let UseSystemSeparators() As Boolean
+Property Let UseSystemSeparators()
 End Property
 
 Property Get Value() As String
@@ -817,12 +817,12 @@ End Property
 
 Property Get Visible() As Boolean
 End Property
-Property Let Visible() As Boolean
+Property Let Visible()
 End Property
 
 Property Get WarnOnFunctionNameConflict() As Boolean
 End Property
-Property Let WarnOnFunctionNameConflict() As Boolean
+Property Let WarnOnFunctionNameConflict()
 End Property
 
 Property Get Watches() As Watches
@@ -830,7 +830,7 @@ End Property
 
 Property Get Width() As Double
 End Property
-Property Let Width() As Double
+Property Let Width()
 End Property
 
 Property Get Windows() As Windows
@@ -841,7 +841,7 @@ End Property
 
 Property Get WindowState() As XlWindowState
 End Property
-Property Let WindowState() As XlWindowState
+Property Let WindowState()
 End Property
 
 Property Get Workbooks() As Workbooks

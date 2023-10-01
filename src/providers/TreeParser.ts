@@ -10,6 +10,7 @@ import MethodsListener from "./MethodsListener";
 import {
   CompletionItem,
   CompletionItemKind,
+  DocumentSymbol,
   Position,
   SymbolKind,
 } from "vscode";
@@ -21,7 +22,7 @@ export default class TreeParser {
   private readonly tree: StartRuleContext;
   private readonly listener: VisualBasic6Listener;
 
-  private readonly tokens: Token[] = [];
+  private tokens: Token[] = [];
 
   constructor(
     private readonly code: string,
@@ -38,8 +39,63 @@ export default class TreeParser {
     return this.tokens;
   }
 
+  public getSymbolsFromTokens(tokens: Token[]): DocumentSymbol[] {
+    const symbols: DocumentSymbol[] = [];
+
+    tokens.forEach((token) => {
+      const parent = new DocumentSymbol(
+        token.label,
+        "",
+        token.symbol,
+        token.range,
+        token.range
+      );
+      for (const child of token.childrens) {
+        parent.children.push(
+          new DocumentSymbol(
+            child.label,
+            "",
+            child.symbol,
+            child.range,
+            child.range
+          )
+        );
+        if (child.childrens.length > 0) {
+          for (const child of token.childrens) {
+            symbols.push(
+              new DocumentSymbol(
+                child.label,
+                "",
+                child.symbol,
+                child.range,
+                child.range
+              )
+            );
+          }
+        }
+      }
+
+      symbols.push(parent);
+    });
+
+    return symbols;
+  }
+
   public getCompletions(): CompletionItem[] {
     return this.tokensToCompletions(this.tokens, this.position);
+  }
+
+  public childrenTokensToCompletions(parent: Token): CompletionItem[] {
+    const completions: CompletionItem[] = [];
+
+    parent.childrens.map((token) => {
+      if (completions.find((completion) => completion.label == token.label))
+        return;
+
+      completions.push(new CompletionItem(token.label, token.completion));
+    });
+
+    return completions;
   }
 
   public tokensToCompletions(
@@ -49,8 +105,11 @@ export default class TreeParser {
     const completions: CompletionItem[] = [];
 
     tokens.map((token) => {
+      if (completions.find((completion) => completion.label == token.label))
+        return;
+
       completions.push(new CompletionItem(token.label, token.completion));
-      if (position && token.intersectPosition(position)) {
+      if ((position && token.intersectPosition(position)) || token.isModule()) {
         for (const child of token.childrens) {
           completions.push(new CompletionItem(child.label, child.completion));
         }

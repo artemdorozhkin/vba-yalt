@@ -3,7 +3,7 @@ End Property
 
 Property Get AlternativeText() As String
 End Property
-Property Let AlternativeText() As String
+Property Let AlternativeText()
 End Property
 
 Property Get Application() As Application
@@ -14,7 +14,7 @@ End Property
 
 Property Get Comment() As String
 End Property
-Property Let Comment() As String
+Property Let Comment()
 End Property
 
 Property Get Creator() As XlCreator
@@ -28,7 +28,7 @@ End Sub
 
 Property Get DisplayName() As String
 End Property
-Property Let DisplayName() As String
+Property Let DisplayName()
 End Property
 
 Property Get DisplayRightToLeft() As Boolean
@@ -51,7 +51,7 @@ End Property
 
 Property Get Name() As String
 End Property
-Property Let Name() As String
+Property Let Name()
 End Property
 
 Property Get Parent() As Object
@@ -77,42 +77,42 @@ End Property
 
 Property Get ShowAutoFilter() As Boolean
 End Property
-Property Let ShowAutoFilter() As Boolean
+Property Let ShowAutoFilter()
 End Property
 
 Property Get ShowAutoFilterDropDown() As Boolean
 End Property
-Property Let ShowAutoFilterDropDown() As Boolean
+Property Let ShowAutoFilterDropDown()
 End Property
 
 Property Get ShowHeaders() As Boolean
 End Property
-Property Let ShowHeaders() As Boolean
+Property Let ShowHeaders()
 End Property
 
 Property Get ShowTableStyleColumnStripes() As Boolean
 End Property
-Property Let ShowTableStyleColumnStripes() As Boolean
+Property Let ShowTableStyleColumnStripes()
 End Property
 
 Property Get ShowTableStyleFirstColumn() As Boolean
 End Property
-Property Let ShowTableStyleFirstColumn() As Boolean
+Property Let ShowTableStyleFirstColumn()
 End Property
 
 Property Get ShowTableStyleLastColumn() As Boolean
 End Property
-Property Let ShowTableStyleLastColumn() As Boolean
+Property Let ShowTableStyleLastColumn()
 End Property
 
 Property Get ShowTableStyleRowStripes() As Boolean
 End Property
-Property Let ShowTableStyleRowStripes() As Boolean
+Property Let ShowTableStyleRowStripes()
 End Property
 
 Property Get ShowTotals() As Boolean
 End Property
-Property Let ShowTotals() As Boolean
+Property Let ShowTotals()
 End Property
 
 Property Get Slicers() As Slicers
@@ -126,7 +126,7 @@ End Property
 
 Property Get Summary() As String
 End Property
-Property Let Summary() As String
+Property Let Summary()
 End Property
 
 Property Get TableObject() As TableObject
@@ -134,7 +134,7 @@ End Property
 
 Property Get TableStyle() As Variant
 End Property
-Property Let TableStyle() As Variant
+Property Let TableStyle()
 End Property
 
 Property Get TotalsRowRange() As Range

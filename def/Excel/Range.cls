@@ -33,7 +33,7 @@ End Property
 
 Property Get ColumnWidth() As Variant
 End Property
-Property Let ColumnWidth() As Variant
+Property Let ColumnWidth()
 End Property
 
 Property Get Comment() As Comment
@@ -86,32 +86,32 @@ End Property
 
 Property Get Formula() As Variant
 End Property
-Property Let Formula() As Variant
+Property Let Formula()
 End Property
 
 Property Get FormulaArray() As Variant
 End Property
-Property Let FormulaArray() As Variant
+Property Let FormulaArray()
 End Property
 
 Property Get FormulaHidden() As Variant
 End Property
-Property Let FormulaHidden() As Variant
+Property Let FormulaHidden()
 End Property
 
 Property Get FormulaLocal() As Variant
 End Property
-Property Let FormulaLocal() As Variant
+Property Let FormulaLocal()
 End Property
 
 Property Get FormulaR1C1() As Variant
 End Property
-Property Let FormulaR1C1() As Variant
+Property Let FormulaR1C1()
 End Property
 
 Property Get FormulaR1C1Local() As Variant
 End Property
-Property Let FormulaR1C1Local() As Variant
+Property Let FormulaR1C1Local()
 End Property
 
 Property Get HasArray() As Variant
@@ -125,12 +125,12 @@ End Property
 
 Property Get Hidden() As Variant
 End Property
-Property Let Hidden() As Variant
+Property Let Hidden()
 End Property
 
 Property Get HorizontalAlignment() As Variant
 End Property
-Property Let HorizontalAlignment() As Variant
+Property Let HorizontalAlignment()
 End Property
 
 Property Get Hyperlinks() As Hyperlinks
@@ -138,12 +138,12 @@ End Property
 
 Property Get ID() As String
 End Property
-Property Let ID() As String
+Property Let ID()
 End Property
 
 Property Get IndentLevel() As Variant
 End Property
-Property Let IndentLevel() As Variant
+Property Let IndentLevel()
 End Property
 
 Property Get Interior() As Interior
@@ -168,7 +168,7 @@ End Property
 
 Property Get Locked() As Variant
 End Property
-Property Let Locked() As Variant
+Property Let Locked()
 End Property
 
 Property Get MDX() As String
@@ -179,12 +179,12 @@ End Property
 
 Property Get MergeCells() As Variant
 End Property
-Property Let MergeCells() As Variant
+Property Let MergeCells()
 End Property
 
 Property Get Name() As Variant
 End Property
-Property Let Name() As Variant
+Property Let Name()
 End Property
 
 Property Get Next() As Range
@@ -192,12 +192,12 @@ End Property
 
 Property Get NumberFormat() As Variant
 End Property
-Property Let NumberFormat() As Variant
+Property Let NumberFormat()
 End Property
 
 Property Get NumberFormatLocal() As Variant
 End Property
-Property Let NumberFormatLocal() As Variant
+Property Let NumberFormatLocal()
 End Property
 
 Property Get Offset(Optional RowOffset, Optional ColumnOffset) As Range
@@ -205,17 +205,17 @@ End Property
 
 Property Get Orientation() As Variant
 End Property
-Property Let Orientation() As Variant
+Property Let Orientation()
 End Property
 
 Property Get OutlineLevel() As Variant
 End Property
-Property Let OutlineLevel() As Variant
+Property Let OutlineLevel()
 End Property
 
 Property Get PageBreak() As Long
 End Property
-Property Let PageBreak() As Long
+Property Let PageBreak()
 End Property
 
 Property Get Parent() As Object
@@ -265,7 +265,7 @@ End Property
 
 Property Get RowHeight() As Variant
 End Property
-Property Let RowHeight() As Variant
+Property Let RowHeight()
 End Property
 
 Property Get Rows() As Range
@@ -276,12 +276,12 @@ End Property
 
 Property Get ShowDetail() As Variant
 End Property
-Property Let ShowDetail() As Variant
+Property Let ShowDetail()
 End Property
 
 Property Get ShrinkToFit() As Variant
 End Property
-Property Let ShrinkToFit() As Variant
+Property Let ShrinkToFit()
 End Property
 
 Property Get SoundNote() As SoundNote
@@ -292,7 +292,7 @@ End Property
 
 Property Get Style() As Variant
 End Property
-Property Let Style() As Variant
+Property Let Style()
 End Property
 
 Property Get Summary() As Variant
@@ -306,12 +306,12 @@ End Property
 
 Property Get UseStandardHeight() As Variant
 End Property
-Property Let UseStandardHeight() As Variant
+Property Let UseStandardHeight()
 End Property
 
 Property Get UseStandardWidth() As Variant
 End Property
-Property Let UseStandardWidth() As Variant
+Property Let UseStandardWidth()
 End Property
 
 Property Get Validation() As Validation
@@ -319,17 +319,17 @@ End Property
 
 Property Get Value(Optional RangeValueDataType)
 End Property
-Property Let Value(Optional RangeValueDataType)
+Property Let Value()
 End Property
 
 Property Get Value2() As Variant
 End Property
-Property Let Value2() As Variant
+Property Let Value2()
 End Property
 
 Property Get VerticalAlignment() As Variant
 End Property
-Property Let VerticalAlignment() As Variant
+Property Let VerticalAlignment()
 End Property
 
 Property Get Width() As Variant
@@ -340,7 +340,7 @@ End Property
 
 Property Get WrapText() As Variant
 End Property
-Property Let WrapText() As Variant
+Property Let WrapText()
 End Property
 
 Property Get XPath() As XPath

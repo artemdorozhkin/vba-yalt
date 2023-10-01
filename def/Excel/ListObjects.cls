@@ -10,7 +10,7 @@ End Property
 Property Get Creator() As XlCreator
 End Property
 
-Property Get Item()(Index) As ListObject
+Property Get Item(Index) As ListObject
 End Property
 
 Property Get Parent() As Object

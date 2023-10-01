@@ -5,9 +5,12 @@ import {
   CompletionItemKind,
   CompletionItemProvider,
   CompletionList,
+  CompletionTriggerKind,
   ExtensionContext,
   Position,
   ProviderResult,
+  Range,
+  SymbolKind,
   TextDocument,
   languages,
 } from "vscode";
@@ -16,44 +19,59 @@ import * as fs from "fs";
 import path = require("path");
 import Token from "./Token";
 
-export function getDefCompletions(extPath: string): {
+export function getDef(extPath: string): {
   completions: CompletionItem[];
   tokens: Token[];
 } {
   //TODO: добавить вложенность для модулей и классов
-  const defCompletions: CompletionItem[] = [];
+  let defCompletions: CompletionItem[] = [];
   const defTokens: Token[] = [];
 
-  const defPath = path.join(extPath, "def");
+  const defPath = path.join(extPath, "def", "test");
   const defFolders = getSubfolders(defPath);
+
   defFolders.forEach((defFolder) => {
-    console.log(path.dirname(defFolder));
-    defCompletions.push(getModuleNameCompletion(path.dirname(defFolder), ""));
+    const defLib = getModuleNameToken("", path.basename(defFolder));
+
     const files = getFiles(defFolder);
 
     files.forEach((file) => {
       const ext = path.extname(file);
-      defCompletions.push(
-        getModuleNameCompletion(ext, path.basename(file, ext))
-      );
+      const defModule = getModuleNameToken(ext, path.basename(file, ext));
+
       const data = fs.readFileSync(file);
       const treeParser = new TreeParser(data.toString());
-      const fileCompletions = treeParser.getCompletions();
-      defCompletions.push(...fileCompletions);
-      defTokens.push(...treeParser.parsedTokens);
+
+      defModule.childrens.push(...treeParser.parsedTokens);
+
+      defLib.childrens.push(defModule);
+      defTokens.push(defLib);
+
+      if (defCompletions.length > 0) defCompletions = [];
+      defCompletions.push(...treeParser.tokensToCompletions(defTokens));
     });
   });
 
   return { completions: defCompletions, tokens: defTokens };
 }
 
-function getModuleNameCompletion(ext: string, name: string): CompletionItem {
+function getModuleNameToken(ext: string, name: string = ""): Token {
   switch (ext) {
     case ".cls":
-      return new CompletionItem(name, CompletionItemKind.Class);
+      return new Token(
+        name,
+        SymbolKind.Class,
+        CompletionItemKind.Class,
+        new Range(0, 0, 0, 0)
+      );
 
     default:
-      return new CompletionItem(name, CompletionItemKind.Module);
+      return new Token(
+        name,
+        SymbolKind.Module,
+        CompletionItemKind.Module,
+        new Range(0, 0, 0, 0)
+      );
   }
 }
 
@@ -63,7 +81,8 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
   constructor(
     private readonly defCompletions: CompletionItem[],
-    private readonly defTokens: Token[]
+    private readonly defTokens: Token[],
+    private readonly keyCompletions: CompletionItem[]
   ) {}
 
   provideCompletionItems(
@@ -74,13 +93,20 @@ export default class VBACompletionProvider implements CompletionItemProvider {
   ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
     const text = document.getText();
     const treeParser = new TreeParser(text, position);
+    console.log(treeParser);
 
     this.tokens = [];
-    this.completions = [];
 
     this.tokens.push(...treeParser.parsedTokens);
-    if (context.triggerCharacter == ".") {
+
+    if (
+      context.triggerKind == CompletionTriggerKind.Invoke ||
+      context.triggerKind == CompletionTriggerKind.TriggerCharacter ||
+      context.triggerKind ==
+        CompletionTriggerKind.TriggerForIncompleteCompletions
+    ) {
       const word = this.getWordAtPosition(document, position, -1);
+
       if (!word) return;
 
       let parentToken: Token | undefined;
@@ -100,20 +126,23 @@ export default class VBACompletionProvider implements CompletionItemProvider {
         }
       }
 
-      console.log(this.defTokens);
-
       if (parentToken) {
+        console.log(parentToken);
+        console.log(parentToken.childrens);
+
+        this.completions = [];
         this.completions.push(
-          ...treeParser.tokensToCompletions([parentToken], position)
+          ...treeParser.childrenTokensToCompletions(parentToken)
         );
-        console.log(this.completions);
 
         return this.completions;
       }
     }
 
+    this.completions = [];
     this.completions.push(...treeParser.getCompletions());
     this.completions.push(...this.defCompletions);
+    this.completions.push(...this.keyCompletions);
 
     return this.completions;
   }

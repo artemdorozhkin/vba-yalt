@@ -1,21 +1,21 @@
 Property Get Global() As Boolean
 End Property
-Property Let Global() As Boolean
+Property Let Global()
 End Property
 
 Property Get IgnoreCase() As Boolean
 End Property
-Property Let IgnoreCase() As Boolean
+Property Let IgnoreCase()
 End Property
 
 Property Get Multiline() As Boolean
 End Property
-Property Let Multiline() As Boolean
+Property Let Multiline()
 End Property
 
 Property Get Pattern() As String
 End Property
-Property Let Pattern() As String
+Property Let Pattern()
 End Property
 
 Function Execute(sourceString As String) As Object

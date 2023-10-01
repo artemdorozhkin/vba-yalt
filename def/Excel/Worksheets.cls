@@ -6,7 +6,6 @@ End Function
 
 Property Get Application() As Application
 End Property
-End Property
 
 Sub Copy(Optional Before, Optional After)
 End Sub
@@ -46,7 +45,7 @@ End Sub
 
 Property Get Visible() As Variant
 End Property
-Property Let Visible() As Variant
+Property Let Visible()
 End Property
 
 Property Get VPageBreaks() As VPageBreaks

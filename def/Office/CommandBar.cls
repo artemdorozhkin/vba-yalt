@@ -1,6 +1,6 @@
 Property Get AdaptiveMenu() As Boolean
 End Property
-Property Let AdaptiveMenu() As Boolean
+Property Let AdaptiveMenu()
 End Property
 
 Property Get Application() As Object
@@ -11,7 +11,7 @@ End Property
 
 Property Get Context() As String
 End Property
-Property Let Context() As String
+Property Let Context()
 End Property
 
 Property Get Controls() As CommandBarControls
@@ -22,12 +22,12 @@ End Property
 
 Property Get Enabled() As Boolean
 End Property
-Property Let Enabled() As Boolean
+Property Let Enabled()
 End Property
 
 Property Get Height() As Long
 End Property
-Property Let Height() As Long
+Property Let Height()
 End Property
 
 Property Get Index() As Long
@@ -35,17 +35,17 @@ End Property
 
 Property Get Left() As Long
 End Property
-Property Let Left() As Long
+Property Let Left()
 End Property
 
 Property Get Name() As String
 End Property
-Property Let Name() As String
+Property Let Name()
 End Property
 
 Property Get NameLocal() As String
 End Property
-Property Let NameLocal() As String
+Property Let NameLocal()
 End Property
 
 Property Get Parent() As Object
@@ -53,22 +53,22 @@ End Property
 
 Property Get Position() As MsoBarPosition
 End Property
-Property Let Position() As MsoBarPosition
+Property Let Position()
 End Property
 
 Property Get Protection() As MsoBarProtection
 End Property
-Property Let Protection() As MsoBarProtection
+Property Let Protection()
 End Property
 
 Property Get RowIndex() As Long
 End Property
-Property Let RowIndex() As Long
+Property Let RowIndex()
 End Property
 
 Property Get Top() As Long
 End Property
-Property Let Top() As Long
+Property Let Top()
 End Property
 
 Property Get Type() As MsoBarType
@@ -76,12 +76,12 @@ End Property
 
 Property Get Visible() As Boolean
 End Property
-Property Let Visible() As Boolean
+Property Let Visible()
 End Property
 
 Property Get Width() As Long
 End Property
-Property Let Width() As Long
+Property Let Width()
 End Property
 
 Sub Delete()

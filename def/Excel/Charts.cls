@@ -11,13 +11,14 @@ Property Get HPageBreaks() As HPageBreaks
 End Property
 
 Property Get Item(Index) As Object
+End Property
 
 Property Get Parent() As Object
 End Property
 
 Property Get Visible() As Variant
 End Property
-Property Let Visible() As Variant
+Property Let Visible() 
 End Property
 
 Property Get VPageBreaks() As VPageBreaks

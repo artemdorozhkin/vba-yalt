@@ -6,7 +6,7 @@ End Property
 
 Property Get AutoFilterMode() As Boolean
 End Property
-Property Let AutoFilterMode() As Boolean
+Property Let AutoFilterMode()
 End Property
 
 Property Get Cells() As Range
@@ -25,7 +25,6 @@ Property Get Comments() As Comments
 End Property
 
 Property Get ConsolidationFunction() As XlConsolidationFunction
-End Function
 End Property
 Property Get ConsolidationOptions() As Variant
 End Property
@@ -41,42 +40,42 @@ End Property
 
 Property Get DisplayPageBreaks() As Boolean
 End Property
-Property Let DisplayPageBreaks() As Boolean
+Property Let DisplayPageBreaks()
 End Property
 
 Property Get DisplayRightToLeft() As Boolean
 End Property
-Property Let DisplayRightToLeft() As Boolean
+Property Let DisplayRightToLeft()
 End Property
 
 Property Get EnableAutoFilter() As Boolean
 End Property
-Property Let EnableAutoFilter() As Boolean
+Property Let EnableAutoFilter()
 End Property
 
 Property Get EnableCalculation() As Boolean
 End Property
-Property Let EnableCalculation() As Boolean
+Property Let EnableCalculation()
 End Property
 
 Property Get EnableFormatConditionsCalculation() As Boolean
 End Property
-Property Let EnableFormatConditionsCalculation() As Boolean
+Property Let EnableFormatConditionsCalculation()
 End Property
 
 Property Get EnableOutlining() As Boolean
 End Property
-Property Let EnableOutlining() As Boolean
+Property Let EnableOutlining()
 End Property
 
 Property Get EnablePivotTable() As Boolean
 End Property
-Property Let EnablePivotTable() As Boolean
+Property Let EnablePivotTable()
 End Property
 
 Property Get EnableSelection() As XlEnableSelection
 End Property
-Property Let EnableSelection() As XlEnableSelection
+Property Let EnableSelection()
 End Property
 
 Property Get FilterMode() As Boolean
@@ -99,7 +98,7 @@ End Property
 
 Property Get Name() As String
 End Property
-Property Let Name() As String
+Property Let Name()
 End Property
 
 Property Get Names() As Names
@@ -149,7 +148,7 @@ End Property
 
 Property Get ScrollArea() As String
 End Property
-Property Let ScrollArea() As String
+Property Let ScrollArea()
 End Property
 
 Property Get Shapes() As Shapes
@@ -163,7 +162,7 @@ End Property
 
 Property Get StandardWidth() As Double
 End Property
-Property Let StandardWidth() As Double
+Property Let StandardWidth()
 End Property
 
 Property Get Tab() As Tab
@@ -171,12 +170,12 @@ End Property
 
 Property Get TransitionExpEval() As Boolean
 End Property
-Property Let TransitionExpEval() As Boolean
+Property Let TransitionExpEval()
 End Property
 
 Property Get TransitionFormEntry() As Boolean
 End Property
-Property Let TransitionFormEntry() As Boolean
+Property Let TransitionFormEntry()
 End Property
 
 Property Get Type() As XlSheetType
@@ -187,7 +186,7 @@ End Property
 
 Property Get Visible() As XlSheetVisibility
 End Property
-Property Let Visible() As XlSheetVisibility
+Property Let Visible()
 End Property
 
 Property Get VPageBreaks() As VPageBreaks

@@ -80,29 +80,40 @@ Property Get UserForms() As Object
 End Property
 
 Function Array(ParamArray ArgList() As Variant)
+End Function
 
 Function Input(Number As Long, FileNumber As Integer)
+End Function
 
 Function Input$(Number As Long, FileNumber As Integer) As String
+End Function
 
 Function InputB(Number As Long, FileNumber As Integer)
+End Function
 
 Function InputB$(Number As Long, FileNumber As Integer) As String
+End Function
 
 Function LBound(Arg) As Long
+End Function
 
 Sub Load(Object As Object)
 End Sub
 
 Function ObjPtr(Ptr As Unknown) As LongPtr
+End Function
 
 Function StrPtr(Ptr As String) As LongPtr
+End Function
 
 Function UBound(Arg) As Long
+End Function
 
 Sub Unload(Object As Object)
 End Sub
 
 Function VarPtr(Ptr As Any) As LongPtr
+End Function
 
 Sub Width(FileNumber As Integer, Width As Integer)
+End Sub

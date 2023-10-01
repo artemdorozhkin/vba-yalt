@@ -40,10 +40,10 @@ End Function
 Function CVErr(Expression)
 End Function
 
-Function Error([ErrorNumber])
+Function Error(Optional ErrorNumber)
 End Function
 
-Function Error$([ErrorNumber]) As String
+Function Error$(Optional ErrorNumber) As String
 End Function
 
 Function Fix(Number)

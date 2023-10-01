@@ -1,16 +1,16 @@
 Property Get Calendar() As VbCalendar
 End Property
-Property Let Calendar() As VbCalendar
+Property Let Calendar()
 End Property
 
 Property Get Date() As Variant
 End Property
-Property Let Date() As Variant
+Property Let Date()
 End Property
 
 Property Get Date$() As String
 End Property
-Property Let Date$() As String
+Property Let Date$()
 End Property
 
 Function DateAdd(Interval As String, Number As Double, Date)
@@ -48,12 +48,12 @@ End Function
 
 Property Get Time() As Variant
 End Property
-Property Let Time() As Variant
+Property Let Time()
 End Property
 
 Property Get Time$() As String
 End Property
-Property Let Time$() As String
+Property Let Time$()
 End Property
 
 Property Get Timer() As Single

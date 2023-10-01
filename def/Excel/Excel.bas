@@ -30,7 +30,7 @@ End Property
 
 Property Get ActivePrinter() As String
 End Property
-Property Let ActivePrinter() As String
+Property Let ActivePrinter() 
 End Property
 
 Property Get ActiveSheet() As Object

@@ -6,7 +6,7 @@ End Property
 
 Property Get AdaptiveMenus() As Boolean
 End Property
-Property Let AdaptiveMenus() As Boolean
+Property Let AdaptiveMenus()
 End Property
 
 Property Get Application() As Object
@@ -20,39 +20,40 @@ End Property
 
 Property Get DisableAskAQuestionDropdown() As Boolean
 End Property
-Property Let DisableAskAQuestionDropdown() As Boolean
+Property Let DisableAskAQuestionDropdown()
 End Property
 
 Property Get DisableCustomize() As Boolean
 End Property
-Property Let DisableCustomize() As Boolean
+Property Let DisableCustomize()
 End Property
 
 Property Get DisplayFonts() As Boolean
 End Property
-Property Let DisplayFonts() As Boolean
+Property Let DisplayFonts()
 End Property
 
 Property Get DisplayKeysInTooltips() As Boolean
 End Property
-Property Let DisplayKeysInTooltips() As Boolean
+Property Let DisplayKeysInTooltips()
 End Property
 
 Property Get DisplayTooltips() As Boolean
 End Property
-Property Let DisplayTooltips() As Boolean
+Property Let DisplayTooltips()
 End Property
 
 Property Get Item(Index) As CommandBar
+End Property
 
 Property Get LargeButtons() As Boolean
 End Property
-Property Let LargeButtons() As Boolean
+Property Let LargeButtons()
 End Property
 
 Property Get MenuAnimationStyle() As MsoMenuAnimation
 End Property
-Property Let MenuAnimationStyle() As MsoMenuAnimation
+Property Let MenuAnimationStyle()
 End Property
 
 Property Get Parent() As Object

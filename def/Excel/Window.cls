@@ -27,12 +27,12 @@ End Property
 
 Property Get AutoFilterDateGrouping() As Boolean
 End Property
-Property Let AutoFilterDateGrouping() As Boolean
+Property Let AutoFilterDateGrouping()
 End Property
 
 Property Get Caption() As Variant
 End Property
-Property Let Caption() As Variant
+Property Let Caption()
 End Property
 
 Function Close(Optional SaveChanges, Optional Filename, Optional RouteWorkbook) As Boolean
@@ -43,82 +43,82 @@ End Property
 
 Property Get DisplayFormulas() As Boolean
 End Property
-Property Let DisplayFormulas() As Boolean
+Property Let DisplayFormulas()
 End Property
 
 Property Get DisplayGridlines() As Boolean
 End Property
-Property Let DisplayGridlines() As Boolean
+Property Let DisplayGridlines()
 End Property
 
 Property Get DisplayHeadings() As Boolean
 End Property
-Property Let DisplayHeadings() As Boolean
+Property Let DisplayHeadings()
 End Property
 
 Property Get DisplayHorizontalScrollBar() As Boolean
 End Property
-Property Let DisplayHorizontalScrollBar() As Boolean
+Property Let DisplayHorizontalScrollBar()
 End Property
 
 Property Get DisplayOutline() As Boolean
 End Property
-Property Let DisplayOutline() As Boolean
+Property Let DisplayOutline()
 End Property
 
 Property Get DisplayRightToLeft() As Boolean
 End Property
-Property Let DisplayRightToLeft() As Boolean
+Property Let DisplayRightToLeft()
 End Property
 
 Property Get DisplayRuler() As Boolean
 End Property
-Property Let DisplayRuler() As Boolean
+Property Let DisplayRuler()
 End Property
 
 Property Get DisplayVerticalScrollBar() As Boolean
 End Property
-Property Let DisplayVerticalScrollBar() As Boolean
+Property Let DisplayVerticalScrollBar()
 End Property
 
 Property Get DisplayWhitespace() As Boolean
 End Property
-Property Let DisplayWhitespace() As Boolean
+Property Let DisplayWhitespace()
 End Property
 
 Property Get DisplayWorkbookTabs() As Boolean
 End Property
-Property Let DisplayWorkbookTabs() As Boolean
+Property Let DisplayWorkbookTabs()
 End Property
 
 Property Get DisplayZeros() As Boolean
 End Property
-Property Let DisplayZeros() As Boolean
+Property Let DisplayZeros()
 End Property
 
 Property Get EnableResize() As Boolean
 End Property
-Property Let EnableResize() As Boolean
+Property Let EnableResize()
 End Property
 
 Property Get FreezePanes() As Boolean
 End Property
-Property Let FreezePanes() As Boolean
+Property Let FreezePanes()
 End Property
 
 Property Get GridlineColor() As Long
 End Property
-Property Let GridlineColor() As Long
+Property Let GridlineColor()
 End Property
 
 Property Get GridlineColorIndex() As XlColorIndex
 End Property
-Property Let GridlineColorIndex() As XlColorIndex
+Property Let GridlineColorIndex()
 End Property
 
 Property Get Height() As Double
 End Property
-Property Let Height() As Double
+Property Let Height()
 End Property
 
 Property Get Hwnd() As Long
@@ -132,7 +132,7 @@ End Function
 
 Property Get Left() As Double
 End Property
-Property Let Left() As Double
+Property Let Left()
 End Property
 
 Function NewWindow() As Window
@@ -140,7 +140,7 @@ End Function
 
 Property Get OnWindow() As String
 End Property
-Property Let OnWindow() As String
+Property Let OnWindow()
 End Property
 
 Property Get Panes() As Panes
@@ -169,14 +169,15 @@ End Property
 
 Property Get ScrollColumn() As Long
 End Property
-Property Let ScrollColumn() As Long
+Property Let ScrollColumn()
 End Property
 
 Sub ScrollIntoView(Left As Long, Top As Long, Width As Long, Height As Long, Optional Start)
+End Sub
 
 Property Get ScrollRow() As Long
 End Property
-Property Let ScrollRow() As Long
+Property Let ScrollRow()
 End Property
 
 Function ScrollWorkbookTabs(Optional Sheets, Optional Position)
@@ -196,37 +197,37 @@ End Function
 
 Property Get Split() As Boolean
 End Property
-Property Let Split() As Boolean
+Property Let Split()
 End Property
 
 Property Get SplitColumn() As Long
 End Property
-Property Let SplitColumn() As Long
+Property Let SplitColumn()
 End Property
 
 Property Get SplitHorizontal() As Double
 End Property
-Property Let SplitHorizontal() As Double
+Property Let SplitHorizontal()
 End Property
 
 Property Get SplitRow() As Long
 End Property
-Property Let SplitRow() As Long
+Property Let SplitRow()
 End Property
 
 Property Get SplitVertical() As Double
 End Property
-Property Let SplitVertical() As Double
+Property Let SplitVertical()
 End Property
 
 Property Get TabRatio() As Double
 End Property
-Property Let TabRatio() As Double
+Property Let TabRatio()
 End Property
 
 Property Get Top() As Double
 End Property
-Property Let Top() As Double
+Property Let Top()
 End Property
 
 Property Get Type() As XlWindowType
@@ -240,12 +241,12 @@ End Property
 
 Property Get View() As XlWindowView
 End Property
-Property Let View() As XlWindowView
+Property Let View()
 End Property
 
 Property Get Visible() As Boolean
 End Property
-Property Let Visible() As Boolean
+Property Let Visible()
 End Property
 
 Property Get VisibleRange() As Range
@@ -259,10 +260,10 @@ End Property
 
 Property Get WindowState() As XlWindowState
 End Property
-Property Let WindowState() As XlWindowState
+Property Let WindowState()
 End Property
 
 Property Get Zoom() As Variant
 End Property
-Property Let Zoom() As Variant
+Property Let Zoom()
 End Property
