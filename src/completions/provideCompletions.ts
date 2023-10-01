@@ -15,8 +15,43 @@ import TreeParser from "./TreeParser";
 import * as fs from "fs";
 import path = require("path");
 
+export function getDefCompletions(extPath: string): CompletionItem[] {
+  const defCompletions: CompletionItem[] = [];
+
+  const defPath = path.join(extPath, "def");
+  const defFolders = getSubfolders(defPath);
+  defFolders.forEach((defFolder) => {
+    console.log(path.dirname(defFolder));
+    defCompletions.push(getModuleNameCompletion(path.dirname(defFolder), ""));
+    const files = getFiles(defFolder);
+
+    files.forEach((file) => {
+      const ext = path.extname(file);
+      defCompletions.push(
+        getModuleNameCompletion(ext, path.basename(file, ext))
+      );
+      const data = fs.readFileSync(file);
+      const treeParser = new TreeParser(data.toString());
+      const fileCompletions = treeParser.getCompletions();
+      defCompletions.push(...fileCompletions);
+    });
+  });
+
+  return defCompletions;
+}
+
+function getModuleNameCompletion(ext: string, name: string): CompletionItem {
+  switch (ext) {
+    case ".cls":
+      return new CompletionItem(name, CompletionItemKind.Class);
+
+    default:
+      return new CompletionItem(name, CompletionItemKind.Module);
+  }
+}
+
 export default class VBACompletionProvider implements CompletionItemProvider {
-  constructor(private readonly extPath: string) {}
+  constructor(private readonly defCompletions: CompletionItem[]) {}
 
   provideCompletionItems(
     document: TextDocument,
@@ -27,39 +62,11 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     const text = document.getText();
     let treeParser = new TreeParser(text, position);
     const completions = treeParser.getCompletions();
-
-    const defPath = path.join(this.extPath, "def");
-    const defFolders = getSubfolders(defPath);
-    defFolders.forEach((defFolder) => {
-      console.log(path.dirname(defFolder));
-      completions.push(
-        this.getModuleNameCompletion(path.dirname(defFolder), "")
-      );
-      const files = getFiles(defFolder);
-
-      files.forEach((file) => {
-        const ext = path.extname(file);
-        completions.push(
-          this.getModuleNameCompletion(ext, path.basename(file, ext))
-        );
-        const data = fs.readFileSync(file);
-        treeParser = new TreeParser(data.toString(), position);
-        const fileCompletions = treeParser.getCompletions();
-        completions.push(...fileCompletions);
-      });
-    });
+    completions.push(...this.defCompletions);
 
     return completions;
   }
-  getModuleNameCompletion(ext: string, name: string): CompletionItem {
-    switch (ext) {
-      case ".cls":
-        return new CompletionItem(name, CompletionItemKind.Class);
 
-      default:
-        return new CompletionItem(name, CompletionItemKind.Module);
-    }
-  }
   resolveCompletionItem(
     item: CompletionItem,
     token: CancellationToken

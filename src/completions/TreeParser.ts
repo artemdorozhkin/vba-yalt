@@ -18,7 +18,7 @@ export default class TreeParser {
   private readonly funcNames: CompletionItem[] = [];
   private readonly contextNames: CompletionItem[] = [];
 
-  constructor(code: string, position: Position) {
+  constructor(code: string, position?: Position) {
     this.lexer = new VisualBasic6Lexer(CharStreams.fromString(code));
     this.parser = new VisualBasic6Parser(new CommonTokenStream(this.lexer));
     this.tree = this.parser.startRule();

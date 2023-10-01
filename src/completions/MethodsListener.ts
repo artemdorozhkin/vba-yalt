@@ -40,7 +40,7 @@ export default class MethodsListener implements VisualBasic6Listener {
   constructor(
     private readonly funcNames: CompletionItem[],
     private readonly contextNames: CompletionItem[],
-    private readonly position: Position
+    private readonly position?: Position
   ) {}
 
   enterVariableSubStmt(ctx: VariableSubStmtContext) {
@@ -96,22 +96,24 @@ export default class MethodsListener implements VisualBasic6Listener {
       )
     );
     if (this.isInRange(ctx)) {
+      const currentLine = this.position?.line || 0;
       this.positionRange.start = ctx.start.line;
-      this.positionRange.end = ctx.stop?.line || this.position.line + 1;
+      this.positionRange.end = ctx.stop?.line || currentLine + 1;
     }
   }
 
   isInRange(context: MethodStmContext): boolean {
-    const currentLine: number = this.position.line + 1;
+    const currentLine: number = this.position?.line || 0;
     const startLine: number = context.start.line;
-    const stopLine: number = context.stop?.line || currentLine;
-    return startLine <= currentLine && currentLine <= stopLine;
+    const stopLine: number = context.stop?.line || currentLine + 1;
+    return startLine <= currentLine + 1 && currentLine + 1 <= stopLine;
   }
 
   isInPositionRange(context: ParserRuleContext): boolean {
+    const currentLine = this.position?.line || 0;
     return (
       this.positionRange.start <= context.start.line &&
-      this.positionRange.end >= (context.stop?.line || this.position.line + 1)
+      this.positionRange.end >= (context.stop?.line || currentLine + 1)
     );
   }
 }
