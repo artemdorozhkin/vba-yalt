@@ -25,43 +25,80 @@ import {
 } from "vb6-antlr4";
 import { ParseTree } from "antlr4ts/tree";
 import { ParserRuleContext } from "antlr4ts";
-import { CompletionItem, CompletionItemKind, Position } from "vscode";
+import {
+  CompletionItem,
+  CompletionItemKind,
+  Position,
+  Range,
+  SymbolKind,
+} from "vscode";
 import { MethodStmContext } from "./types";
+import Token from "./Token";
 
-type PositionRange = {
-  start: number;
-  end: number;
+type Start = {
+  line: number;
+  startIndex: number;
+};
+type Stop = {
+  line: number;
+  stopIndex: number;
 };
 
 export default class MethodsListener implements VisualBasic6Listener {
-  private readonly positionRange: PositionRange = { start: 0, end: 0 };
   private isDeclareStmt: boolean = true;
 
   constructor(
-    private readonly funcNames: CompletionItem[],
-    private readonly contextNames: CompletionItem[],
+    private readonly tokens: Token[],
     private readonly position?: Position
   ) {}
 
   enterVariableSubStmt(ctx: VariableSubStmtContext) {
-    if (this.isInPositionRange(ctx) || this.isDeclareStmt) {
-      this.contextNames.push(
-        new CompletionItem(
+    const varRange = this.getRange(ctx.start, ctx.stop || ctx.start);
+    const parentToken = this.tokens.find((token) => {
+      if (token.isContainer() && token.intersectRange(varRange)) {
+        return token;
+      }
+    });
+    if (parentToken) {
+      parentToken.childrens?.push(
+        new Token(
           ctx.ambiguousIdentifier().text,
+          SymbolKind.Variable,
+          CompletionItemKind.Variable,
+          varRange,
+          ctx.typeHint()?.text || ""
+        )
+      );
+    } else {
+      this.tokens.push(
+        new Token(
+          ctx.ambiguousIdentifier().text,
+          this.isDeclareStmt ? SymbolKind.Field : SymbolKind.Variable,
           this.isDeclareStmt
             ? CompletionItemKind.Field
-            : CompletionItemKind.Variable
+            : CompletionItemKind.Variable,
+          this.getRange(ctx.start, ctx.stop || ctx.start),
+          ctx.typeHint()?.text || ""
         )
       );
     }
   }
 
   enterArg(ctx: ArgContext) {
-    if (this.isInPositionRange(ctx)) {
-      this.contextNames.push(
-        new CompletionItem(
+    const argRange = this.getRange(ctx.start, ctx.stop || ctx.start);
+    const parentToken = this.tokens.find((token) => {
+      if (token.isContainer() && token.intersectRange(argRange)) {
+        return token;
+      }
+    });
+    if (parentToken) {
+      parentToken.childrens?.push(
+        new Token(
           ctx.ambiguousIdentifier().text,
-          CompletionItemKind.Variable
+          SymbolKind.Variable,
+          CompletionItemKind.Variable,
+          argRange,
+          ctx.typeHint()?.text || ""
         )
       );
     }
@@ -87,33 +124,21 @@ export default class MethodsListener implements VisualBasic6Listener {
     this.addName(ctx, true);
   }
 
-  addName(ctx: MethodStmContext, isParam = false) {
+  getRange(start: Start, stop: Stop) {
+    const startPos = new Position(start.line, start.startIndex);
+    const stopPos = new Position(stop.line, stop.stopIndex) || startPos;
+    return new Range(startPos, stopPos);
+  }
+
+  addName(ctx: MethodStmContext, isProp = false) {
     this.isDeclareStmt = false;
-    this.funcNames.push(
-      new CompletionItem(
+    this.tokens.push(
+      new Token(
         ctx.ambiguousIdentifier().text,
-        isParam ? CompletionItemKind.Property : CompletionItemKind.Method
+        isProp ? SymbolKind.Property : SymbolKind.Method,
+        isProp ? CompletionItemKind.Property : CompletionItemKind.Method,
+        this.getRange(ctx.start, ctx.stop || ctx.start)
       )
-    );
-    if (this.isInRange(ctx)) {
-      const currentLine = this.position?.line || 0;
-      this.positionRange.start = ctx.start.line;
-      this.positionRange.end = ctx.stop?.line || currentLine + 1;
-    }
-  }
-
-  isInRange(context: MethodStmContext): boolean {
-    const currentLine: number = this.position?.line || 0;
-    const startLine: number = context.start.line;
-    const stopLine: number = context.stop?.line || currentLine + 1;
-    return startLine <= currentLine + 1 && currentLine + 1 <= stopLine;
-  }
-
-  isInPositionRange(context: ParserRuleContext): boolean {
-    const currentLine = this.position?.line || 0;
-    return (
-      this.positionRange.start <= context.start.line &&
-      this.positionRange.end >= (context.stop?.line || currentLine + 1)
     );
   }
 }

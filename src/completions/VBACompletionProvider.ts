@@ -14,9 +14,15 @@ import {
 import TreeParser from "./TreeParser";
 import * as fs from "fs";
 import path = require("path");
+import Token from "./Token";
 
-export function getDefCompletions(extPath: string): CompletionItem[] {
+export function getDefCompletions(extPath: string): {
+  completions: CompletionItem[];
+  tokens: Token[];
+} {
+  //TODO: добавить вложенность для модулей и классов
   const defCompletions: CompletionItem[] = [];
+  const defTokens: Token[] = [];
 
   const defPath = path.join(extPath, "def");
   const defFolders = getSubfolders(defPath);
@@ -34,10 +40,11 @@ export function getDefCompletions(extPath: string): CompletionItem[] {
       const treeParser = new TreeParser(data.toString());
       const fileCompletions = treeParser.getCompletions();
       defCompletions.push(...fileCompletions);
+      defTokens.push(...treeParser.parsedTokens);
     });
   });
 
-  return defCompletions;
+  return { completions: defCompletions, tokens: defTokens };
 }
 
 function getModuleNameCompletion(ext: string, name: string): CompletionItem {
@@ -51,7 +58,13 @@ function getModuleNameCompletion(ext: string, name: string): CompletionItem {
 }
 
 export default class VBACompletionProvider implements CompletionItemProvider {
-  constructor(private readonly defCompletions: CompletionItem[]) {}
+  private completions: CompletionItem[] = [];
+  private tokens: Token[] = [];
+
+  constructor(
+    private readonly defCompletions: CompletionItem[],
+    private readonly defTokens: Token[]
+  ) {}
 
   provideCompletionItems(
     document: TextDocument,
@@ -60,19 +73,74 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     context: CompletionContext
   ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
     const text = document.getText();
-    let treeParser = new TreeParser(text, position);
-    const completions = treeParser.getCompletions();
-    completions.push(...this.defCompletions);
+    const treeParser = new TreeParser(text, position);
 
-    return completions;
+    this.tokens = [];
+    this.completions = [];
+
+    this.tokens.push(...treeParser.parsedTokens);
+    if (context.triggerCharacter == ".") {
+      const word = this.getWordAtPosition(document, position, -1);
+      if (!word) return;
+
+      let parentToken: Token | undefined;
+      for (const token of this.tokens) {
+        if (word.toLowerCase() == token.label.toLowerCase()) {
+          parentToken = token;
+          break;
+        }
+      }
+
+      if (!parentToken) {
+        for (const token of this.defTokens) {
+          if (word.toLowerCase() == token.label.toLowerCase()) {
+            parentToken = token;
+            break;
+          }
+        }
+      }
+
+      console.log(this.defTokens);
+
+      if (parentToken) {
+        this.completions.push(
+          ...treeParser.tokensToCompletions([parentToken], position)
+        );
+        console.log(this.completions);
+
+        return this.completions;
+      }
+    }
+
+    this.completions.push(...treeParser.getCompletions());
+    this.completions.push(...this.defCompletions);
+
+    return this.completions;
   }
 
   resolveCompletionItem(
     item: CompletionItem,
     token: CancellationToken
   ): ProviderResult<CompletionItem> {
-    console.log(item);
+    console.log(`documentation for ${item.label} for example`);
     return;
+  }
+
+  getWordAtPosition(
+    document: TextDocument,
+    position: Position,
+    offset: number = 0
+  ): string | null {
+    const totalPosition = new Position(
+      position.line,
+      position.character + offset
+    );
+    const wordRange = document.getWordRangeAtPosition(totalPosition);
+    if (wordRange) {
+      const word = document.getText(wordRange);
+      return word;
+    }
+    return null;
   }
 }
 
