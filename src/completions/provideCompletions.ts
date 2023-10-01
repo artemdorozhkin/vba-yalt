@@ -1,30 +1,86 @@
-import * as vscode from "vscode";
+import {
+  CancellationToken,
+  CompletionContext,
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemProvider,
+  CompletionList,
+  ExtensionContext,
+  Position,
+  ProviderResult,
+  TextDocument,
+  languages,
+} from "vscode";
 import TreeParser from "./TreeParser";
 import * as fs from "fs";
+import path = require("path");
 
-export const provider = vscode.languages.registerCompletionItemProvider(
-  { scheme: "file", language: "vba" },
-  {
-    provideCompletionItems(document, position) {
-      return provideCompletions(document, position);
-    },
+export default class VBACompletionProvider implements CompletionItemProvider {
+  constructor(private readonly extPath: string) {}
+
+  provideCompletionItems(
+    document: TextDocument,
+    position: Position,
+    token: CancellationToken,
+    context: CompletionContext
+  ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
+    const text = document.getText();
+    let treeParser = new TreeParser(text, position);
+    const completions = treeParser.getCompletions();
+
+    const defPath = path.join(this.extPath, "def");
+    const defFolders = getSubfolders(defPath);
+    defFolders.forEach((defFolder) => {
+      console.log(path.dirname(defFolder));
+      completions.push(
+        this.getModuleNameCompletion(path.dirname(defFolder), "")
+      );
+      const files = getFiles(defFolder);
+
+      files.forEach((file) => {
+        const ext = path.extname(file);
+        completions.push(
+          this.getModuleNameCompletion(ext, path.basename(file, ext))
+        );
+        const data = fs.readFileSync(file);
+        treeParser = new TreeParser(data.toString(), position);
+        const fileCompletions = treeParser.getCompletions();
+        completions.push(...fileCompletions);
+      });
+    });
+
+    return completions;
   }
-);
+  getModuleNameCompletion(ext: string, name: string): CompletionItem {
+    switch (ext) {
+      case ".cls":
+        return new CompletionItem(name, CompletionItemKind.Class);
 
-async function provideCompletions(
-  document: vscode.TextDocument,
-  position: vscode.Position
-): Promise<vscode.CompletionItem[]> {
-  const text = document.getText();
-  let treeParser: TreeParser = new TreeParser(text, position);
-  const completions = treeParser.getCompletions();
+      default:
+        return new CompletionItem(name, CompletionItemKind.Module);
+    }
+  }
+  resolveCompletionItem(
+    item: CompletionItem,
+    token: CancellationToken
+  ): ProviderResult<CompletionItem> {
+    console.log(item);
+    return;
+  }
+}
 
-  const data = fs.readFileSync(
-    "C:\\Users\\aador\\development\\typescript\\vba\\def\\vba\\strings.bas"
-  );
+function getSubfolders(folderPath: string) {
+  const subfolders: string[] = fs.readdirSync(folderPath);
 
-  treeParser = new TreeParser(data.toString(), position);
-  const excelCompletions = treeParser.getCompletions();
-  completions.push(...excelCompletions);
-  return completions;
+  return subfolders
+    .map((subfolder) => path.join(folderPath, subfolder))
+    .filter((folderPath) => fs.statSync(folderPath).isDirectory());
+}
+
+function getFiles(folderPath: string) {
+  const files = fs.readdirSync(folderPath);
+
+  return files
+    .map((file) => path.join(folderPath, file))
+    .filter((filePath) => fs.statSync(filePath).isFile());
 }
