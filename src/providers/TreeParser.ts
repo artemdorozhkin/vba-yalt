@@ -60,19 +60,6 @@ export default class TreeParser {
             child.range
           )
         );
-        if (child.childrens.length > 0) {
-          for (const child of token.childrens) {
-            symbols.push(
-              new DocumentSymbol(
-                child.label,
-                "",
-                child.symbol,
-                child.range,
-                child.range
-              )
-            );
-          }
-        }
       }
 
       symbols.push(parent);

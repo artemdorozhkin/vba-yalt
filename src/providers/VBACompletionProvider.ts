@@ -93,7 +93,6 @@ export default class VBACompletionProvider implements CompletionItemProvider {
   ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
     const text = document.getText();
     const treeParser = new TreeParser(text, position);
-    console.log(treeParser);
 
     this.tokens = [];
 
@@ -127,9 +126,6 @@ export default class VBACompletionProvider implements CompletionItemProvider {
       }
 
       if (parentToken) {
-        console.log(parentToken);
-        console.log(parentToken.childrens);
-
         this.completions = [];
         this.completions.push(
           ...treeParser.childrenTokensToCompletions(parentToken)
@@ -151,7 +147,7 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     item: CompletionItem,
     token: CancellationToken
   ): ProviderResult<CompletionItem> {
-    console.log(`documentation for ${item.label} for example`);
+    // console.log(`documentation for ${item.label} for example`);
     return;
   }
 
