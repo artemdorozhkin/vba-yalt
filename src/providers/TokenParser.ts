@@ -33,7 +33,6 @@ export default class TokenParser {
 
     this.builder = new TokenBuilder(this._tokens, position);
     ParseTreeWalker.DEFAULT.walk(this.builder, this.tree);
-    console.log(this.tokens);
   }
 
   public get tokens(): BaseToken[] {

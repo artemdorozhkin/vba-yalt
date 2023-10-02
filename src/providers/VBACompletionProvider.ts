@@ -80,19 +80,22 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
       if (!word) return;
 
-      let parentToken: BaseToken | null = this.tokenManager.getTokenByLabel(
-        word,
-        this.tokens
-      );
+      const parentToken: BaseToken | null = this.getParentByName(word);
 
-      if (!parentToken)
-        parentToken = this.tokenManager.getTokenByLabel(word, this.defTokens);
+      if (parentToken && (parentToken.returnType || parentToken.isEnum())) {
+        let returnedType: BaseToken | null;
+        if (parentToken.isEnum()) {
+          returnedType = parentToken;
+        } else {
+          returnedType = this.getParentByName(parentToken.returnType!);
+        }
 
-      if (parentToken) {
+        if (!returnedType) return;
+
         this.completions = [];
 
         this.tokenManager.childrenToCompletions(
-          [parentToken],
+          [returnedType],
           this.completions
         );
 
@@ -107,7 +110,8 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
     this.tokenManager.childrenToCompletionsRecoursive(
       this.tokens,
-      this.completions
+      this.completions,
+      position
     );
 
     this.completions.push(...this.defCompletions);
@@ -115,6 +119,18 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
     return this.completions;
   }
+  private getParentByName(word: string) {
+    let parentToken: BaseToken | null = this.tokenManager.getTokenByLabel(
+      word,
+      this.tokens
+    );
+
+    if (!parentToken)
+      parentToken = this.tokenManager.getTokenByLabel(word, this.defTokens);
+
+    return parentToken;
+  }
+
   prevCharIsDot(document: TextDocument, position: Position): boolean {
     return (
       document.getText(
