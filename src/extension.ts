@@ -8,8 +8,8 @@ import {
 import * as fs from "fs";
 import VBACompletionProvider, {
   getDef as getDef,
-} from "./providers/VBACompletionProvider";
-import VBASymbolProvider from "./providers/VBASymbolProvider";
+} from "./language-features/VBACompletionProvider";
+import VBASymbolProvider from "./language-features/VBASymbolProvider";
 import path = require("path");
 
 export function activate(context: ExtensionContext) {

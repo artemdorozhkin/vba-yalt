@@ -1,14 +1,19 @@
 {
   "name": "vba",
-  "displayName": "vba",
-  "description": "",
-  "version": "0.0.1",
+  "displayName": "VBA",
+  "description": "Language support for VBA (Visual Basic for Applications).",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
-    "Other"
+    "Language Packs",
+    "Programming Languages"
   ],
+  "author": {
+    "name": "artemdorozhkin",
+    "url": "https://github.com/artemdorozhkin"
+  },
   "main": "./dist/extension.js",
   "activationEvents": [],
   "contributes": {

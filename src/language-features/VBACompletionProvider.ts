@@ -10,12 +10,12 @@ import {
   Range,
   TextDocument,
 } from "vscode";
-import TokenParser from "./TokenParser";
-import { BaseToken, LibToken } from "./Tokens";
 import { basename, dirname, join } from "path";
 import { readFileSync, readdirSync, statSync } from "fs";
 import path = require("path");
-import { TokenManager } from "./TokenManager";
+import { TokenManager } from "../tokens/TokenManager";
+import TokenParser from "../tokens/TokenParser";
+import { BaseToken, LibToken } from "../tokens/Tokens";
 
 export function getDef(extPath: string): {
   completions: CompletionItem[];
@@ -25,7 +25,7 @@ export function getDef(extPath: string): {
   const defTokens: BaseToken[] = [];
   const tokenManager: TokenManager = new TokenManager();
 
-  const defPath = join(extPath, "def", "test");
+  const defPath = join(extPath, "def");
   const defFolders = getSubfolders(defPath);
 
   defFolders.forEach((defFolder) => {

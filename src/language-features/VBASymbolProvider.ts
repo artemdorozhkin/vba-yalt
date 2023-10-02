@@ -6,10 +6,10 @@ import {
   SymbolInformation,
   TextDocument,
 } from "vscode";
-import TokenParser from "./TokenParser";
-import { BaseToken } from "./Tokens";
 import { basename, extname } from "path";
 import { SymbolManager } from "./SymbolManager";
+import TokenParser from "../tokens/TokenParser";
+import { BaseToken } from "../tokens/Tokens";
 
 export default class VBASymbolProvider implements DocumentSymbolProvider {
   private symbols: DocumentSymbol[] = [];

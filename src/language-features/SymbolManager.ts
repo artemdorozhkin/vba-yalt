@@ -1,5 +1,5 @@
 import { DocumentSymbol } from "vscode";
-import { BaseToken } from "./Tokens";
+import { BaseToken } from "../tokens/Tokens";
 
 export class SymbolManager {
   public getSymbolsFromTokens(tokens: BaseToken[], output: DocumentSymbol[]) {

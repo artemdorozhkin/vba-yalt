@@ -57,6 +57,7 @@ export default class TokenBuilder implements VisualBasic6Listener {
     this.module = this.manager.getModule(this.tokens)!;
   }
 
+  // TODO: добавить поддержку считывания PredeclaredID, для работы классов Workbooks, Range etc.
   enterTypeStmt(ctx: TypeStmtContext) {
     this.module.addType(
       new TypeToken(

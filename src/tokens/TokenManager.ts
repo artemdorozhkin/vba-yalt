@@ -80,6 +80,7 @@ export class TokenManager {
     return find;
   }
 
+  // TODO: добавить сортировку по релевантности (?)
   public tokensToCompletions(tokens: BaseToken[], output: CompletionItem[]) {
     tokens.map((token) => {
       if (output.find((completion) => completion.label == token.label)) return;
