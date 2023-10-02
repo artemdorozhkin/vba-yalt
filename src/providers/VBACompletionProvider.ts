@@ -45,8 +45,8 @@ export function getDef(extPath: string): {
     });
     defTokens.push(lib);
   });
-  defCompletions.push(...tokenManager.tokensToCompletions(defTokens));
-  defCompletions.push(...tokenManager.childrenTokensToCompletions(defTokens));
+  tokenManager.tokensToCompletions(defTokens, defCompletions);
+  tokenManager.childrenToCompletionsRecoursive(defTokens, defCompletions);
 
   return { completions: defCompletions, tokens: defTokens };
 }
@@ -95,11 +95,10 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
       if (parentToken) {
         this.completions = [];
-        console.log("parentToken");
-        console.log(parentToken);
 
-        this.completions.push(
-          ...this.tokenManager.childrenTokensToCompletions([parentToken])
+        this.tokenManager.childrenToCompletions(
+          [parentToken],
+          this.completions
         );
 
         return this.completions;
@@ -109,12 +108,15 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     }
 
     this.completions = [];
-    this.completions.push(
-      ...this.tokenManager.tokensToCompletions(this.tokens)
+    this.tokenManager.tokensToCompletions(this.tokens, this.completions);
+    // console.log(`tokens: ${this.completions.length}`);
+    // console.log(this.completions);
+
+    this.tokenManager.childrenToCompletionsRecoursive(
+      this.tokens,
+      this.completions
     );
-    this.completions.push(
-      ...this.tokenManager.childrenTokensToCompletions(this.tokens)
-    );
+
     this.completions.push(...this.defCompletions);
     this.completions.push(...this.keywordsCompletions);
 

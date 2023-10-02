@@ -44,8 +44,6 @@ export class TokenManager {
   public getTokenByLabel(label: string, tokens: BaseToken[]): BaseToken | null {
     let find: BaseToken | null = null;
 
-    console.log(tokens);
-
     for (const token of tokens) {
       if (token.isMe(label)) {
         find = token;
@@ -88,25 +86,41 @@ export class TokenManager {
 
     return find;
   }
-
-  public childrenTokensToCompletions(tokens: BaseToken[]): CompletionItem[] {
-    const completions: CompletionItem[] = [];
-
+  public childrenToCompletions(tokens: BaseToken[], output: CompletionItem[]) {
     tokens.map((token) => {
       if (token.isLib()) {
-        this.addCompletionsFromChilder(token.modules, completions);
+        this.addCompletionsFromChilder(token.modules, output);
       } else if (token.isModule() || token.isClass()) {
-        this.addCompletionsFromChilder(token.enums, completions);
-        this.addCompletionsFromChilder(token.types, completions);
-        this.addCompletionsFromChilder(token.variables, completions);
-        this.addCompletionsFromChilder(token.methods, completions);
-        this.addCompletionsFromChilder(token.properties, completions);
+        this.addCompletionsFromChilder(token.enums, output);
+        this.addCompletionsFromChilder(token.types, output);
+        this.addCompletionsFromChilder(token.variables, output);
+        this.addCompletionsFromChilder(token.methods, output);
+        this.addCompletionsFromChilder(token.properties, output);
       } else if (token.isEnum()) {
-        this.addCompletionsFromChilder(token.members, completions);
+        this.addCompletionsFromChilder(token.members, output);
       }
     });
+  }
 
-    return completions;
+  public childrenToCompletionsRecoursive(
+    tokens: BaseToken[],
+    output: CompletionItem[]
+  ) {
+    tokens.map((token) => {
+      if (token.isLib()) {
+        this.addCompletionsFromChilder(token.modules, output);
+        this.childrenToCompletionsRecoursive(token.modules, output);
+      } else if (token.isModule() || token.isClass()) {
+        this.addCompletionsFromChilder(token.enums, output);
+        this.childrenToCompletionsRecoursive(token.enums, output);
+        this.addCompletionsFromChilder(token.types, output);
+        this.addCompletionsFromChilder(token.variables, output);
+        this.addCompletionsFromChilder(token.methods, output);
+        this.addCompletionsFromChilder(token.properties, output);
+      } else if (token.isEnum()) {
+        this.addCompletionsFromChilder(token.members, output);
+      }
+    });
   }
 
   private addCompletionsFromChilder(
@@ -122,17 +136,13 @@ export class TokenManager {
 
   public tokensToCompletions(
     tokens: BaseToken[],
+    output: CompletionItem[],
     position?: Position
-  ): CompletionItem[] {
-    const completions: CompletionItem[] = [];
-
+  ) {
     tokens.map((token) => {
-      if (completions.find((completion) => completion.label == token.label))
-        return;
+      if (output.find((completion) => completion.label == token.label)) return;
 
-      completions.push(new CompletionItem(token.label, token.completion));
+      output.push(new CompletionItem(token.label, token.completion));
     });
-
-    return completions;
   }
 }

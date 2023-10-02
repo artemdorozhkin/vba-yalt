@@ -5,6 +5,7 @@ import {
   BlockContext,
   BlockStmtContext,
   DeclareStmtContext,
+  EnumerationStmtContext,
   FieldLengthContext,
   FunctionStmtContext,
   ModuleAttributesContext,
@@ -31,7 +32,11 @@ import {
   Range,
   SymbolKind,
 } from "vscode";
-import { MethodStmContext } from "./types";
+import {
+  MethodStmtContext,
+  PropertyAccessor,
+  PropertyStmtContext,
+} from "./types";
 import {
   ArgToken,
   BaseToken,
@@ -39,6 +44,7 @@ import {
   PropertyToken,
   VariableToken,
   ModuleToken,
+  EnumToken,
 } from "./Tokens";
 import { TokenManager } from "./TokenManager";
 
@@ -66,11 +72,58 @@ export default class TokenBuilder implements VisualBasic6Listener {
     this.module = this.manager.getModule(this.tokens)!;
   }
 
-  getParent(range: Range) {
-    return (
-      this.manager.getParent(this.module.methods, range) ||
-      this.manager.getParent(this.module.properties, range)
+  enterEnumerationStmt(ctx: EnumerationStmtContext) {
+    this.module.addEnum(
+      new EnumToken(
+        ctx.ambiguousIdentifier().text,
+        this.getRange(ctx.start, ctx.stop || ctx.start)
+      )
     );
+  }
+
+  enterSubStmt(ctx: SubStmtContext) {
+    this.addMethod(ctx);
+  }
+
+  enterFunctionStmt(ctx: FunctionStmtContext) {
+    this.addMethod(ctx);
+  }
+
+  enterPropertyGetStmt(ctx: PropertyGetStmtContext) {
+    this.addProp(ctx, "get");
+  }
+
+  enterPropertyLetStmt(ctx: PropertyLetStmtContext) {
+    this.addProp(ctx, "let");
+  }
+
+  enterPropertySetStmt(ctx: PropertySetStmtContext) {
+    this.addProp(ctx, "set");
+  }
+
+  addMethod(ctx: MethodStmtContext, isProp = false) {
+    this.isDeclareStmt = false;
+
+    this.module.addMethod(
+      new MethodToken(
+        ctx.ambiguousIdentifier().text,
+        this.getRange(ctx.start, ctx.stop || ctx.start)
+      )
+    );
+  }
+
+  enterArg(ctx: ArgContext) {
+    if (!this.module) return;
+
+    const argRange = this.getRange(ctx.start, ctx.stop || ctx.start);
+    const arg = new ArgToken(
+      ctx.ambiguousIdentifier().text,
+      argRange,
+      ctx.typeHint()?.text || ""
+    );
+
+    const parentToken = this.getParent(argRange);
+    if (parentToken) parentToken.addArg(arg);
   }
 
   enterVariableSubStmt(ctx: VariableSubStmtContext) {
@@ -91,81 +144,30 @@ export default class TokenBuilder implements VisualBasic6Listener {
     if (parentToken) parentToken.addVariable(variable);
   }
 
-  enterArg(ctx: ArgContext) {
-    if (!this.module) return;
+  addProp(ctx: PropertyStmtContext, accessor: PropertyAccessor) {
+    this.isDeclareStmt = false;
 
-    const argRange = this.getRange(ctx.start, ctx.stop || ctx.start);
-    const arg = new ArgToken(
+    const match = /\b([gls]et)\b/i.exec(ctx.text.toLowerCase());
+
+    const prop = new PropertyToken(
       ctx.ambiguousIdentifier().text,
-      argRange,
-      ctx.typeHint()?.text || ""
+      this.getRange(ctx.start, ctx.stop || ctx.start)
     );
 
-    const parentToken = this.getParent(argRange);
-    if (parentToken) parentToken.addArg(arg);
+    prop.setAccessor(accessor);
+    this.module.addProperty(prop);
   }
 
-  enterSubStmt(ctx: SubStmtContext) {
-    this.addMethod(ctx);
-  }
-
-  enterFunctionStmt(ctx: FunctionStmtContext) {
-    this.addMethod(ctx);
-  }
-
-  enterPropertyGetStmt(ctx: PropertyGetStmtContext) {
-    this.addMethod(ctx, true);
-  }
-
-  enterPropertyLetStmt(ctx: PropertyLetStmtContext) {
-    this.addMethod(ctx, true);
-  }
-
-  enterPropertySetStmt(ctx: PropertySetStmtContext) {
-    this.addMethod(ctx, true);
+  getParent(range: Range) {
+    return (
+      this.manager.getParent(this.module.methods, range) ||
+      this.manager.getParent(this.module.properties, range)
+    );
   }
 
   getRange(start: Start, stop: Stop) {
     const startPos = new Position(start.line - 1, start.startIndex);
     const stopPos = new Position(stop.line - 1, stop.stopIndex) || startPos;
     return new Range(startPos, stopPos);
-  }
-
-  addMethod(ctx: MethodStmContext, isProp = false) {
-    this.isDeclareStmt = false;
-
-    if (isProp) {
-      const prop = new PropertyToken(
-        ctx.ambiguousIdentifier().text,
-        this.getRange(ctx.start, ctx.stop || ctx.start)
-      );
-      const accessor = /\b([gls]et)\b/i.exec(ctx.text.toLowerCase());
-      const token = this.tokens.find((token) => {
-        return token.label == ctx.ambiguousIdentifier().text;
-      });
-
-      if (!token) {
-        return this.module.addProperty(prop);
-      }
-
-      if (token && token.isProperty()) {
-        if (!accessor) return;
-
-        switch (accessor[0]) {
-          case "get":
-            token.addAccessor("get");
-          case "let":
-            token.addAccessor("let");
-          case "set":
-            token.addAccessor("set");
-        }
-      }
-    }
-    this.module.addMethod(
-      new MethodToken(
-        ctx.ambiguousIdentifier().text,
-        this.getRange(ctx.start, ctx.stop || ctx.start)
-      )
-    );
   }
 }

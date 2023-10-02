@@ -206,7 +206,7 @@ export class ConstantToken extends BaseToken {
 export class PropertyToken extends BaseToken {
   private readonly _args: ArgToken[] = [];
   private readonly _variables: (VariableToken | ConstantToken)[] = [];
-  private readonly _accessors: PropertyAccessor[] = [];
+  private _accessor: PropertyAccessor = null;
 
   public get symbol(): SymbolKind {
     return SymbolKind.Property;
@@ -223,14 +223,12 @@ export class PropertyToken extends BaseToken {
     return this._variables;
   }
 
-  public get isReadOnly(): boolean {
-    if (this._accessors.filter((accessor) => accessor != "get")) return false;
-
-    return true;
+  public get accessor(): PropertyAccessor {
+    return this._accessor;
   }
 
-  public addAccessor(accessor: PropertyAccessor) {
-    this._accessors.push(accessor);
+  public setAccessor(accessor: PropertyAccessor) {
+    this._accessor = accessor;
   }
 
   addArg(arg: ArgToken) {
