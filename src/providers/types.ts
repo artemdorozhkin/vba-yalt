@@ -12,3 +12,6 @@ export type MethodStmContext =
   | PropertySetStmtContext
   | PropertyLetStmtContext
   | PropertyGetStmtContext;
+
+export type ConstantValue = string | number | boolean;
+export type PropertyAccessor = "get" | "let" | "set";

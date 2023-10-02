@@ -7,22 +7,22 @@ import {
   TextDocument,
 } from "vscode";
 import TreeParser from "./TreeParser";
-import Token from "./Token";
+import { BaseToken } from "./Token";
 
 export default class VBASymbolProvider implements DocumentSymbolProvider {
   private symbols: DocumentSymbol[] = [];
-  private tokens: Token[] = [];
+  private tokens: BaseToken[] = [];
 
   provideDocumentSymbols(
     document: TextDocument,
     token: CancellationToken
   ): ProviderResult<SymbolInformation[] | DocumentSymbol[]> {
     const text = document.getText();
-    const treeParser = new TreeParser(text);
+    const treeParser = new TreeParser(text, document.fileName);
 
     this.tokens = [];
 
-    this.tokens.push(...treeParser.parsedTokens);
+    this.tokens.push(...treeParser.tokens);
 
     this.symbols = [];
     this.symbols.push(...treeParser.getSymbolsFromTokens(this.tokens));
