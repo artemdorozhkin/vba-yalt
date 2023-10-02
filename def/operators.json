@@ -1,53 +1,29 @@
 {
-    "*": {
-        "Description": ""
-    },
-    "^": {
-        "Description": ""
-    },
-    "/": {
-        "Description": ""
-    },
-    "\\": {
-        "Description": ""
-    },
-    "+": {
-        "Description": ""
-    },
-    "-": {
-        "Description": ""
-    },
-    "=": {
-        "Description": ""
-    },
-    "&": {
-        "Description": ""
-    },
-    "And": {
-        "Description": ""
-    },
-    "Eqv": {
-        "Description": ""
-    },
-    "Imp": {
-        "Description": ""
-    },
-    "Is": {
-        "Description": ""
-    },
-    "Like": {
-        "Description": ""
-    },
-    "Mod": {
-        "Description": ""
-    },
-    "Not": {
-        "Description": ""
-    },
-    "Or": {
-        "Description": ""
-    },
-    "Xor": {
-        "Description": ""
-    }
+  "And": {
+    "Description": ""
+  },
+  "Eqv": {
+    "Description": ""
+  },
+  "Imp": {
+    "Description": ""
+  },
+  "Is": {
+    "Description": ""
+  },
+  "Like": {
+    "Description": ""
+  },
+  "Mod": {
+    "Description": ""
+  },
+  "Not": {
+    "Description": ""
+  },
+  "Or": {
+    "Description": ""
+  },
+  "Xor": {
+    "Description": ""
+  }
 }

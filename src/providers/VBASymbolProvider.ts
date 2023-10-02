@@ -26,7 +26,6 @@ export default class VBASymbolProvider implements DocumentSymbolProvider {
 
     this.symbols = [];
     this.symbols.push(...treeParser.getSymbolsFromTokens(this.tokens));
-    console.log(this.symbols);
 
     return this.symbols;
   }

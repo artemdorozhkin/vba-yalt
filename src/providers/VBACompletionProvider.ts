@@ -98,12 +98,7 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
     this.tokens.push(...treeParser.parsedTokens);
 
-    if (
-      context.triggerKind == CompletionTriggerKind.Invoke ||
-      context.triggerKind == CompletionTriggerKind.TriggerCharacter ||
-      context.triggerKind ==
-        CompletionTriggerKind.TriggerForIncompleteCompletions
-    ) {
+    if (context.triggerKind == CompletionTriggerKind.TriggerCharacter) {
       const word = this.getWordAtPosition(document, position, -1);
 
       if (!word) return;
@@ -133,6 +128,9 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
         return this.completions;
       }
+      console.log("here");
+
+      return;
     }
 
     this.completions = [];

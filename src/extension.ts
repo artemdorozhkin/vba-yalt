@@ -3,6 +3,7 @@ import {
   ExtensionContext,
   CompletionItem,
   CompletionItemKind,
+  DocumentSelector,
 } from "vscode";
 import * as fs from "fs";
 import VBACompletionProvider, {
@@ -13,6 +14,8 @@ import path = require("path");
 
 export function activate(context: ExtensionContext) {
   console.log("VBA IS WORKING");
+  const vbaScheme: DocumentSelector = { language: "vba", scheme: "file" };
+
   const def = getDef(context.extensionPath);
   const data = fs
     .readFileSync(path.join(context.extensionPath, "def", "keywords.json"))
@@ -27,12 +30,12 @@ export function activate(context: ExtensionContext) {
   }
 
   const completionsProvider = languages.registerCompletionItemProvider(
-    { language: "vba", scheme: "file" }, // Паттерн для всех файлов
+    vbaScheme,
     new VBACompletionProvider(def.completions, def.tokens, keyCompletions),
-    "." // Триггер символы, например, '.'
+    "."
   );
   const symbolsProvider = languages.registerDocumentSymbolProvider(
-    { language: "vba", scheme: "file" }, // Паттерн для всех файлов
+    vbaScheme,
     new VBASymbolProvider()
   );
   context.subscriptions.push(completionsProvider, symbolsProvider);
