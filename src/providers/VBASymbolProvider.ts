@@ -6,19 +6,24 @@ import {
   SymbolInformation,
   TextDocument,
 } from "vscode";
-import TreeParser from "./TreeParser";
-import { BaseToken } from "./Token";
+import TokenParser from "./TokenParser";
+import { BaseToken } from "./Tokens";
+import { basename, extname } from "path";
 
 export default class VBASymbolProvider implements DocumentSymbolProvider {
   private symbols: DocumentSymbol[] = [];
   private tokens: BaseToken[] = [];
 
+  //TODO: провайдит только проперти
   provideDocumentSymbols(
     document: TextDocument,
     token: CancellationToken
   ): ProviderResult<SymbolInformation[] | DocumentSymbol[]> {
     const text = document.getText();
-    const treeParser = new TreeParser(text, document.fileName);
+    const treeParser = new TokenParser(
+      text,
+      basename(document.fileName, extname(document.fileName))
+    );
 
     this.tokens = [];
 

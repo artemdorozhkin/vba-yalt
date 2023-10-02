@@ -4,12 +4,20 @@ import { ConstantValue, PropertyAccessor } from "./types";
 export abstract class BaseToken {
   constructor(
     public readonly label: string,
-    public readonly range: Range,
+    public readonly range: Range = new Range(0, 0, 0, 0),
     public readonly returnType?: string
   ) {}
 
   public abstract get symbol(): SymbolKind;
   public abstract get completion(): CompletionItemKind;
+
+  isMe(label: string): boolean {
+    return label.toLowerCase() == this.label.toLowerCase();
+  }
+
+  isLib(): this is LibToken {
+    return this.symbol == SymbolKind.Namespace;
+  }
 
   isClass(): this is ModuleToken {
     return this.symbol == SymbolKind.Class;
@@ -64,12 +72,113 @@ export abstract class BaseToken {
   }
 }
 
-export class VariableToken extends BaseToken {
+export class LibToken extends BaseToken {
+  private _modules: BaseToken[] = [];
+
   public get symbol(): SymbolKind {
-    return SymbolKind.Variable;
+    return SymbolKind.Namespace;
   }
   public get completion(): CompletionItemKind {
-    return CompletionItemKind.Variable;
+    return CompletionItemKind.Folder;
+  }
+
+  public get modules(): BaseToken[] {
+    return this._modules;
+  }
+
+  public addModule(moduleTokens: BaseToken[]): void;
+  public addModule(moduleToken: BaseToken): void;
+  public addModule(moduleTokenOrTokens: BaseToken | BaseToken[]): void {
+    if (Array.isArray(moduleTokenOrTokens))
+      this._modules.push(...moduleTokenOrTokens);
+    else this._modules.push(moduleTokenOrTokens);
+  }
+}
+
+export class ModuleToken extends BaseToken {
+  private _symbol: SymbolKind = SymbolKind.Module;
+  private _completion: CompletionItemKind = CompletionItemKind.Module;
+  private _enums: EnumToken[] = [];
+  private _types: TypeToken[] = [];
+  private _variables: (VariableToken | ConstantToken)[] = [];
+  private _properties: PropertyToken[] = [];
+  private _methods: MethodToken[] = [];
+
+  public get symbol(): SymbolKind {
+    return this._symbol;
+  }
+  public get completion(): CompletionItemKind {
+    return this._completion;
+  }
+
+  public get enums(): EnumToken[] {
+    return this._enums;
+  }
+
+  public get types(): TypeToken[] {
+    return this._types;
+  }
+
+  public get variables(): (VariableToken | ConstantToken)[] {
+    return this._variables;
+  }
+
+  public get properties(): PropertyToken[] {
+    return this._properties;
+  }
+
+  public get methods(): MethodToken[] {
+    return this._methods;
+  }
+
+  public parseType(fileExtension: string) {
+    switch (fileExtension) {
+      case ".bas": {
+        this._symbol = SymbolKind.Module;
+        this._completion = CompletionItemKind.Module;
+      }
+      case ".cls" || ".frm": {
+        this._symbol = SymbolKind.Class;
+        this._completion = CompletionItemKind.Class;
+      }
+    }
+  }
+
+  addEnum(enumToken: EnumToken) {
+    this._enums.push(enumToken);
+  }
+
+  addType(typeToken: TypeToken) {
+    this._types.push(typeToken);
+  }
+
+  addVariable(variable: VariableToken | ConstantToken) {
+    this._variables.push(variable);
+  }
+
+  addProperty(propertyToken: PropertyToken) {
+    this._properties.push(propertyToken);
+  }
+
+  addMethod(methodToken: MethodToken) {
+    this._methods.push(methodToken);
+  }
+}
+
+export class VariableToken extends BaseToken {
+  private _symbol: SymbolKind = SymbolKind.Variable;
+  private _completion: CompletionItemKind = CompletionItemKind.Variable;
+
+  public get symbol(): SymbolKind {
+    return this._symbol;
+  }
+  public get completion(): CompletionItemKind {
+    return this._completion;
+  }
+
+  changeToField(): void {
+    this._symbol = SymbolKind.Field;
+    this._completion = CompletionItemKind.Field;
   }
 }
 
@@ -94,15 +203,6 @@ export class ConstantToken extends BaseToken {
   }
 }
 
-export class ArrayToken extends BaseToken {
-  public get symbol(): SymbolKind {
-    return SymbolKind.Array;
-  }
-  public get completion(): CompletionItemKind {
-    return CompletionItemKind.Variable;
-  }
-}
-
 export class PropertyToken extends BaseToken {
   private readonly _args: ArgToken[] = [];
   private readonly _variables: (VariableToken | ConstantToken)[] = [];
@@ -119,7 +219,7 @@ export class PropertyToken extends BaseToken {
     return this._args;
   }
 
-  public get variables(): ArgToken[] {
+  public get variables(): (VariableToken | ConstantToken)[] {
     return this._variables;
   }
 
@@ -157,7 +257,7 @@ export class MethodToken extends BaseToken {
     return this._args;
   }
 
-  public get variables(): ArgToken[] {
+  public get variables(): (VariableToken | ConstantToken)[] {
     return this._variables;
   }
 
@@ -228,67 +328,5 @@ export class TypeToken extends BaseToken {
 
   addMember(typeMember: VariableToken) {
     this._members.push(typeMember);
-  }
-}
-
-export class ModuleToken extends BaseToken {
-  private _symbol: SymbolKind = SymbolKind.Module;
-  private _completion: CompletionItemKind = CompletionItemKind.Module;
-  private _enums: EnumToken[] = [];
-  private _types: TypeToken[] = [];
-  private _variables: (VariableToken | ConstantToken)[] = [];
-  private _properties: PropertyToken[] = [];
-  private _methods: MethodToken[] = [];
-
-  public get symbol(): SymbolKind {
-    return this._symbol;
-  }
-  public get completion(): CompletionItemKind {
-    return this._completion;
-  }
-
-  public get enums(): EnumToken[] {
-    return this._enums;
-  }
-
-  public get types(): TypeToken[] {
-    return this._types;
-  }
-
-  public get variables(): VariableToken[] {
-    return this._variables;
-  }
-
-  public get properties(): PropertyToken[] {
-    return this._properties;
-  }
-
-  public get methods(): MethodToken[] {
-    return this._methods;
-  }
-
-  public changeTypeToClass() {
-    this._symbol = SymbolKind.Class;
-    this._completion = CompletionItemKind.Class;
-  }
-
-  addEnum(enumToken: EnumToken) {
-    this._enums.push(enumToken);
-  }
-
-  addType(typeToken: TypeToken) {
-    this._types.push(typeToken);
-  }
-
-  addVariable(variable: VariableToken | ConstantToken) {
-    this._variables.push(variable);
-  }
-
-  addProperty(propertyToken: PropertyToken) {
-    this._properties.push(propertyToken);
-  }
-
-  addMethod(methodToken: MethodToken) {
-    this._methods.push(methodToken);
   }
 }

@@ -39,7 +39,7 @@ import {
   PropertyToken,
   VariableToken,
   ModuleToken,
-} from "./Token";
+} from "./Tokens";
 import { TokenManager } from "./TokenManager";
 
 type Start = {
@@ -82,6 +82,7 @@ export default class TokenBuilder implements VisualBasic6Listener {
     );
 
     if (this.isDeclareStmt) {
+      variable.changeToField();
       return this.module.addVariable(variable);
     }
 

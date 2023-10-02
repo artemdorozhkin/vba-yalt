@@ -15,9 +15,10 @@ import {
   Range,
   SymbolKind,
 } from "vscode";
-import { BaseToken, ModuleToken } from "./Token";
+import { BaseToken, LibToken, ModuleToken } from "./Tokens";
+import { basename, extname } from "path";
 
-export default class TreeParser {
+export default class TokenParser {
   private readonly lexer: VisualBasic6Lexer;
   private readonly parser: VisualBasic6Parser;
   private readonly tree: StartRuleContext;
@@ -27,13 +28,16 @@ export default class TreeParser {
 
   constructor(
     private readonly code: string,
-    private readonly moduleName: string,
+    filePath: string,
     private readonly position?: Position
   ) {
     this.lexer = new VisualBasic6Lexer(CharStreams.fromString(this.code));
     this.parser = new VisualBasic6Parser(new CommonTokenStream(this.lexer));
     this.tree = this.parser.startRule();
-    this._tokens.push(new ModuleToken(this.moduleName, new Range(0, 0, 0, 0)));
+
+    const module = this.buildModule(filePath);
+    this._tokens.push(module);
+
     this.builder = new TokenBuilder(this._tokens, position);
     ParseTreeWalker.DEFAULT.walk(this.builder, this.tree);
   }
@@ -42,6 +46,16 @@ export default class TreeParser {
     return this._tokens;
   }
 
+  private buildModule(filePath: string): ModuleToken {
+    const moduleType = extname(filePath);
+    const moduleName = basename(filePath, moduleType);
+    const module = new ModuleToken(moduleName);
+    module.parseType(moduleType);
+
+    return module;
+  }
+
+  // TODO: убрать методы в отдельный класс
   private buildSymbol(token: BaseToken): DocumentSymbol {
     return new DocumentSymbol(
       token.label,
@@ -70,38 +84,5 @@ export default class TreeParser {
     });
 
     return symbols;
-  }
-
-  public getCompletions(): CompletionItem[] {
-    return this.tokensToCompletions(this._tokens, this.position);
-  }
-
-  public childrenTokensToCompletions(childrens: BaseToken[]): CompletionItem[] {
-    const completions: CompletionItem[] = [];
-
-    childrens.map((token) => {
-      if (completions.find((completion) => completion.label == token.label))
-        return;
-
-      completions.push(new CompletionItem(token.label, token.completion));
-    });
-
-    return completions;
-  }
-
-  public tokensToCompletions(
-    tokens: BaseToken[],
-    position?: Position
-  ): CompletionItem[] {
-    const completions: CompletionItem[] = [];
-
-    tokens.map((token) => {
-      if (completions.find((completion) => completion.label == token.label))
-        return;
-
-      completions.push(new CompletionItem(token.label, token.completion));
-    });
-
-    return completions;
   }
 }

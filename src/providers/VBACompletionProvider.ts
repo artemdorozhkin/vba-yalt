@@ -14,42 +14,39 @@ import {
   TextDocument,
   languages,
 } from "vscode";
-import TreeParser from "./TreeParser";
-import * as fs from "fs";
+import TokenParser from "./TokenParser";
+import { BaseToken, LibToken, ModuleToken } from "./Tokens";
+import { basename, dirname, extname, join } from "path";
+import { readFileSync, readdirSync, statSync } from "fs";
 import path = require("path");
-import { BaseToken, ModuleToken } from "./Token";
+import { TokenManager } from "./TokenManager";
 
 export function getDef(extPath: string): {
   completions: CompletionItem[];
   tokens: BaseToken[];
 } {
-  //TODO: добавить вложенность для модулей и классов
-  let defCompletions: CompletionItem[] = [];
+  //TODO: Добавить работу с либой.
+  const defCompletions: CompletionItem[] = [];
   const defTokens: BaseToken[] = [];
+  const tokenManager: TokenManager = new TokenManager();
 
-  const defPath = path.join(extPath, "def", "test");
+  const defPath = join(extPath, "def", "test");
   const defFolders = getSubfolders(defPath);
 
   defFolders.forEach((defFolder) => {
     const files = getFiles(defFolder);
+    const lib = new LibToken(basename(defFolder));
 
-    files.forEach((file) => {
-      const ext = path.extname(file);
+    files.forEach((file: string) => {
+      const data = readFileSync(file);
+      const treeParser = new TokenParser(data.toString(), file);
 
-      const data = fs.readFileSync(file);
-      const treeParser = new TreeParser(
-        data.toString(),
-        path.basename(file, ext)
-      );
-
-      defTokens.push(...treeParser.tokens);
-      console.log("def tokens");
-      console.log(defTokens);
-
-      if (defCompletions.length > 0) defCompletions = [];
-      defCompletions.push(...treeParser.tokensToCompletions(defTokens));
+      lib.addModule(treeParser.tokens);
     });
+    defTokens.push(lib);
   });
+  defCompletions.push(...tokenManager.tokensToCompletions(defTokens));
+  defCompletions.push(...tokenManager.childrenTokensToCompletions(defTokens));
 
   return { completions: defCompletions, tokens: defTokens };
 }
@@ -57,11 +54,12 @@ export function getDef(extPath: string): {
 export default class VBACompletionProvider implements CompletionItemProvider {
   private completions: CompletionItem[] = [];
   private tokens: BaseToken[] = [];
+  private readonly tokenManager: TokenManager = new TokenManager();
 
   constructor(
     private readonly defCompletions: CompletionItem[],
     private readonly defTokens: BaseToken[],
-    private readonly keyCompletions: CompletionItem[]
+    private readonly keywordsCompletions: CompletionItem[]
   ) {}
 
   provideCompletionItems(
@@ -71,55 +69,68 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     context: CompletionContext
   ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
     const text = document.getText();
-    const treeParser = new TreeParser(text, document.fileName, position);
+    const lib = new LibToken(basename(dirname(document.fileName)));
+    const treeParser = new TokenParser(text, document.fileName, position);
 
     this.tokens = [];
+    lib.addModule(treeParser.tokens);
+    this.tokens.push(lib);
 
-    this.tokens.push(...treeParser.tokens);
-
-    if (context.triggerKind == CompletionTriggerKind.TriggerCharacter) {
+    if (
+      context.triggerKind == CompletionTriggerKind.TriggerCharacter ||
+      (context.triggerKind == CompletionTriggerKind.Invoke &&
+        this.prevCharIsDot(document, position))
+    ) {
       const word = this.getWordAtPosition(document, position, -1);
 
       if (!word) return;
 
-      let parentToken: BaseToken | undefined;
-      for (const token of this.tokens) {
-        if (word.toLowerCase() == token.label.toLowerCase()) {
-          parentToken = token;
-          break;
-        }
-      }
+      let parentToken: BaseToken | null = this.tokenManager.getTokenByLabel(
+        word,
+        this.tokens
+      );
 
-      if (!parentToken) {
-        for (const token of this.defTokens) {
-          if (word.toLowerCase() == token.label.toLowerCase()) {
-            parentToken = token;
-            break;
-          }
-        }
-      }
+      if (!parentToken)
+        parentToken = this.tokenManager.getTokenByLabel(word, this.defTokens);
 
       if (parentToken) {
         this.completions = [];
-        if (parentToken instanceof ModuleToken) {
-          this.completions.push(
-            ...treeParser.childrenTokensToCompletions(parentToken.methods)
-          );
-        }
+        console.log("parentToken");
+        console.log(parentToken);
+
+        this.completions.push(
+          ...this.tokenManager.childrenTokensToCompletions([parentToken])
+        );
 
         return this.completions;
       }
-      console.log("here");
 
       return;
     }
 
     this.completions = [];
-    this.completions.push(...treeParser.getCompletions());
+    this.completions.push(
+      ...this.tokenManager.tokensToCompletions(this.tokens)
+    );
+    this.completions.push(
+      ...this.tokenManager.childrenTokensToCompletions(this.tokens)
+    );
     this.completions.push(...this.defCompletions);
-    this.completions.push(...this.keyCompletions);
+    this.completions.push(...this.keywordsCompletions);
 
     return this.completions;
+  }
+  prevCharIsDot(document: TextDocument, position: Position): boolean {
+    return (
+      document.getText(
+        new Range(
+          position.line,
+          position.character - 1,
+          position.line,
+          position.character
+        )
+      ) == "."
+    );
   }
 
   resolveCompletionItem(
@@ -149,17 +160,17 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 }
 
 function getSubfolders(folderPath: string) {
-  const subfolders: string[] = fs.readdirSync(folderPath);
+  const subfolders: string[] = readdirSync(folderPath);
 
   return subfolders
-    .map((subfolder) => path.join(folderPath, subfolder))
-    .filter((folderPath) => fs.statSync(folderPath).isDirectory());
+    .map((subfolder) => join(folderPath, subfolder))
+    .filter((folderPath) => statSync(folderPath).isDirectory());
 }
 
 function getFiles(folderPath: string) {
-  const files = fs.readdirSync(folderPath);
+  const files = readdirSync(folderPath);
 
   return files
     .map((file) => path.join(folderPath, file))
-    .filter((filePath) => fs.statSync(filePath).isFile());
+    .filter((filePath) => statSync(filePath).isFile());
 }
