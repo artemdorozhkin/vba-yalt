@@ -1,39 +1,20 @@
 import {
   AmbiguousIdentifierContext,
   ArgContext,
-  ArgListContext,
-  BlockContext,
-  BlockStmtContext,
-  DeclareStmtContext,
   EnumerationStmtContext,
   EnumerationStmt_ConstantContext,
-  FieldLengthContext,
   FunctionStmtContext,
-  ModuleAttributesContext,
-  ModuleConfigContext,
-  ModuleContext,
-  ModuleHeaderContext,
-  ModuleOptionContext,
-  ModuleReferenceContext,
   PropertyGetStmtContext,
   PropertyLetStmtContext,
   PropertySetStmtContext,
   SubStmtContext,
   TypeStmtContext,
   TypeStmt_ElementContext,
-  VariableStmtContext,
   VariableSubStmtContext,
   VisualBasic6Listener,
 } from "vb6-antlr4";
-import { ParseTree, TerminalNode } from "antlr4ts/tree";
 import { ParserRuleContext } from "antlr4ts";
-import {
-  CompletionItem,
-  CompletionItemKind,
-  Position,
-  Range,
-  SymbolKind,
-} from "vscode";
+import { Position, Range } from "vscode";
 import {
   MethodStmtContext,
   PropertyAccessor,
@@ -85,18 +66,6 @@ export default class TokenBuilder implements VisualBasic6Listener {
     );
   }
 
-  enterTypeStmt_Element(ctx: TypeStmt_ElementContext) {
-    const typeToken = this.getTypeToken(ctx.parent);
-    if (!typeToken) return;
-
-    const field = new VariableToken(
-      ctx.ambiguousIdentifier().text,
-      this.getRange(ctx.start, ctx.stop || ctx.start)
-    );
-    field.changeToField();
-    typeToken.addMember(field);
-  }
-
   getTypeToken(parent: ParserRuleContext | undefined) {
     if (!parent) return;
     if (!parent.children) return;
@@ -111,6 +80,19 @@ export default class TokenBuilder implements VisualBasic6Listener {
 
     if (!parentName) return;
     return this.module.types.find((typeToken) => typeToken.label == parentName);
+  }
+
+  enterTypeStmt_Element(ctx: TypeStmt_ElementContext) {
+    const typeToken = this.getTypeToken(ctx.parent);
+    if (!typeToken) return;
+
+    const field = new VariableToken(
+      ctx.ambiguousIdentifier().text,
+      this.getRange(ctx.start, ctx.stop || ctx.start),
+      this.getReturnedType(ctx)
+    );
+    field.changeToField();
+    typeToken.addMember(field);
   }
 
   enterEnumerationStmt(ctx: EnumerationStmtContext) {
@@ -155,11 +137,11 @@ export default class TokenBuilder implements VisualBasic6Listener {
   }
 
   enterFunctionStmt(ctx: FunctionStmtContext) {
-    this.addMethod(ctx);
+    this.addMethod(ctx, this.getReturnedType(ctx));
   }
 
   enterPropertyGetStmt(ctx: PropertyGetStmtContext) {
-    this.addProp(ctx, "get");
+    this.addProp(ctx, "get", this.getReturnedType(ctx));
   }
 
   enterPropertyLetStmt(ctx: PropertyLetStmtContext) {
@@ -170,13 +152,14 @@ export default class TokenBuilder implements VisualBasic6Listener {
     this.addProp(ctx, "set");
   }
 
-  addMethod(ctx: MethodStmtContext, isProp = false) {
+  addMethod(ctx: MethodStmtContext, returnedType?: string | undefined) {
     this.isDeclareStmt = false;
 
     this.module.addMethod(
       new MethodToken(
         ctx.ambiguousIdentifier().text,
-        this.getRange(ctx.start, ctx.stop || ctx.start)
+        this.getRange(ctx.start, ctx.stop || ctx.start),
+        returnedType
       )
     );
   }
@@ -188,7 +171,7 @@ export default class TokenBuilder implements VisualBasic6Listener {
     const arg = new ArgToken(
       ctx.ambiguousIdentifier().text,
       argRange,
-      ctx.typeHint()?.text || ""
+      this.getReturnedType(ctx)
     );
 
     const parentToken = this.getParent(argRange);
@@ -200,7 +183,7 @@ export default class TokenBuilder implements VisualBasic6Listener {
     const variable = new VariableToken(
       ctx.ambiguousIdentifier().text,
       this.getRange(ctx.start, ctx.stop || ctx.start),
-      ctx.typeHint()?.text || ""
+      this.getReturnedType(ctx)
     );
 
     if (this.isDeclareStmt) {
@@ -212,15 +195,38 @@ export default class TokenBuilder implements VisualBasic6Listener {
 
     if (parentToken) parentToken.addVariable(variable);
   }
+  getReturnedType(
+    ctx:
+      | VariableSubStmtContext
+      | ArgContext
+      | TypeStmt_ElementContext
+      | FunctionStmtContext
+      | PropertyGetStmtContext
+  ): string {
+    let returnedType: string = ctx.asTypeClause()?.type().text || "Variant";
+    if (
+      ctx instanceof TypeStmt_ElementContext ||
+      ctx instanceof FunctionStmtContext
+    ) {
+      return returnedType;
+    }
+    const typeHint = ctx.typeHint();
+    if (!typeHint) return returnedType;
 
-  addProp(ctx: PropertyStmtContext, accessor: PropertyAccessor) {
+    return returnedType || typeHint.text;
+  }
+
+  addProp(
+    ctx: PropertyStmtContext,
+    accessor: PropertyAccessor,
+    returnedType?: string | undefined
+  ) {
     this.isDeclareStmt = false;
-
-    const match = /\b([gls]et)\b/i.exec(ctx.text.toLowerCase());
 
     const prop = new PropertyToken(
       ctx.ambiguousIdentifier().text,
-      this.getRange(ctx.start, ctx.stop || ctx.start)
+      this.getRange(ctx.start, ctx.stop || ctx.start),
+      returnedType
     );
 
     prop.setAccessor(accessor);

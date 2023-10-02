@@ -2,7 +2,7 @@ import { CompletionItem, Position, Range } from "vscode";
 import { ModuleToken, MethodToken, PropertyToken, BaseToken } from "./Tokens";
 
 export class TokenManager {
-  getModule(tokens: BaseToken[]): ModuleToken | undefined {
+  public getModule(tokens: BaseToken[]): ModuleToken | undefined {
     const moduleToken = tokens.find((token) => {
       if (token.isClass() || token.isModule()) {
         return token;
@@ -11,15 +11,15 @@ export class TokenManager {
     if (moduleToken instanceof ModuleToken) return moduleToken;
   }
 
-  getParent(
+  public getParent(
     tokens: BaseToken[],
     position: Position
   ): MethodToken | PropertyToken | undefined;
-  getParent(
+  public getParent(
     tokens: BaseToken[],
     range: Range
   ): MethodToken | PropertyToken | undefined;
-  getParent(
+  public getParent(
     tokens: BaseToken[],
     positionOrRange: Position | Range
   ): MethodToken | PropertyToken | undefined {

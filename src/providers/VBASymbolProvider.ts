@@ -9,12 +9,12 @@ import {
 import TokenParser from "./TokenParser";
 import { BaseToken } from "./Tokens";
 import { basename, extname } from "path";
+import { SymbolManager } from "./SymbolManager";
 
 export default class VBASymbolProvider implements DocumentSymbolProvider {
   private symbols: DocumentSymbol[] = [];
   private tokens: BaseToken[] = [];
 
-  //TODO: провайдит только проперти
   provideDocumentSymbols(
     document: TextDocument,
     token: CancellationToken
@@ -30,7 +30,8 @@ export default class VBASymbolProvider implements DocumentSymbolProvider {
     this.tokens.push(...treeParser.tokens);
 
     this.symbols = [];
-    this.symbols.push(...treeParser.getSymbolsFromTokens(this.tokens));
+    const symbolsManager = new SymbolManager();
+    symbolsManager.getSymbolsFromTokens(this.tokens, this.symbols);
 
     return this.symbols;
   }

@@ -2,21 +2,17 @@ import {
   CancellationToken,
   CompletionContext,
   CompletionItem,
-  CompletionItemKind,
   CompletionItemProvider,
   CompletionList,
   CompletionTriggerKind,
-  ExtensionContext,
   Position,
   ProviderResult,
   Range,
-  SymbolKind,
   TextDocument,
-  languages,
 } from "vscode";
 import TokenParser from "./TokenParser";
-import { BaseToken, LibToken, ModuleToken } from "./Tokens";
-import { basename, dirname, extname, join } from "path";
+import { BaseToken, LibToken } from "./Tokens";
+import { basename, dirname, join } from "path";
 import { readFileSync, readdirSync, statSync } from "fs";
 import path = require("path");
 import { TokenManager } from "./TokenManager";
@@ -25,7 +21,6 @@ export function getDef(extPath: string): {
   completions: CompletionItem[];
   tokens: BaseToken[];
 } {
-  //TODO: Добавить работу с либой.
   const defCompletions: CompletionItem[] = [];
   const defTokens: BaseToken[] = [];
   const tokenManager: TokenManager = new TokenManager();
@@ -109,8 +104,6 @@ export default class VBACompletionProvider implements CompletionItemProvider {
 
     this.completions = [];
     this.tokenManager.tokensToCompletions(this.tokens, this.completions);
-    // console.log(`tokens: ${this.completions.length}`);
-    // console.log(this.completions);
 
     this.tokenManager.childrenToCompletionsRecoursive(
       this.tokens,

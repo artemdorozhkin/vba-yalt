@@ -7,15 +7,8 @@ import {
 import { CharStreams, CommonTokenStream } from "antlr4ts";
 import { ParseTreeWalker } from "antlr4ts/tree";
 import TokenBuilder from "./TokenBuilder";
-import {
-  CompletionItem,
-  CompletionItemKind,
-  DocumentSymbol,
-  Position,
-  Range,
-  SymbolKind,
-} from "vscode";
-import { BaseToken, LibToken, ModuleToken } from "./Tokens";
+import { Position } from "vscode";
+import { BaseToken, ModuleToken } from "./Tokens";
 import { basename, extname } from "path";
 
 export default class TokenParser {
@@ -40,6 +33,7 @@ export default class TokenParser {
 
     this.builder = new TokenBuilder(this._tokens, position);
     ParseTreeWalker.DEFAULT.walk(this.builder, this.tree);
+    console.log(this.tokens);
   }
 
   public get tokens(): BaseToken[] {
@@ -53,36 +47,5 @@ export default class TokenParser {
     module.parseType(moduleType);
 
     return module;
-  }
-
-  // TODO: убрать методы в отдельный класс
-  private buildSymbol(token: BaseToken): DocumentSymbol {
-    return new DocumentSymbol(
-      token.label,
-      "",
-      token.symbol,
-      token.range,
-      token.range
-    );
-  }
-
-  public getSymbolsFromTokens(tokens: BaseToken[]): DocumentSymbol[] {
-    const symbols: DocumentSymbol[] = [];
-
-    tokens.forEach((token) => {
-      if (token.isModule() || token.isClass()) {
-        const parent = this.buildSymbol(token);
-        const variables = token.variables.map(this.buildSymbol);
-        const methods = token.methods.map(this.buildSymbol);
-        const properties = token.properties.map(this.buildSymbol);
-        parent.children = variables;
-        parent.children = methods;
-        parent.children = properties;
-
-        symbols.push(parent);
-      }
-    });
-
-    return symbols;
   }
 }
