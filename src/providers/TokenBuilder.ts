@@ -6,6 +6,7 @@ import {
   BlockStmtContext,
   DeclareStmtContext,
   EnumerationStmtContext,
+  EnumerationStmt_ConstantContext,
   FieldLengthContext,
   FunctionStmtContext,
   ModuleAttributesContext,
@@ -23,7 +24,7 @@ import {
   VariableSubStmtContext,
   VisualBasic6Listener,
 } from "vb6-antlr4";
-import { ParseTree } from "antlr4ts/tree";
+import { ParseTree, TerminalNode } from "antlr4ts/tree";
 import { ParserRuleContext } from "antlr4ts";
 import {
   CompletionItem,
@@ -45,6 +46,7 @@ import {
   VariableToken,
   ModuleToken,
   EnumToken,
+  EnumMemberToken,
 } from "./Tokens";
 import { TokenManager } from "./TokenManager";
 
@@ -79,6 +81,34 @@ export default class TokenBuilder implements VisualBasic6Listener {
         this.getRange(ctx.start, ctx.stop || ctx.start)
       )
     );
+  }
+
+  enterEnumerationStmt_Constant(ctx: EnumerationStmt_ConstantContext) {
+    const enumToken = this.getEnumToken(ctx.parent);
+    if (!enumToken) return;
+
+    enumToken.addMember(
+      new EnumMemberToken(
+        ctx.ambiguousIdentifier().text,
+        this.getRange(ctx.start, ctx.stop || ctx.start)
+      )
+    );
+  }
+
+  getEnumToken(parent: ParserRuleContext | undefined) {
+    if (!parent) return;
+    if (!parent.children) return;
+
+    let parentName: string | null = null;
+    for (const child of parent.children) {
+      if (child instanceof AmbiguousIdentifierContext) {
+        parentName = child.text;
+        break;
+      }
+    }
+
+    if (!parentName) return;
+    return this.module.enums.find((enumToken) => enumToken.label == parentName);
   }
 
   enterSubStmt(ctx: SubStmtContext) {

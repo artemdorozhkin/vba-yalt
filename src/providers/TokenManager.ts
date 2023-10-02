@@ -51,22 +51,22 @@ export class TokenManager {
       }
 
       if (token.isLib()) {
-        find = this.findInTokens(label, token.modules);
+        find = this.getTokenByLabel(label, token.modules);
         if (find) break;
       } else if (token.isClass() || token.isModule()) {
-        find = this.findInTokens(label, token.enums);
+        find = this.getTokenByLabel(label, token.enums);
         if (find) break;
 
-        find = this.findInTokens(label, token.types);
+        find = this.getTokenByLabel(label, token.types);
         if (find) break;
 
-        find = this.findInTokens(label, token.variables);
+        find = this.getTokenByLabel(label, token.variables);
         if (find) break;
 
-        find = this.findInTokens(label, token.properties);
+        find = this.getTokenByLabel(label, token.properties);
         if (find) break;
 
-        find = this.findInTokens(label, token.methods);
+        find = this.getTokenByLabel(label, token.methods);
         if (find) break;
       }
     }
@@ -74,18 +74,6 @@ export class TokenManager {
     return find;
   }
 
-  private findInTokens(label: string, tokens: BaseToken[]): BaseToken | null {
-    let find: BaseToken | null = null;
-
-    for (const token of tokens) {
-      if (token.isMe(label)) {
-        find = token;
-        break;
-      }
-    }
-
-    return find;
-  }
   public childrenToCompletions(tokens: BaseToken[], output: CompletionItem[]) {
     tokens.map((token) => {
       if (token.isLib()) {
@@ -97,6 +85,8 @@ export class TokenManager {
         this.addCompletionsFromChilder(token.methods, output);
         this.addCompletionsFromChilder(token.properties, output);
       } else if (token.isEnum()) {
+        console.log(token);
+
         this.addCompletionsFromChilder(token.members, output);
       }
     });
