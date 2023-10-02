@@ -85,8 +85,8 @@ export class TokenManager {
         this.addCompletionsFromChilder(token.methods, output);
         this.addCompletionsFromChilder(token.properties, output);
       } else if (token.isEnum()) {
-        console.log(token);
-
+        this.addCompletionsFromChilder(token.members, output);
+      } else if (token.isType()) {
         this.addCompletionsFromChilder(token.members, output);
       }
     });

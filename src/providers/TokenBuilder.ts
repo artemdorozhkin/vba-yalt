@@ -20,6 +20,7 @@ import {
   PropertySetStmtContext,
   SubStmtContext,
   TypeStmtContext,
+  TypeStmt_ElementContext,
   VariableStmtContext,
   VariableSubStmtContext,
   VisualBasic6Listener,
@@ -47,6 +48,7 @@ import {
   ModuleToken,
   EnumToken,
   EnumMemberToken,
+  TypeToken,
 } from "./Tokens";
 import { TokenManager } from "./TokenManager";
 
@@ -72,6 +74,43 @@ export default class TokenBuilder implements VisualBasic6Listener {
     if (!this.manager.getModule(this.tokens))
       throw new Error("module not found");
     this.module = this.manager.getModule(this.tokens)!;
+  }
+
+  enterTypeStmt(ctx: TypeStmtContext) {
+    this.module.addType(
+      new TypeToken(
+        ctx.ambiguousIdentifier().text,
+        this.getRange(ctx.start, ctx.stop || ctx.start)
+      )
+    );
+  }
+
+  enterTypeStmt_Element(ctx: TypeStmt_ElementContext) {
+    const typeToken = this.getTypeToken(ctx.parent);
+    if (!typeToken) return;
+
+    const field = new VariableToken(
+      ctx.ambiguousIdentifier().text,
+      this.getRange(ctx.start, ctx.stop || ctx.start)
+    );
+    field.changeToField();
+    typeToken.addMember(field);
+  }
+
+  getTypeToken(parent: ParserRuleContext | undefined) {
+    if (!parent) return;
+    if (!parent.children) return;
+
+    let parentName: string | null = null;
+    for (const child of parent.children) {
+      if (child instanceof AmbiguousIdentifierContext) {
+        parentName = child.text;
+        break;
+      }
+    }
+
+    if (!parentName) return;
+    return this.module.types.find((typeToken) => typeToken.label == parentName);
   }
 
   enterEnumerationStmt(ctx: EnumerationStmtContext) {
