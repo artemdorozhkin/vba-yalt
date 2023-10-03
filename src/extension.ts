@@ -1,19 +1,9 @@
-import {
-  languages,
-  ExtensionContext,
-  CompletionItem,
-  CompletionItemKind,
-  DocumentSelector,
-  Position,
-  commands,
-  window,
-} from "vscode";
+import { languages, ExtensionContext, DocumentSelector } from "vscode";
 import VBACompletionProvider, {
   getDef as getDef,
   getKeywords,
 } from "./language-features/VBACompletionProvider";
 import VBASymbolProvider from "./language-features/VBASymbolProvider";
-import path = require("path");
 import { VBAHoverProvider } from "./language-features/VBAHoverProvider";
 
 export function activate(context: ExtensionContext) {
@@ -23,6 +13,7 @@ export function activate(context: ExtensionContext) {
   console.log("def loading");
   const def = getDef(context.extensionPath);
   console.log("def loading: ok");
+
   console.log("keywords loading");
   const keywords = getKeywords(context.extensionPath);
   console.log("keywords loading: ok");

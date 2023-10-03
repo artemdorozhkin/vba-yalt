@@ -4,10 +4,8 @@ import {
   CompletionItem,
   CompletionItemProvider,
   CompletionList,
-  CompletionTriggerKind,
   Position,
   ProviderResult,
-  Range,
   TextDocument,
 } from "vscode";
 import { basename, dirname, join } from "path";

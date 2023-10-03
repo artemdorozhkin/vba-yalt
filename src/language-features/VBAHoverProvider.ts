@@ -5,7 +5,6 @@ import {
   MarkdownString,
   Position,
   ProviderResult,
-  Range,
   TextDocument,
 } from "vscode";
 import { BaseToken, LibToken } from "../tokens/Tokens";

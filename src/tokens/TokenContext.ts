@@ -1,5 +1,4 @@
 import { Position, Range, TextDocument } from "vscode";
-import { BaseToken } from "./Tokens";
 
 export enum TokenContextKind {
   NonContext = -1, // ...

@@ -1,7 +1,7 @@
 {
-  "name": "vba",
-  "displayName": "VBA",
-  "description": "Language support for VBA (Visual Basic for Applications).",
+  "name": "vba-yalt",
+  "displayName": "VBA yalt",
+  "description": "Yet another language tools for VBA (Visual Basic for Applications).",
   "version": "0.2.0",
   "engines": {
     "vscode": "^1.82.0"
@@ -80,6 +80,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "antlr4ts": "^0.5.0-alpha.4",
     "vb6-antlr4": "^1.0.50"
   }
 }

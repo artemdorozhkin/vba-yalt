@@ -1,7 +1,6 @@
 import { CompletionItemKind, Position, Range, SymbolKind } from "vscode";
 import { ConstantValue, PropertyAccessor } from "./types";
 import { KeywordToken } from "../language-features/KeywordsBuilder";
-import { TokenContext } from "./TokenContext";
 
 export abstract class BaseToken {
   constructor(

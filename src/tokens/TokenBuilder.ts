@@ -5,7 +5,6 @@ import {
   EnumerationStmtContext,
   EnumerationStmt_ConstantContext,
   FunctionStmtContext,
-  ModuleConfigElementContext,
   PropertyGetStmtContext,
   PropertyLetStmtContext,
   PropertySetStmtContext,
