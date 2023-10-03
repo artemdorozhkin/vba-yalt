@@ -1,9 +1,11 @@
 import {
   AmbiguousIdentifierContext,
   ArgContext,
+  AttributeStmtContext,
   EnumerationStmtContext,
   EnumerationStmt_ConstantContext,
   FunctionStmtContext,
+  ModuleConfigElementContext,
   PropertyGetStmtContext,
   PropertyLetStmtContext,
   PropertySetStmtContext,
@@ -57,7 +59,18 @@ export default class TokenBuilder implements VisualBasic6Listener {
     this.module = this.manager.getModule(this.tokens)!;
   }
 
-  // TODO: добавить поддержку считывания PredeclaredID, для работы классов Workbooks, Range etc.
+  enterAttributeStmt(ctx: AttributeStmtContext) {
+    const variable = ctx
+      .implicitCallStmt_InStmt()
+      .iCS_S_VariableOrProcedureCall();
+    if (
+      this.module.isClass() &&
+      variable &&
+      /predeclaredid/i.test(variable.text)
+    )
+      this.module.predeclared = /true/i.test(ctx.literal()[0].text);
+  }
+
   enterTypeStmt(ctx: TypeStmtContext) {
     this.module.addType(
       new TypeToken(

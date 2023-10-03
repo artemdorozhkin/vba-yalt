@@ -16,6 +16,8 @@ import path = require("path");
 import { TokenManager } from "../tokens/TokenManager";
 import TokenParser from "../tokens/TokenParser";
 import { BaseToken, LibToken } from "../tokens/Tokens";
+import { KeywordsBuilder } from "./KeywordsBuilder";
+import { TokenContext, TokenContextKind } from "../tokens/TokenContext";
 
 export function getDef(extPath: string): {
   completions: CompletionItem[];
@@ -41,9 +43,24 @@ export function getDef(extPath: string): {
     defTokens.push(lib);
   });
   tokenManager.tokensToCompletions(defTokens, defCompletions);
+
   tokenManager.childrenToCompletionsRecoursive(defTokens, defCompletions);
 
   return { completions: defCompletions, tokens: defTokens };
+}
+
+export function getKeywords(extPath: string) {
+  const builder = new KeywordsBuilder(
+    path.join(extPath, "def", "keywords.json")
+  );
+
+  const tokens = builder.keywords;
+
+  const tokenManager: TokenManager = new TokenManager();
+  const completions: CompletionItem[] = [];
+  tokenManager.tokensToCompletions(tokens, completions);
+
+  return { tokens, completions };
 }
 
 export default class VBACompletionProvider implements CompletionItemProvider {
@@ -52,9 +69,14 @@ export default class VBACompletionProvider implements CompletionItemProvider {
   private readonly tokenManager: TokenManager = new TokenManager();
 
   constructor(
-    private readonly defCompletions: CompletionItem[],
-    private readonly defTokens: BaseToken[],
-    private readonly keywordsCompletions: CompletionItem[]
+    private readonly def: {
+      completions: CompletionItem[];
+      tokens: BaseToken[];
+    },
+    private readonly keywords: {
+      tokens: BaseToken[];
+      completions: CompletionItem[];
+    }
   ) {}
 
   provideCompletionItems(
@@ -68,44 +90,33 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     const treeParser = new TokenParser(text, document.fileName, position);
 
     this.tokens = [];
+    this.completions = [];
     lib.addModule(treeParser.tokens);
     this.tokens.push(lib);
 
-    if (
-      context.triggerKind == CompletionTriggerKind.TriggerCharacter ||
-      (context.triggerKind == CompletionTriggerKind.Invoke &&
-        this.prevCharIsDot(document, position))
-    ) {
-      const word = this.getWordAtPosition(document, position, -1);
+    const tokenContext = new TokenContext(document, position).getContext();
+    switch (tokenContext) {
+      case TokenContextKind.ClauseTypeContext:
+        this.completions = this.getClauseTypeCompletions();
+        break;
 
-      if (!word) return;
+      case TokenContextKind.ObjectTypeContext:
+        this.completions = this.getObjectTypeCompletions();
+        break;
 
-      const parentToken: BaseToken | null = this.getParentByName(word);
+      case TokenContextKind.ChildrensContext:
+        const word = this.getWordAtPosition(document, position, -1);
+        if (!word) return;
+        this.completions = this.getChildrensCompletions(word);
+        break;
 
-      if (parentToken && (parentToken.returnType || parentToken.isEnum())) {
-        let returnedType: BaseToken | null;
-        if (parentToken.isEnum()) {
-          returnedType = parentToken;
-        } else {
-          returnedType = this.getParentByName(parentToken.returnType!);
-        }
-
-        if (!returnedType) return;
-
-        this.completions = [];
-
-        this.tokenManager.childrenToCompletions(
-          [returnedType],
-          this.completions
-        );
-
-        return this.completions;
-      }
-
-      return;
+      default:
+        this.completions = this.getNonContextCompletions(position);
     }
+    return this.completions;
+  }
 
-    this.completions = [];
+  getNonContextCompletions(position: Position): CompletionItem[] {
     this.tokenManager.tokensToCompletions(this.tokens, this.completions);
 
     this.tokenManager.childrenToCompletionsRecoursive(
@@ -114,11 +125,41 @@ export default class VBACompletionProvider implements CompletionItemProvider {
       position
     );
 
-    this.completions.push(...this.defCompletions);
-    this.completions.push(...this.keywordsCompletions);
+    this.completions.push(
+      ...this.def.completions,
+      ...this.keywords.completions
+    );
 
     return this.completions;
   }
+
+  private getClauseTypeCompletions(): CompletionItem[] {
+    this.tokens.push(...this.def.tokens, ...this.keywords.tokens);
+
+    this.tokenManager.setClauseTypeContextTokens(this.tokens, this.completions);
+    return this.completions;
+  }
+
+  getObjectTypeCompletions(): CompletionItem[] {
+    this.tokens.push(...this.def.tokens);
+
+    this.tokenManager.setObjectTypeContextTokens(this.tokens, this.completions);
+    return this.completions;
+  }
+
+  private getChildrensCompletions(parent: string): CompletionItem[] {
+    let parentToken: BaseToken | null = this.getParentByName(parent);
+    if (parentToken && parentToken.returnType)
+      parentToken = this.getParentByName(parentToken.returnType!);
+
+    if (parentToken) {
+      this.tokenManager.childrenToCompletions([parentToken], this.completions, {
+        forcePredeclared: true,
+      });
+    }
+    return this.completions;
+  }
+
   private getParentByName(word: string) {
     let parentToken: BaseToken | null = this.tokenManager.getTokenByLabel(
       word,
@@ -126,22 +167,9 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     );
 
     if (!parentToken)
-      parentToken = this.tokenManager.getTokenByLabel(word, this.defTokens);
+      parentToken = this.tokenManager.getTokenByLabel(word, this.def.tokens);
 
     return parentToken;
-  }
-
-  prevCharIsDot(document: TextDocument, position: Position): boolean {
-    return (
-      document.getText(
-        new Range(
-          position.line,
-          position.character - 1,
-          position.line,
-          position.character
-        )
-      ) == "."
-    );
   }
 
   resolveCompletionItem(

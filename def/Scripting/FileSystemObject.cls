@@ -1,3 +1,5 @@
+Attribute VB_PredeclaredId = False
+
 Property Get Drives() As Drives
 End Property
 

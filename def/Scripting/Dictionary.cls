@@ -1,3 +1,5 @@
+Attribute VB_PredeclaredId = False
+
 Property Get CompareMode() As CompareMethod
 End Property
 Property Let CompareMode()

@@ -10,9 +10,10 @@
     "Language Packs",
     "Programming Languages"
   ],
-  "author": {
-    "name": "artemdorozhkin",
-    "url": "https://github.com/artemdorozhkin"
+  "publisher": "artemdorozhkin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artemdorozhkin/vba-yalt"
   },
   "main": "./dist/extension.js",
   "activationEvents": [],

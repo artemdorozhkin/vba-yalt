@@ -1,5 +1,7 @@
 import { CompletionItemKind, Position, Range, SymbolKind } from "vscode";
 import { ConstantValue, PropertyAccessor } from "./types";
+import { KeywordToken } from "../language-features/KeywordsBuilder";
+import { TokenContext } from "./TokenContext";
 
 export abstract class BaseToken {
   constructor(
@@ -51,6 +53,10 @@ export abstract class BaseToken {
     return this.symbol == SymbolKind.Struct;
   }
 
+  isKeyword(): this is KeywordToken {
+    return this.completion == CompletionItemKind.Keyword;
+  }
+
   isInModuleContainer(): boolean {
     return (
       this.isEnum() || this.isType() || this.isProperty() || this.isMethod()
@@ -96,6 +102,7 @@ export class LibToken extends BaseToken {
 }
 
 export class ModuleToken extends BaseToken {
+  public predeclared: boolean = true;
   private _symbol: SymbolKind = SymbolKind.Module;
   private _completion: CompletionItemKind = CompletionItemKind.Module;
   private _enums: EnumToken[] = [];
@@ -136,10 +143,12 @@ export class ModuleToken extends BaseToken {
       case ".bas": {
         this._symbol = SymbolKind.Module;
         this._completion = CompletionItemKind.Module;
+        break;
       }
       case ".cls" || ".frm": {
         this._symbol = SymbolKind.Class;
         this._completion = CompletionItemKind.Class;
+        break;
       }
     }
   }

@@ -1,290 +1,362 @@
 {
   "As": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Base": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
   "Binary": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
   "Boolean": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "ByRef": {
-    "Description": ""
+    "context": ["Args"],
+    "description": ""
   },
   "Byte": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "ByVal": {
-    "Description": ""
+    "context": ["Args"],
+    "description": ""
   },
   "Call": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Close": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Compare": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
   "Const": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Currency": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Date": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Declare": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Deftype": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Dim": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Do": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Double": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Each": {
-    "Description": ""
+    "context": ["For"],
+    "description": ""
   },
   "Else": {
-    "Description": ""
+    "context": ["If"],
+    "description": ""
   },
   "Empty": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "End": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Enum": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Erase": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Error": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Event": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Exit": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Explicit": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
   "False": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "For": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Friend": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Function": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Get": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "GoSub": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "GoTo": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "If": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Implements": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
-  "Input #": {
-    "Description": ""
+  "Input": {
+    "context": ["Common"],
+    "description": ""
   },
   "Integer": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Is": {
-    "Description": ""
-  },
-  "Kill": {
-    "Description": ""
-  },
-  "Len": {
-    "Description": ""
+    "context": ["Compare"],
+    "description": ""
   },
   "Let": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Line": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Lock": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Long": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "LongLong": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "LongPtr": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Loop": {
-    "Description": ""
+    "context": ["Do"],
+    "description": ""
   },
   "LSet": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Me": {
-    "Description": ""
-  },
-  "Name": {
-    "Description": ""
+    "context": ["ClassModule"],
+    "description": ""
   },
   "New": {
-    "Description": ""
+    "context": ["TypeClause"],
+    "description": ""
   },
   "Next": {
-    "Description": ""
+    "context": ["For"],
+    "description": ""
   },
   "Nothing": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Null": {
-    "Description": ""
+    "context": ["Definition"],
+    "description": ""
   },
   "Object": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "On": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Open": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Option": {
-    "Description": ""
+    "context": ["ModuleOption"],
+    "description": ""
   },
   "Optional": {
-    "Description": ""
+    "context": ["Args"],
+    "description": ""
   },
   "ParamArray": {
-    "Description": ""
+    "context": ["Args"],
+    "description": ""
   },
   "Print": {
-    "Description": ""
-  },
-  "Print #": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Private": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Property": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "PtrSafe": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Public": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Put": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "RaiseEvent": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "ReDim": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Rem": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Resume": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Return": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "RSet": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Seek": {
-    "Description": ""
-  },
-  "SendKeys": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Set": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Single": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Static": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Step": {
-    "Description": ""
+    "context": ["For"],
+    "description": ""
   },
   "Stop": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "String": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Sub": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Then": {
-    "Description": ""
+    "context": ["If"],
+    "description": ""
   },
   "To": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "True": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Type": {
-    "Description": ""
+    "context": ["Modifier"],
+    "description": ""
   },
   "Unlock": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "Variant": {
-    "Description": ""
+    "context": ["BuiltinType"],
+    "description": ""
   },
   "Wend": {
-    "Description": ""
+    "context": ["While"],
+    "description": ""
   },
   "While": {
-    "Description": ""
-  },
-  "Width #": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "With": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
   "WithEvents": {
-    "Description": ""
+    "context": ["Common"],
+    "description": ""
   },
-  "Write #": {
-    "Description": ""
+  "Write": {
+    "context": ["Common"],
+    "description": ""
   }
 }
