@@ -14,6 +14,7 @@ import VBACompletionProvider, {
 } from "./language-features/VBACompletionProvider";
 import VBASymbolProvider from "./language-features/VBASymbolProvider";
 import path = require("path");
+import { VBAHoverProvider } from "./language-features/VBAHoverProvider";
 
 export function activate(context: ExtensionContext) {
   console.log("VBA IS WORKING");
@@ -33,11 +34,24 @@ export function activate(context: ExtensionContext) {
     "."
   );
   console.log("completions registration: ok");
+
   console.log("symbols registration");
   const symbolsProvider = languages.registerDocumentSymbolProvider(
     vbaScheme,
     new VBASymbolProvider()
   );
   console.log("symbols registration: ok");
-  context.subscriptions.push(completionsProvider, symbolsProvider);
+
+  console.log("hovers registration");
+  const hoversProvider = languages.registerHoverProvider(
+    vbaScheme,
+    new VBAHoverProvider(def)
+  );
+  console.log("hovers registration: ok");
+
+  context.subscriptions.push(
+    completionsProvider,
+    symbolsProvider,
+    hoversProvider
+  );
 }
