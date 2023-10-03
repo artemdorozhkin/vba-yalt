@@ -1,0 +1,294 @@
+{
+	"information_for_contributors": [
+		"This file"
+	],
+	"version": "",
+	"name": "VB for Applications",
+	"scopeName": "source.vba",
+	"comment": "Original pack by Artem Dorozhkin",
+	"patterns": [
+		{
+			"include": "#code"
+		}
+	],
+	"repository": {
+		"code": {
+			"patterns": [
+				{
+					"include": "#atDocs"
+				},
+				{
+					"include": "#todos"
+				},
+				{
+					"include": "#keywords"
+				},
+				{
+					"include": "#multiline-comment"
+				},
+				{
+					"include": "#punctuations"
+				},
+				{
+					"include": "#numbers"
+				},
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#indentifiers"
+				}
+			]
+		},
+		"todos": {
+			"patterns": [
+				{
+					"name": "invalid.illegal.todo.vba",
+					"match": "(?i:('\\s*(todo|fixme).*))"
+				}
+			]
+		},
+		"atDocs": {
+			"begin": "('@)([[:alpha:]][_.[:alnum:]]*)",
+			"end": "(?<! _)[\\t ]*(\\n)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.atdoc.vba"
+				},
+				"2": {
+					"name": "keyword.control.atdoc.vba"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.tag.atdoc.end.vba"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string"
+				},
+				{
+					"include": "#numbers"
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "storage.modifier.other.vba",
+					"match": "\\b(Attribute VB_([[:alpha:]][_.[:alnum:]]*)|VERSION|CLASS|BEGIN|MultiUse)\\b"
+				},
+				{
+					"name": "keyword.control.other.vba",
+					"match": "(?i:\\b(option (base [01]|explicit|compare (text|binary|database))|call|if|else|elseif|then|end if|for|each|in|to|next|do|while|until|loop|while|wend|with|end with|(?<!\\.)select|case|end select|exit( sub| function)?|on error (resume next|goto|gosub)|goto|gosub|nothing)\\b)"
+				},
+				{
+					"name": "keyword.operator.logical.vba",
+					"match": "(?i:\\s*\\b(or|and|xor|is|not|like)\\b\\s+)"
+				},
+				{
+					"name": "storage.type.other.vba",
+					"match": "\\s*(?i:\\b(me|private|public|friend|static|sub|function|property( get| set| let)?|enum|type|end( sub| function| type| enum| property)|as|new|dim|redim( preserve)?|const|set|let|byval|byref|optional|paramarray|true|false|nothing|empty)\\b)"
+				},
+				{
+					"name": "support.class.constant.vba",
+					"match": "(?i:\\b(debug|err|application|window|workbook(s)|active(workbook|sheet|cell)|thisworkbook|sheet(s)|worksheet(s)|pivot(fields|caches|tables)|querytable(s)|listobject(s)|connection(s)|entire(row|column)|usedrange|currentregion|range|cells|list(rows|columns)|databodyrange|rows|columns|selection)\\b)"
+				},
+				{
+					"name": "support.class.constant.vba",
+					"match": "(?i:(\\[[[:alpha:]][[:alnum:]]\\]))"
+				},
+				{
+					"name": "support.function.constant.vba",
+					"match": "(?i:\\.\\b(address(local)?|getopenfilename|filedialog|path|keys|exists|item\\(|count|RowAxisLayout|createpivottable|addfields|create|pastespecial|copy(to)|round|min|max|transpose|volatile|refresh|showalldata|removeall|clearcontents|delete|end\\(|setfocus|show|hide|resize\\(|autofiltermode|autofilter|filtermode|protect|unprotect|activate|select|offset\\(|print|assert|add|open|close|saveas|save|clear)\\b|(?<!as\\s*)\\b(shell|array|chr|cstr|cdate|cdbl|clng|cint|isempty|ismissing|iserror|isarray|vartype|doevents|msgbox|dateadd|datediff|now|format|timer|day|month|year|date|createobject|getobject|lcase|ucase|lbound|ubound|environ|freefile|iif|trim|replace|left|right|mid|instr|instrrev|split|len|join|(mk|ch)?dir|chdrive|kill|timevalue|unload)\\b)"
+				},
+				{
+					"name": "entity.name.type.interface.other.vba",
+					"match": "(?i:(?<=type\\s*)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "entity.name.type.enum.vba",
+					"match": "(?i:(?<=enum\\s*)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "entity.name.function.vba",
+					"match": "(?i:(?<=sub\\s*|function\\s*|property( get| set| let)?\\s*)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.class.other.vba",
+					"match": "(?i:([[:alpha:]][_[:alnum:]]*)(?=\\s*\\=\\s*createobject))"
+				},
+				{
+					"name": "support.class.other.vba",
+					"match": "(?i:([[:alpha:]][_[:alnum:]]*)(?=\\s*\\=\\s*new\\s*))"
+				},
+				{
+					"name": "support.class.other.vba",
+					"match": "(?i:([[:alpha:]][_[:alnum:]]*)(?=\\s*as\\s*new))"
+				},
+				{
+					"name": "support.class.other.vba",
+					"match": "(?i:([[:alpha:]][_[:alnum:]]*)(?=\\s+as\\s+object))"
+				},
+				{
+					"name": "variable.other.readwrite.vba",
+					"match": "(?i:(?<=dim|private|public)\\s*(?!const|sub|function|static|property|enum|type)\\s*([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "entity.name.label.name.vba",
+					"match": "(?i:([[:alpha:]][_.[:alnum:]]*:=))"
+				},
+				{
+					"name": "entity.name.label.other.vba",
+					"match": "(?i:(?<=^)([[:alpha:]][_.[:alnum:]]*:)$)"
+				},
+				{
+					"name": "entity.name.label.other.vba",
+					"match": "(?i:(?<=goto|gosub)\\s*([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "storage.type.constant.vba",
+					"match": "(?i:(?<!as\\s+)((?:vb)(newline|null(string|char)|errobject|normalfocus|directory|highlight|activeborder|critical|exclamation|information|msgboxresult|okcancel|ok|cancel|yesno|yes|no)|(?:xl)(sum|tabular(row)?|(row|data)field|database|pastevalues|sheetveryhidden|sheetvisible|sheethidden|up|down|toleft|toright|center|calculationmanual|calculationautomatic)|(?:mso)(filedialog(file|folder)picker)))"
+				},
+				{
+					"name": "variable.other.constant.vba",
+					"match": "(?i:(?<=const|private const|public const)\\s*([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.type.other.vba",
+					"match": "(?i:(?<=\\s+as\\s+)(?!new\\s+)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.type.other.vba",
+					"match": "(?i:(?<=\\s+as\\s+new\\s+)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.type.other.vba",
+					"match": "(?i:(?<=\\=\\s*new\\s+)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.type.other.vba",
+					"match": "(?i:(?<=[[:alpha:]][_.[:alnum:]]*)([\\!\\@\\#\\$\\%\\&]))"
+				},
+				{
+					"name": "entity.name.function.local.vba",
+					"match": "(?i:([[:alpha:]][_[:alnum:]]*)(?=\\s*\\())"
+				},
+				{
+					"name": "entity.name.function.local.vba",
+					"match": "(?<!\\.)([[:upper:]][_[:alnum:]]*)(?=\\s*\\((?!\\)))"
+				},
+				{
+					"name": "entity.name.function.local.vba",
+					"match": "(?i:(?<=call\\s+)([[:alpha:]][_.[:alnum:]]*))"
+				},
+				{
+					"name": "support.class.other.vba",
+					"match": "(?i:(?<!\\.)\\b([[:alpha:]][_[:alnum:]]*)\\b(?=\\.))"
+				}
+			]
+		},
+		"multiline-comment": {
+			"begin": "(?i:'|Rem\\b).*$",
+			"end": "(?<! _)[\\t ]*(\\n)",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.apostrofe.vba"
+				}
+			},
+			"endCaptures": {
+				"0": {
+					"name": "comment.line.end.vba"
+				}
+			},
+			"name": "comment.line.vba"
+		},
+		"indentifiers": {
+			"patterns": [
+				{
+					"name": "variable.other.constant.vba",
+					"match": "([[:upper:]][_[:digit:][:upper:]]*)(?![_[:alnum:]])"
+				},
+				{
+					"name": "variable.other.readwrite.vba",
+					"match": "[[:alpha:]][_[:alnum:]]*"
+				}
+			]
+		},
+		"punctuations": {
+			"patterns": [
+				{
+					"include": "#punctuation-comma"
+				},
+				{
+					"include": "#punctuation-colon"
+				},
+				{
+					"include": "#punctuation-accessor"
+				}
+			]
+		},
+		"punctuation-comma": {
+			"name": "punctuation.separator.comma.vba",
+			"match": ","
+		},
+		"punctuation-colon": {
+			"name": "punctuation.terminator.statement.vba",
+			"match": "(?<![_]\\s*)(:|\\n)"
+		},
+		"punctuation-accessor": {
+			"match": "(?:(\\.)(?!\\s*[[:digit:]]))",
+			"captures": {
+				"1": {
+					"name": "punctuation.accessor.vba"
+				},
+				"2": {
+					"name": "punctuation.accessor.optional.vba"
+				}
+			}
+		},
+		"string": {
+			"name": "string.quoted.double.vba",
+			"begin": "\"",
+			"end": "(\")|((?:[^\\\\\\n])$)",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.vba"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.vba"
+				},
+				"2": {
+					"name": "invalid.illegal.newline.vba"
+				}
+			}
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.decimal.vba",
+					"match": "[[:digit:]]"
+				},
+				{
+					"match": "#\\d+\/\\d+\/\\d+#",
+					"name": "constant.numeric.date.vba"
+				},
+				{
+					"match": "\\b((([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b",
+					"name": "constant.numeric.vba"
+				},
+				{
+					"match": "&(h|H)[0-9a-fA-F]+\\b",
+					"name": "constant.numeric.hex.vba"
+				},
+				{
+					"match": "&(o|O)[0-7]+\\b",
+					"name": "constant.numeric.oct.vba"
+				}
+			]
+		}
+	}
+}

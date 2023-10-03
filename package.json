@@ -36,7 +36,13 @@
       {
         "language": "vba",
         "scopeName": "source.vba",
-        "path": "./src/syntaxes/vba.tmLanguage.json"
+        "path": "./syntaxes/vba.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "vba",
+        "path": "./syntaxes/vba.code-snippets.json"
       }
     ],
     "configurationDefaults": {

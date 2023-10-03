@@ -1,0 +1,426 @@
+{
+  "For Each ... Next": {
+    "prefix": "fore",
+    "body": ["For Each ${1:Variable} In ${2:Collection}", "\t$0", "Next"],
+    "description": "For Each Loop"
+  },
+  "For i ... Next": {
+    "prefix": "fori",
+    "body": ["For i = ${2:Lower} To ${3:Upper}", "\t$0", "Next"],
+    "description": "For i Loop"
+  },
+  "For j ... Next": {
+    "prefix": "forj",
+    "body": ["For j = ${2:Lower} To ${3:Upper}", "\t$0", "Next"],
+    "description": "For j Loop"
+  },
+  "For [N] ... Next": {
+    "prefix": "forn",
+    "body": ["For ${1:Iterator} = ${2:Lower} To ${3:Upper}", "\t$0", "Next"],
+    "description": "For [N] Loop"
+  },
+  "While ...": {
+    "prefix": "wl",
+    "body": ["While ${1:Condition}", "\t$0", "End While"],
+    "description": "While Loop"
+  },
+  "Do While ...": {
+    "prefix": "dwl",
+    "body": ["Do While ${1:Condition}", "\t$0", "Loop"],
+    "description": "Do While Loop"
+  },
+  "Do Loop While ...": {
+    "prefix": "dlw",
+    "body": ["Do ${1:Condition}", "\t$0", "Loop While"],
+    "description": "Do Loop While"
+  },
+  "Do Until ...": {
+    "prefix": "dul",
+    "body": ["Do Until ${1:Condition}", "\t$0", "Loop"],
+    "description": "Do Until Loop"
+  },
+  "Do Loop Until ...": {
+    "prefix": "dlu",
+    "body": ["Do ${1:Condition}", "\t$0", "Loop Until"],
+    "description": "Do Loop Until"
+  },
+  "Public Function...": {
+    "prefix": "puf",
+    "body": [
+      "Public Function ${1:FunctionName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\t$0",
+      "End Function"
+    ],
+    "description": "Public Function..."
+  },
+  "Public Sub ...": {
+    "prefix": "pus",
+    "body": [
+      "Public Sub ${1:ProcedureName}(${2:ParameterList})",
+      "\t$0",
+      "\nEnd Sub"
+    ],
+    "description": "Public Sub ..."
+  },
+  "Private Function...": {
+    "prefix": "prf",
+    "body": [
+      "Private Function ${1:FunctionName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\t$0",
+      "End Function"
+    ],
+    "description": "Private Function..."
+  },
+  "Private Sub ...": {
+    "prefix": "prs",
+    "body": [
+      "Private Sub ${1:ProcedureName}(${2:ParameterList})",
+      "\t$0",
+      "\nEnd Sub"
+    ],
+    "description": "Private Sub ..."
+  },
+  "Public Function (With Err Handler) ...": {
+    "prefix": "pufeh",
+    "body": [
+      "Public Function ${1:FunctionName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t$0",
+      "ExitFunction",
+      "Exit Function",
+      "\nCatch:\n\tGoTo ExitFunction",
+      "End Function"
+    ],
+    "description": "Public Function (With Err Handler) ..."
+  },
+  "Public Sub (With Err Handler) ...": {
+    "prefix": "puseh",
+    "body": [
+      "Public Sub ${1:ProcedureName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0",
+      "ExitSub",
+      "Exit Sub",
+      "\nCatch:\n\tGoTo ExitFunction",
+      "\nEnd Sub"
+    ],
+    "description": "Public Sub (With Err Handler) ..."
+  },
+  "Private Function (With Err Handler) ...": {
+    "prefix": "prfeh",
+    "body": [
+      "Private Function ${1:FunctionName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t$0",
+      "ExitFunction",
+      "Exit Function",
+      "\nCatch:\n\tGoTo ExitFunction",
+      "End Function"
+    ],
+    "description": "Private Function (With Err Handler) ..."
+  },
+  "Private Sub (With Err Handler) ...": {
+    "prefix": "prseh",
+    "body": [
+      "Private Sub ${1:ProcedureName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0",
+      "ExitSub",
+      "Exit Sub",
+      "\nCatch:\n\tGoTo ExitFunction",
+      "\nEnd Sub"
+    ],
+    "description": "Private Sub (With Err Handler) ..."
+  },
+  "Public Property Get ...": {
+    "prefix": "pugp",
+    "body": [
+      "Public Property Get ${1:PropertyName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\t${1:PropertyName} = ${4:ReturnValue}$0",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Get ..."
+  },
+  "Public Property Let ...": {
+    "prefix": "pulp",
+    "body": [
+      "Public Property Let ${1:PropertyName}(${2:ParameterList})",
+      "\t$0 = ${1:PropertyName}",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Let ..."
+  },
+  "Public Property Set ...": {
+    "prefix": "pusp",
+    "body": [
+      "Public Property Set ${1:PropertyName}(${2:ParameterList})",
+      "\tSet $0 = ${1:PropertyName}",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Set ..."
+  },
+  "Public Property (Get & Let & Set) ...": {
+    "prefix": "pups",
+    "body": [
+      "Public Property Get ${1:PropertyName}(${2:ParameterList}) As ${4:ReturnType}",
+      "\t${1:PropertyName} = ${5:ReturnValue}$0",
+      "\nEnd Property\n",
+      "Public Property Let ${1:PropertyName}(${3:ParameterList})",
+      "\t$0 = ${1:PropertyName}",
+      "\nEnd Property\n",
+      "Public Property Set ${1:PropertyName}(${3:ParameterList})",
+      "\tSet $0 = ${1:PropertyName}",
+      "\nEnd Property"
+    ],
+    "description": "Public Properties ..."
+  },
+  "Private Property Get ...": {
+    "prefix": "prgp",
+    "body": [
+      "Private Property Get ${1:PropertyName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${4:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Get ..."
+  },
+  "Private Property Let ...": {
+    "prefix": "prlp",
+    "body": [
+      "Private Property Let ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Let ..."
+  },
+  "Private Property Set ...": {
+    "prefix": "prsp",
+    "body": [
+      "Private Property Set ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Set ..."
+  },
+  "Private Property (Get & Let & Set) ...": {
+    "prefix": "prps",
+    "body": [
+      "Private Property Get ${1:PropertyName}(${2:ParameterList}) As ${4:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${5:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Private Property Let ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Private Property Set ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Properties ..."
+  },
+  "Public Property Get (With Err Handler) ...": {
+    "prefix": "pugpeh",
+    "body": [
+      "Public Property Get ${1:PropertyName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${4:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Get (With Err Handler) ..."
+  },
+  "Public Property Let (With Err Handler) ...": {
+    "prefix": "pulpeh",
+    "body": [
+      "Public Property Let ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Let (With Err Handler) ..."
+  },
+  "Public Property Set (With Err Handler) ...": {
+    "prefix": "puspeh",
+    "body": [
+      "Public Property Set ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Public Property Set (With Err Handler) ..."
+  },
+  "Public Property (Get & Let & Set With Err Handler) ...": {
+    "prefix": "pupseh",
+    "body": [
+      "Public Property Get ${1:PropertyName}(${2:ParameterList}) As ${4:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${5:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Public Property Let ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Public Property Set ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Public Properties (With Err Handler) ..."
+  },
+  "Private Property Get (With Err Handler) ...": {
+    "prefix": "prgpeh",
+    "body": [
+      "Private Property Get ${1:PropertyName}(${2:ParameterList}) As ${3:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${4:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Get (With Err Handler) ..."
+  },
+  "Private Property Let (With Err Handler) ...": {
+    "prefix": "prlpeh",
+    "body": [
+      "Private Property Let ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Let (With Err Handler) ..."
+  },
+  "Private Property Set (With Err Handler) ...": {
+    "prefix": "prspeh",
+    "body": [
+      "Private Property Set ${1:PropertyName}(${2:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Property Set (With Err Handler) ..."
+  },
+  "Private Property (Get & Let & Set With Err Handler) ...": {
+    "prefix": "prpseh",
+    "body": [
+      "Private Property Get ${1:PropertyName}(${2:ParameterList}) As ${4:ReturnType}",
+      "\tOn Error GoTo Catch",
+      "\t${1:PropertyName} = ${5:ReturnValue}$0",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Private Property Let ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\t$0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property\n",
+      "Private Property Set ${1:PropertyName}(${3:ParameterList})",
+      "\tOn Error GoTo Catch",
+      "\tSet $0 = ${1:PropertyName}",
+      "ExitProperty",
+      "Exit Property",
+      "\nCatch:\n\tGoTo ExitProperty",
+      "\nEnd Property"
+    ],
+    "description": "Private Properties (With Err Handler) ..."
+  },
+  "Class Attributes": {
+    "prefix": "clattr",
+    "body": [
+      "VERSION 1.0 CLASS",
+      "BEGIN",
+      "MultiUse = -1  'True",
+      "END",
+      "Attribute VB_Name = \"$1\"",
+      "Attribute VB_GlobalNameSpace = False",
+      "Attribute VB_Creatable = ${2:False}",
+      "Attribute VB_PredeclaredId = ${3:False}",
+      "Attribute VB_Exposed = ${4:False}",
+      "$0"
+    ],
+    "description": "Class Attributes"
+  },
+  "Module Attributes": {
+    "prefix": "modattr",
+    "body": ["Attribute VB_Name = \"$1\"", "$0"],
+    "description": "Module Attributes"
+  },
+  "Doc - summary": {
+    "prefix": "''' summary",
+    "body": ["''' <summary>", "''' $0", "''' </summary>"],
+    "description": "Doc - summary"
+  },
+  "Doc - param": {
+    "prefix": "''' param",
+    "body": ["''' <param name=\"$1\">", "''' $2", "''' </param>"],
+    "description": "Doc - param"
+  },
+  "Doc - remarks": {
+    "prefix": "''' remarks",
+    "body": ["''' <remarks>", "''' $0", "''' </remarks>"],
+    "description": "Doc - remarks"
+  },
+  "Doc - returns": {
+    "prefix": "''' returns",
+    "body": ["''' <returns>", "''' $0", "''' </returns>"],
+    "description": "Doc - returns"
+  },
+  "Doc - example": {
+    "prefix": "''' example",
+    "body": ["''' <example>", "''' $0", "''' </example>"],
+    "description": "Doc - example"
+  },
+  "Doc - code": {
+    "prefix": "''' code",
+    "body": ["''' <code>", "''' $0", "''' </code>"],
+    "description": "Doc - code"
+  }
+}
