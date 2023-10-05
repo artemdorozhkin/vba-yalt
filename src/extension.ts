@@ -5,6 +5,7 @@ import VBACompletionProvider, {
 } from "./language-features/VBACompletionProvider";
 import VBASymbolProvider from "./language-features/VBASymbolProvider";
 import { VBAHoverProvider } from "./language-features/VBAHoverProvider";
+import { VBASignatureHelpProvider } from "./language-features/VBASignatureHelpProvider";
 
 export function activate(context: ExtensionContext) {
   console.log("VBA IS WORKING");
@@ -40,9 +41,27 @@ export function activate(context: ExtensionContext) {
   );
   console.log("hovers registration: ok");
 
+  console.log("space signatures registration");
+  const signaturesSpaceProvider = languages.registerSignatureHelpProvider(
+    vbaScheme,
+    new VBASignatureHelpProvider(def),
+    " "
+  );
+  console.log("space signatures registration: ok");
+
+  console.log("parenthesis signatures registration");
+  const signaturesParenthesisProvider = languages.registerSignatureHelpProvider(
+    vbaScheme,
+    new VBASignatureHelpProvider(def),
+    "("
+  );
+  console.log("parenthesis signatures registration: ok");
+
   context.subscriptions.push(
     completionsProvider,
     symbolsProvider,
-    hoversProvider
+    hoversProvider,
+    signaturesSpaceProvider,
+    signaturesParenthesisProvider
   );
 }

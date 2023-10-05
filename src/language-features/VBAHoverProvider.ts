@@ -11,6 +11,7 @@ import { BaseToken, LibToken } from "../tokens/Tokens";
 import { TokenManager } from "../tokens/TokenManager";
 import { basename, dirname } from "path";
 import TokenParser from "../tokens/TokenParser";
+import { getWordAtPosition } from "../common/utils";
 
 export class VBAHoverProvider implements HoverProvider {
   private readonly tokenManager: TokenManager = new TokenManager();
@@ -25,10 +26,7 @@ export class VBAHoverProvider implements HoverProvider {
   ): ProviderResult<Hover> {
     this.parseTokens(document, position);
 
-    const range = document.getWordRangeAtPosition(position);
-    if (!range) return;
-
-    const word = document.getText(range);
+    const word = getWordAtPosition(document, position, 0);
     if (!word) return;
 
     const hovered = this.tokenManager.getTokenByLabel(word, this.tokens);
@@ -36,8 +34,9 @@ export class VBAHoverProvider implements HoverProvider {
     if (!hovered) return;
 
     const markdown = this.buildMarkdown(hovered);
-    if (markdown) return new Hover(markdown, range);
+    if (markdown) return new Hover(markdown);
   }
+
   parseTokens(document: TextDocument, position: Position) {
     const text = document.getText();
     const lib = new LibToken(basename(dirname(document.fileName)));

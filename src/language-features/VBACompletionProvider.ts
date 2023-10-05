@@ -16,6 +16,7 @@ import TokenParser from "../tokens/TokenParser";
 import { BaseToken, LibToken } from "../tokens/Tokens";
 import { KeywordsBuilder } from "./KeywordsBuilder";
 import { TokenContext, TokenContextKind } from "../tokens/TokenContext";
+import { getWordAtPosition } from "../common/utils";
 
 export function getDef(extPath: string): {
   completions: CompletionItem[];
@@ -103,7 +104,7 @@ export default class VBACompletionProvider implements CompletionItemProvider {
         break;
 
       case TokenContextKind.ChildrensContext:
-        const word = this.getWordAtPosition(document, position, -1);
+        const word = getWordAtPosition(document, position, -1);
         if (!word) return;
         this.completions = this.getChildrensCompletions(word);
         break;
@@ -177,25 +178,7 @@ export default class VBACompletionProvider implements CompletionItemProvider {
     // console.log(`documentation for ${item.label} for example`);
     return;
   }
-
-  getWordAtPosition(
-    document: TextDocument,
-    position: Position,
-    offset: number = 0
-  ): string | null {
-    const totalPosition = new Position(
-      position.line,
-      position.character + offset
-    );
-    const wordRange = document.getWordRangeAtPosition(totalPosition);
-    if (wordRange) {
-      const word = document.getText(wordRange);
-      return word;
-    }
-    return null;
-  }
 }
-
 function getSubfolders(folderPath: string) {
   const subfolders: string[] = readdirSync(folderPath);
 

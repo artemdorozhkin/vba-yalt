@@ -284,6 +284,14 @@ export class MethodToken extends BaseToken {
     return this._variables;
   }
 
+  public argsToString(delimiter: string = ", ", withType: boolean = true) {
+    const args: string[] = this.args.map((arg) => {
+      return `${arg.label + (withType ? " As " + arg.returnType : "")}`;
+    });
+
+    return args.join(delimiter);
+  }
+
   addArg(arg: ArgToken) {
     this._args.push(arg);
   }
