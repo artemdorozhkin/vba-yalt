@@ -32,6 +32,7 @@ export default class TokenParser {
     this._tokens.push(module);
 
     this.builder = new TokenBuilder(this._tokens, position);
+
     ParseTreeWalker.DEFAULT.walk(this.builder, this.tree);
   }
 

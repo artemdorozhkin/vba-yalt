@@ -189,7 +189,8 @@ export class TokenManager {
       if (output.find((token) => token.label == child.label)) return;
       if (child.isClass() && !child.predeclared) return;
 
-      output.push(new CompletionItem(child.label, child.completion));
+      const item = new CompletionItem(child.label, child.completion);
+      output.push(item);
     });
   }
 

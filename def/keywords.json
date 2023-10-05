@@ -1,4 +1,40 @@
 {
+  "And": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Eqv": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Imp": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Is": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Like": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Mod": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Not": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Or": {
+    "context": ["Operator"],
+    "description": ""
+  },
+  "Xor": {
+    "context": ["Operator"],
+    "description": ""
+  },
   "As": {
     "context": ["Common"],
     "description": ""
@@ -153,10 +189,6 @@
   },
   "Integer": {
     "context": ["BuiltinType"],
-    "description": ""
-  },
-  "Is": {
-    "context": ["Compare"],
     "description": ""
   },
   "Let": {

@@ -1,16 +1,23 @@
 import { CompletionItemKind, Position, Range, SymbolKind } from "vscode";
-import { ConstantValue, PropertyAccessor } from "./types";
-import { KeywordToken } from "../language-features/KeywordsBuilder";
+import { ConstantValue, Keyword, PropertyAccessor } from "./types";
 
 export abstract class BaseToken {
+  public readonly ranges: Range[] = [];
+
   constructor(
     public readonly label: string,
     public readonly range: Range = new Range(0, 0, 0, 0),
     public readonly returnType?: string
-  ) {}
+  ) {
+    this.addRange(range);
+  }
 
   public abstract get symbol(): SymbolKind;
   public abstract get completion(): CompletionItemKind;
+
+  addRange(range: Range) {
+    this.ranges.push(range);
+  }
 
   isMe(label: string): boolean {
     return label.toLowerCase() == this.label.toLowerCase();
@@ -64,15 +71,15 @@ export abstract class BaseToken {
 
   intersectRange(range: Range): boolean {
     return (
-      this.range.start.line <= range.start.line &&
-      this.range.end.line >= range.end.line
+      this.ranges[0].start.line <= range.start.line &&
+      this.ranges[0].end.line >= range.end.line
     );
   }
 
   intersectPosition(position: Position): boolean {
     return (
-      this.range.start.line <= position.line &&
-      this.range.end.line >= position.line
+      this.ranges[0].start.line <= position.line &&
+      this.ranges[0].end.line >= position.line
     );
   }
 }
@@ -104,11 +111,16 @@ export class ModuleToken extends BaseToken {
   public predeclared: boolean = true;
   private _symbol: SymbolKind = SymbolKind.Module;
   private _completion: CompletionItemKind = CompletionItemKind.Module;
-  private _enums: EnumToken[] = [];
-  private _types: TypeToken[] = [];
-  private _variables: (VariableToken | ConstantToken)[] = [];
-  private _properties: PropertyToken[] = [];
-  private _methods: MethodToken[] = [];
+  private readonly _childrens: BaseToken[] = [];
+  private readonly _enums: EnumToken[] = [];
+  private readonly _types: TypeToken[] = [];
+  private readonly _variables: (VariableToken | ConstantToken)[] = [];
+  private readonly _properties: PropertyToken[] = [];
+  private readonly _methods: MethodToken[] = [];
+
+  public get childrens(): BaseToken[] {
+    return this._childrens;
+  }
 
   public get symbol(): SymbolKind {
     return this._symbol;
@@ -154,22 +166,27 @@ export class ModuleToken extends BaseToken {
 
   addEnum(enumToken: EnumToken) {
     this._enums.push(enumToken);
+    this._childrens.push(enumToken);
   }
 
   addType(typeToken: TypeToken) {
     this._types.push(typeToken);
+    this._childrens.push(typeToken);
   }
 
   addVariable(variable: VariableToken | ConstantToken) {
     this._variables.push(variable);
+    this._childrens.push(variable);
   }
 
   addProperty(propertyToken: PropertyToken) {
     this._properties.push(propertyToken);
+    this._childrens.push(propertyToken);
   }
 
   addMethod(methodToken: MethodToken) {
     this._methods.push(methodToken);
+    this._childrens.push(methodToken);
   }
 }
 
@@ -334,5 +351,28 @@ export class TypeToken extends BaseToken {
 
   addMember(typeMember: VariableToken) {
     this._members.push(typeMember);
+  }
+}
+
+export class KeywordToken extends BaseToken {
+  private _keyword?: Keyword;
+
+  public get symbol(): SymbolKind {
+    return SymbolKind.TypeParameter;
+  }
+  public get completion(): CompletionItemKind {
+    return CompletionItemKind.Keyword;
+  }
+
+  public get keyword(): Keyword | null {
+    return this._keyword || null;
+  }
+
+  public setKeyword(value: Keyword) {
+    this._keyword = value;
+
+    this._keyword.context = this._keyword.context.map((ctx) => {
+      return ctx.toLowerCase();
+    });
   }
 }

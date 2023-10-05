@@ -15,3 +15,8 @@ export type PropertyStmtContext =
 
 export type ConstantValue = string | number | boolean;
 export type PropertyAccessor = "get" | "let" | "set" | null;
+
+export type Keyword = {
+  context: string[];
+  description: string;
+};

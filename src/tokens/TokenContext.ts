@@ -98,8 +98,6 @@ export class TokenContext {
       }
 
       if (isChar) {
-        console.log(i);
-
         charNum = i;
         break;
       }

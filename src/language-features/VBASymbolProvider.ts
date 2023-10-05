@@ -8,8 +8,8 @@ import {
 } from "vscode";
 import { basename, extname } from "path";
 import { SymbolManager } from "./SymbolManager";
-import TokenParser from "../tokens/TokenParser";
 import { BaseToken } from "../tokens/Tokens";
+import TokenParser from "../tokens/TokenParser";
 
 export default class VBASymbolProvider implements DocumentSymbolProvider {
   private symbols: DocumentSymbol[] = [];
