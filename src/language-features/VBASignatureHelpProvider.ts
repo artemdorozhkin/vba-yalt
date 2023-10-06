@@ -49,10 +49,7 @@ export class VBASignatureHelpProvider implements SignatureHelpProvider {
       `${currentToken.label} ${currentToken.argsToString()}`
     );
     for (const arg of currentToken.args) {
-      const parameter = new ParameterInformation(
-        arg.label,
-        new MarkdownString(`${arg.label} As ${arg.returnType}`)
-      );
+      const parameter = new ParameterInformation(arg.label);
 
       signature.parameters.push(parameter);
     }

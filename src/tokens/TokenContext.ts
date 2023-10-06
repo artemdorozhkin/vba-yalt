@@ -99,9 +99,6 @@ export class TokenContext {
 
     for (let i = this.position.character + offset; i >= 0; i--) {
       const char = line.text[i];
-      console.log("char");
-      console.log(char);
-      console.log(i);
 
       const isChar = /[a-zа-яё]/i.test(char);
 
@@ -118,8 +115,6 @@ export class TokenContext {
       }
 
       if (isChar) {
-        console.log(`return ${i}`);
-
         charNum = i;
         break;
       }
