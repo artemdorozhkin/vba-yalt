@@ -86,7 +86,7 @@ export default class VBACompletionProvider implements CompletionItemProvider {
   ): ProviderResult<CompletionItem[] | CompletionList<CompletionItem>> {
     const text = document.getText();
     const lib = new LibToken(basename(dirname(document.fileName)));
-    const treeParser = new TokenParser(text, document.fileName, position);
+    const treeParser = new TokenParser(text, document.fileName, true, position);
 
     this.tokens = [];
     this.completions = [];
@@ -107,6 +107,14 @@ export default class VBACompletionProvider implements CompletionItemProvider {
         const word = getWordAtPosition(document, position, -1);
         if (!word) return;
         this.completions = this.getChildrensCompletions(word);
+        break;
+
+      case TokenContextKind.ClassContext:
+        const currentModule = lib.modules.find(
+          (module) => module.isClass() && module.isCurrentModule
+        );
+        if (!currentModule) return;
+        this.completions = this.getChildrensCompletions(currentModule.label);
         break;
 
       default:

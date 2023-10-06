@@ -40,7 +40,7 @@ export class VBAHoverProvider implements HoverProvider {
   parseTokens(document: TextDocument, position: Position) {
     const text = document.getText();
     const lib = new LibToken(basename(dirname(document.fileName)));
-    const treeParser = new TokenParser(text, document.fileName, position);
+    const treeParser = new TokenParser(text, document.fileName, true, position);
 
     this.tokens = [];
     lib.addModule(treeParser.tokens);

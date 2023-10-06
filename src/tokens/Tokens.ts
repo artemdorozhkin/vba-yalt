@@ -108,6 +108,7 @@ export class LibToken extends BaseToken {
 }
 
 export class ModuleToken extends BaseToken {
+  public isCurrentModule: boolean = false;
   public predeclared: boolean = true;
   private _symbol: SymbolKind = SymbolKind.Module;
   private _completion: CompletionItemKind = CompletionItemKind.Module;

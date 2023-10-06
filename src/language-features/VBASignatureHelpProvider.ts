@@ -19,7 +19,6 @@ import TokenParser from "../tokens/TokenParser";
 
 export class VBASignatureHelpProvider implements SignatureHelpProvider {
   private tokens: BaseToken[] = [];
-  private readonly tokenManager: TokenManager = new TokenManager();
 
   constructor(
     private readonly def: {
@@ -69,7 +68,7 @@ export class VBASignatureHelpProvider implements SignatureHelpProvider {
   parseTokens(document: TextDocument, position: Position) {
     const text = document.getText();
     const lib = new LibToken(basename(dirname(document.fileName)));
-    const treeParser = new TokenParser(text, document.fileName, position);
+    const treeParser = new TokenParser(text, document.fileName, true, position);
 
     this.tokens = [];
     lib.addModule(treeParser.tokens);

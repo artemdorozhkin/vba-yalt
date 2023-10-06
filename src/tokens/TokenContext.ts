@@ -18,13 +18,13 @@ export class TokenContext {
   }
 
   public getContext(): TokenContextKind {
+    if (this.prevCharIsDot() && this.prevWordIsMe())
+      return TokenContextKind.ClassContext;
     if (this.prevCharIsDot()) return TokenContextKind.ChildrensContext;
 
-    const lastChar = this.getLastNonWhitespaceCharNum();
-    if (lastChar == 0) return TokenContextKind.NonContext;
-    const firstChar = this.getFirstNonWhitespaceCharNum(lastChar);
+    const word = this.getPrevWord();
+    if (word.length == 0) return TokenContextKind.NonContext;
 
-    const word = this.getWord(firstChar, lastChar);
     let context: TokenContextKind = -1;
     for (let i = 0; i < this.triggers.length; i++) {
       if (this.triggers[i] == word.toLowerCase()) {
@@ -34,6 +34,21 @@ export class TokenContext {
     }
 
     return context;
+  }
+  getPrevWord(offset: number = 0) {
+    const lastChar = this.getLastNonWhitespaceCharNum(offset);
+    if (lastChar == 0) return "";
+    const firstChar = this.getFirstNonWhitespaceCharNum(lastChar);
+
+    return this.getWord(firstChar, lastChar);
+  }
+  prevWordIsMe() {
+    const line = this.document.lineAt(this.position.line);
+    return (
+      line.text
+        .substring(line.text.length - 3, line.text.length)
+        .toLowerCase() == "me."
+    );
   }
 
   getWord(firstChar: number, lastChar: number) {
@@ -77,14 +92,19 @@ export class TokenContext {
     return charNum;
   }
 
-  getLastNonWhitespaceCharNum(): number {
+  getLastNonWhitespaceCharNum(offset: number): number {
     const line = this.document.lineAt(this.position.line);
     let charNum = 0;
     let wsNum = 0;
 
-    for (let i = this.position.character; i > 0; i--) {
+    for (let i = this.position.character + offset; i >= 0; i--) {
       const char = line.text[i];
+      console.log("char");
+      console.log(char);
+      console.log(i);
+
       const isChar = /[a-zа-яё]/i.test(char);
+
       if (/\s/.test(char)) wsNum = i;
       if (isChar && wsNum == 0) {
         let nextChar;
@@ -98,6 +118,8 @@ export class TokenContext {
       }
 
       if (isChar) {
+        console.log(`return ${i}`);
+
         charNum = i;
         break;
       }

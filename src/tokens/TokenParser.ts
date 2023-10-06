@@ -22,6 +22,7 @@ export default class TokenParser {
   constructor(
     private readonly code: string,
     filePath: string,
+    isCurrentModule: boolean = false,
     private readonly position?: Position
   ) {
     this.lexer = new VisualBasic6Lexer(CharStreams.fromString(this.code));
@@ -29,6 +30,7 @@ export default class TokenParser {
     this.tree = this.parser.startRule();
 
     const module = this.buildModule(filePath);
+    module.isCurrentModule = isCurrentModule;
     this._tokens.push(module);
 
     this.builder = new TokenBuilder(this._tokens, position);

@@ -1,4 +1,4 @@
-import { CompletionItem, Position, Range } from "vscode";
+import { CompletionItem, CompletionItemKind, Position, Range } from "vscode";
 import { ModuleToken, MethodToken, PropertyToken, BaseToken } from "./Tokens";
 
 export class TokenManager {
@@ -113,7 +113,8 @@ export class TokenManager {
     tokens.map((token) => {
       if (output.find((completion) => completion.label == token.label)) return;
 
-      if (token.isClass() && !token.predeclared) return;
+      if (token.isClass() && !(token.predeclared || token.isCurrentModule))
+        return;
       output.push(new CompletionItem(token.label, token.completion));
     });
   }
@@ -128,7 +129,9 @@ export class TokenManager {
         this.addCompletionsFromChildrens(token.modules, output);
       } else if (
         (token.isModule() || token.isClass()) &&
-        (token.predeclared || (options && options.forcePredeclared))
+        (token.predeclared ||
+          (options && options.forcePredeclared) ||
+          token.isCurrentModule)
       ) {
         this.addCompletionsFromChildrens(token.enums, output);
         this.addCompletionsFromChildrens(token.types, output);
@@ -152,7 +155,10 @@ export class TokenManager {
       if (token.isLib()) {
         this.addCompletionsFromChildrens(token.modules, output);
         this.childrenToCompletionsRecoursive(token.modules, output, position);
-      } else if ((token.isModule() || token.isClass()) && token.predeclared) {
+      } else if (
+        (token.isModule() || token.isClass()) &&
+        (token.predeclared || token.isCurrentModule)
+      ) {
         this.addCompletionsFromChildrens(token.enums, output);
         this.childrenToCompletionsRecoursive(token.enums, output, position);
 
@@ -187,7 +193,8 @@ export class TokenManager {
   ) {
     childrens.forEach((child) => {
       if (output.find((token) => token.label == child.label)) return;
-      if (child.isClass() && !child.predeclared) return;
+      if (child.isClass() && (!child.predeclared || child.isCurrentModule))
+        return;
 
       const item = new CompletionItem(child.label, child.completion);
       output.push(item);
@@ -204,6 +211,8 @@ export class TokenManager {
       } else if (token.isModule() || token.isClass()) {
         if (token.isClass() && !token.predeclared)
           output.push(new CompletionItem(token.label, token.completion));
+        if (token.isClass() && token.isCurrentModule)
+          output.push(new CompletionItem("Me", CompletionItemKind.Keyword));
 
         this.setClauseTypeContextTokens(token.enums, output);
         this.setClauseTypeContextTokens(token.types, output);
@@ -225,7 +234,7 @@ export class TokenManager {
       if (token.isLib()) {
         this.setObjectTypeContextTokens(token.modules, output);
       } else if (token.isClass()) {
-        if (token.isClass() && !token.predeclared)
+        if (token.isClass() && !(token.predeclared || token.isCurrentModule))
           output.push(new CompletionItem(token.label, token.completion));
       }
     });
